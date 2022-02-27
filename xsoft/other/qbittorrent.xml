@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY qbittorrent-download-http "https://sourceforge.net/projects/qbittorrent/files/qbittorrent/qbittorrent-4.4.1/qbittorrent-4.4.1.tar.xz">
+  <!ENTITY qbittorrent-download-ftp  " ">
+  <!ENTITY qbittorrent-md5sum        "a1f6f453e02f77df3e5a4852d16d5962">
+  <!ENTITY qbittorrent-size          "4.6 MB">
+  <!ENTITY qbittorrent-buildsize     "500 MB">
+  <!ENTITY qbittorrent-time          "2 SBU (using parallelism=4)">
+]>
+
+<sect1 id="qbittorrent" xreflabel="qBittorrent-&qbittorrent-version;">
+  <?dbhtml filename="qbittorrent.html"?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>qBittorrent-&qbittorrent-version;</title>
+
+  <indexterm zone="qbittorrent">
+    <primary sortas="a-qBittorrent">qBittorrent</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduction to qBittorrent</title>
+
+    <para>
+      <application>qBittorrent</application> project aims to provide an               open-source software alternative to µTorrent. qBittorrent is based on the       Qt toolkit and libtorrent-rasterbar library.
+    </para>
+
+    &lfs110a_checked;
+
+    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Download (HTTP): <ulink url="&qbittorrent-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download (FTP): <ulink url="&qbittorrent-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download MD5 sum: &qbittorrent-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download size: &qbittorrent-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated disk space required: &qbittorrent-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated build time: &qbittorrent-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">qBittorrent Dependencies</bridgehead>
+
+    <bridgehead renderas="sect4">Required</bridgehead>
+    <para role="required">
+      <xref linkend="qt5"/>, and
+      <xref linkend="libtorrent-rasterbar"/>
+    </para>
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installation of qBittorrent</title>
+
+    <para>
+      Install <application>qBittorrent</application> by running the
+      following commands:
+    </para>
+
+<screen><userinput>./configure --prefix=/usr &amp;&amp;
+make</userinput></screen>
+
+    <para>
+      This package does not come with a test suite.
+    </para>
+
+    <para>
+      Now, as the <systemitem class="username">root</systemitem> user:
+    </para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+  </sect2>
+
+  <sect2 role="content">
+    <title>Contents</title>
+
+    <segmentedlist>
+      <segtitle>Installed Programs</segtitle>
+      <segtitle>Installed Libraries</segtitle>
+      <segtitle>Installed Directory</segtitle>
+
+      <seglistitem>
+	<seg>
+          qbittorrent
+        </seg>
+        <seg>
+          None
+        </seg>
+        <seg>
+          /usr/share/qbittorrent
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+  </sect2>
+
+</sect1>

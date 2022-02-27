@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY libtorrent-rasterbar-download-http "https://github.com/arvidn/libtorrent/releases/download/v2.0.5/libtorrent-rasterbar-2.0.5.tar.gz">
+  <!ENTITY libtorrent-rasterbar-download-ftp  " ">
+  <!ENTITY libtorrent-rasterbar-md5sum        "98e0464cabbf73f56bfbfe6dfaaef4c0">
+  <!ENTITY libtorrent-rasterbar-size          "4.2 MB">
+  <!ENTITY libtorrent-rasterbar-buildsize     "150 MB">
+  <!ENTITY libtorrent-rasterbar-time          "1.5 SBU (using parallelism=4)">
+]>
+
+<sect1 id="libtorrent-rasterbar" xreflabel="libtorrent-&libtorrent-rasterbar-version;">
+  <?dbhtml filename="libtorrent-rasterbar.html"?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>libtorrent-&libtorrent-rasterbar-version;</title>
+
+  <indexterm zone="libtorrent-rasterbar">
+    <primary sortas="a-libtorrent">libtorrent</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduction to libtorrent</title>
+
+    <para>
+      <application>libtorrent</application> is a feature complete C++ bittorrent implementation focusing on efficiency and scalability. It runs on embedded devices as well as desktops. It boasts a well documented library interface that is easy to use. It comes with a simple bittorrent client demonstrating the use of the library.
+    </para>
+
+    &lfs110a_checked;
+
+    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Download (HTTP): <ulink url="&libtorrent-rasterbar-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download (FTP): <ulink url="&libtorrent-rasterbar-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download MD5 sum: &libtorrent-rasterbar-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download size: &libtorrent-rasterbar-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated disk space required: &libtorrent-rasterbar-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated build time: &libtorrent-rasterbar-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">Additional Downloads</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+         Required patch:
+         <ulink url="&patch-root;/libtorrent-rasterbar-&libtorrent-rasterbar-version;-update-allocator-sizes-for-boost-1.78.patch"/>
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">libtorrent Dependencies</bridgehead>
+
+    <bridgehead renderas="sect4">Required</bridgehead>
+    <para role="required">
+      <xref linkend="boost"/>, and
+    </para>
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installation of libtorrent</title>
+
+    <screen><userinput>patch -Np1 -i ../libtorrent-rasterbar-2.0.5-update-allocator-sizes-for-boost-1.78.patch</userinput></screen>
+
+
+    <para>
+      Install <application>libtorrent</application> by running the
+      following commands:
+    </para>
+
+<screen><userinput>mkdir build &amp;&amp;
+cd build &amp;&amp;
+cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_STANDARD=17 -G Ninja .. &amp;&amp;
+ninja</userinput></screen>
+
+    <para>
+      This package does not come with a test suite.
+    </para>
+
+    <para>
+      Now, as the <systemitem class="username">root</systemitem> user:
+    </para>
+
+<screen role="root"><userinput>cmake --install .</userinput></screen>
+  </sect2>
+
+  <sect2 role="content">
+    <title>Contents</title>
+
+    <segmentedlist>
+      <segtitle>Installed Programs</segtitle>
+      <segtitle>Installed Libraries</segtitle>
+      <segtitle>Installed Directory</segtitle>
+
+      <seglistitem>
+	<seg>
+          libtorrent-rasterbar
+        </seg>
+        <seg>
+          None
+        </seg>
+        <seg>
+          /usr/share/libtorrent-rasterbar
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+  </sect2>
+
+</sect1>
