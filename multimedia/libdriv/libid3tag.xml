@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY libid3tag-download-http "https://sourceforge.net/projects/mad/files/libid3tag/0.15.1b/libid3tag-0.15.1b.tar.gz">
+  <!ENTITY libid3tag-download-ftp  " ">
+  <!ENTITY libid3tag-md5sum        "e5808ad997ba32c498803822078748c3">
+  <!ENTITY libid3tag-size          "1 MB">
+  <!ENTITY libid3tag-buildsize     "10 MB">
+  <!ENTITY libid3tag-time          "0.1 SBU (using parallelism=4)">
+]>
+
+<sect1 id="libid3tag" xreflabel="libid3tag-&libid3tag-version;">
+  <?dbhtml filename="libid3tag.html"?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>libid3tag-&libid3tag-version;</title>
+
+  <indexterm zone="libid3tag">
+    <primary sortas="a-libid3tag">libid3tag</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduction to libid3tag</title>
+
+    <para>
+      <application>libid3tag</application> is a library for reading and (eventually) writing ID3 tags, both
+  ID3v1 and the various versions of ID3v2.
+    </para>
+
+    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Download (HTTP): <ulink url="&libid3tag-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download (FTP): <ulink url="&libid3tag-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download MD5 sum: &libid3tag-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download size: &libid3tag-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated disk space required: &libid3tag-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated build time: &libid3tag-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">libid3tag Dependencies</bridgehead>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installation of libid3tag</title>
+
+    <para>
+      Install <application>libid3tag</application> by running the
+      following commands:
+    </para>
+
+<screen><userinput>./configure --prefix=/usr &amp;&amp;
+make</userinput></screen>
+
+    <para>
+      This package does not come with a test suite.
+    </para>
+
+    <para>
+      Now, as the <systemitem class="username">root</systemitem> user:
+    </para>
+
+    <screen role="root"><userinput>make install &amp;&amp;
+rm -fv /usr/lib/libid3tag.a</userinput></screen>
+  </sect2>
+
+  <sect2 role="content">
+    <title>Contents</title>
+
+    <segmentedlist>
+      <segtitle>Installed Programs</segtitle>
+      <segtitle>Installed Libraries</segtitle>
+      <segtitle>Installed Directory</segtitle>
+
+      <seglistitem>
+	<seg>
+          libid3tag
+        </seg>
+        <seg>
+          None
+        </seg>
+        <seg>
+          /usr/share/libid3tag
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+  </sect2>
+
+</sect1>

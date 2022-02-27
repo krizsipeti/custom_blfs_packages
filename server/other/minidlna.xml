@@ -4,82 +4,87 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY qbittorrent-download-http "https://sourceforge.net/projects/qbittorrent/files/qbittorrent/qbittorrent-4.4.1/qbittorrent-4.4.1.tar.xz">
-  <!ENTITY qbittorrent-download-ftp  " ">
-  <!ENTITY qbittorrent-md5sum        "a1f6f453e02f77df3e5a4852d16d5962">
-  <!ENTITY qbittorrent-size          "4.6 MB">
-  <!ENTITY qbittorrent-buildsize     "500 MB">
-  <!ENTITY qbittorrent-time          "2 SBU (using parallelism=4)">
+  <!ENTITY minidlna-download-http "https://sourceforge.net/projects/minidlna/files/minidlna/1.3.0/minidlna-1.3.0.tar.gz">
+  <!ENTITY minidlna-download-ftp  " ">
+  <!ENTITY minidlna-md5sum        "89e92d1938ee3066631d4ca9fbf31507">
+  <!ENTITY minidlna-size          "2.4 MB">
+  <!ENTITY minidlna-buildsize     "50 MB">
+  <!ENTITY minidlna-time          "0.5 SBU (using parallelism=4)">
 ]>
 
-<sect1 id="qbittorrent" xreflabel="qBittorrent-&qbittorrent-version;">
-  <?dbhtml filename="qbittorrent.html"?>
+<sect1 id="minidlna" xreflabel="MiniDLNA-&minidlna-version;">
+  <?dbhtml filename="minidlna.html"?>
 
   <sect1info>
     <date>$Date$</date>
   </sect1info>
 
-  <title>qBittorrent-&qbittorrent-version;</title>
+  <title>MiniDLNA-&minidlna-version;</title>
 
-  <indexterm zone="qbittorrent">
-    <primary sortas="a-qBittorrent">qBittorrent</primary>
+  <indexterm zone="minidlna">
+    <primary sortas="a-MiniDLNA">MiniDLNA</primary>
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to qBittorrent</title>
+    <title>Introduction to MiniDLNA</title>
 
     <para>
-      <application>qBittorrent</application> project aims to provide an               open-source software alternative to µTorrent. qBittorrent is based on the       Qt toolkit and libtorrent-rasterbar library.
+      <application>MiniDLNA</application> is a simple media server software, with the aim of being fully compliant with DLNA/UPnP-AV clients. It was originally developed by a NETGEAR employee for the ReadyNAS product line.
     </para>
 
     <bridgehead renderas="sect3">Package Information</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&qbittorrent-download-http;"/>
+          Download (HTTP): <ulink url="&minidlna-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&qbittorrent-download-ftp;"/>
+          Download (FTP): <ulink url="&minidlna-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &qbittorrent-md5sum;
+          Download MD5 sum: &minidlna-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &qbittorrent-size;
+          Download size: &minidlna-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &qbittorrent-buildsize;
+          Estimated disk space required: &minidlna-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &qbittorrent-time;
+          Estimated build time: &minidlna-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">qBittorrent Dependencies</bridgehead>
+    <bridgehead renderas="sect3">MiniDLNA Dependencies</bridgehead>
 
     <bridgehead renderas="sect4">Required</bridgehead>
     <para role="required">
-      <xref linkend="qt5"/>, and
-      <xref linkend="libtorrent-rasterbar"/>
+      <xref linkend="libexif"/>, and
+      <xref linkend="libjpeg"/>
+      <xref linkend="libid3tag"/>
+      <xref linkend="flac"/>
+      <xref linkend="libvorbis"/>
+      <xref linkend="sqlite"/>
+      <xref linkend="ffmpeg"/>
     </para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of qBittorrent</title>
+    <title>Installation of MiniDLNA</title>
 
     <para>
-      Install <application>qBittorrent</application> by running the
+      Install <application>MiniDLNA</application> by running the
       following commands:
     </para>
 
@@ -107,13 +112,13 @@ make</userinput></screen>
 
       <seglistitem>
 	<seg>
-          qbittorrent
+          minidlna
         </seg>
         <seg>
           None
         </seg>
         <seg>
-          /usr/share/qbittorrent
+          /usr/share/minidlna
         </seg>
       </seglistitem>
     </segmentedlist>
