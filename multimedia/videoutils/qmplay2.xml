@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY qmplay2-download-http "https://github.com/zaps166/QMPlay2/releases/download/22.03.19/QMPlay2-src-22.03.19.tar.xz">
+  <!ENTITY qmplay2-download-ftp  " ">
+  <!ENTITY qmplay2-md5sum        "13c642cc196a42457766fd9757854d70">
+  <!ENTITY qmplay2-size          "1.6 MB">
+  <!ENTITY qmplay2-buildsize     "160 MB">
+  <!ENTITY qmplay2-time          "2 SBU (using parallelism=4)">
+]>
+
+<sect1 id="qmplay2" xreflabel="QMPlay2-&qmplay2-version;">
+    <?dbhtml filename="qmplay2.html"?>
+
+    <sect1info>
+        <date>$Date$</date>
+    </sect1info>
+
+    <title>QMPlay2-&qmplay2-version;</title>
+
+    <indexterm zone="qmplay2">
+        <primary sortas="a-QMPlay2">QMPlay2</primary>
+    </indexterm>
+    
+    <sect2 role="package">
+        <title>Introduction to QMPlay2</title>
+
+        <para>
+            <application>QMPlay2</application> is a video and audio player. It can play all formats supported by FFmpeg, libmodplug (including J2B and SFX). It also supports Audio CD, raw files, Rayman 2 music and chiptunes. It contains YouTube and MyFreeMP3 browser.
+        </para>
+
+        <bridgehead renderas="sect3">Package Information</bridgehead>
+        <itemizedlist spacing="compact">
+        <listitem>
+            <para>
+                Download (HTTP): <ulink url="&qmplay2-download-http;"/>
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                Download (FTP): <ulink url="&qmplay2-download-ftp;"/>
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                Download MD5 sum: &qmplay2-md5sum;
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                Download size: &qmplay2-size;
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                Estimated disk space required: &qmplay2-buildsize;
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                Estimated build time: &qmplay2-time;
+            </para>
+        </listitem>
+        </itemizedlist>
+
+        <bridgehead renderas="sect3">QMPlay2 Dependencies</bridgehead>
+
+        <bridgehead renderas="sect4">Required</bridgehead>
+        <para role="required">
+            <xref linkend="qt5"/>, and
+            <xref linkend="ffmpeg"/>, and
+            <xref linkend="taglib"/>, and
+            <xref linkend="libass"/>, and
+            <xref linkend="libcdio"/>, and
+            <xref linkend="alsa"/>, and
+            <xref linkend="alsa-lib"/>, and
+            <xref linkend="pulseaudio"/>, and
+            <xref linkend="alsa-oss"/>, and
+            <xref linkend="libcddb"/>
+        </para>
+    </sect2>
+
+    <sect2 role="installation">
+        <title/>
+
+<screen><userinput>mkdir build &amp;&amp;
+cd build &amp;&amp;
+cmake .. -DCMAKE_INSTALL_PREFIX=/usr &amp;&amp;
+make</userinput></screen>
+        
+<screen role="root"><userinput>make install/strip</userinput></screen>
+    </sect2>
+</sect1>
