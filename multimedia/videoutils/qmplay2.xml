@@ -4,9 +4,9 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY qmplay2-download-http "https://github.com/zaps166/QMPlay2/releases/download/22.03.19/QMPlay2-src-22.03.19.tar.xz">
+  <!ENTITY qmplay2-download-http "https://github.com/zaps166/QMPlay2/releases/download/22.06.16/QMPlay2-src-22.06.16.tar.xz">
   <!ENTITY qmplay2-download-ftp  " ">
-  <!ENTITY qmplay2-md5sum        "13c642cc196a42457766fd9757854d70">
+  <!ENTITY qmplay2-md5sum        "36b42e7b1417a1a69c9893cfc1bc8bf5">
   <!ENTITY qmplay2-size          "1.6 MB">
   <!ENTITY qmplay2-buildsize     "160 MB">
   <!ENTITY qmplay2-time          "2 SBU (using parallelism=4)">
