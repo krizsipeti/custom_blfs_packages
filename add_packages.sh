@@ -29,4 +29,4 @@ grep -qF minidlna-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY m
 # Add QMPlay2
 cp -fv multimedia/videoutils/qmplay2.xml ../blfs_root/blfs-xml/multimedia/videoutils
 grep -qF qmplay2.xml ../blfs_root/blfs-xml/multimedia/videoutils/videoutils.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="qmplay2.xml"/>' ../blfs_root/blfs-xml/multimedia/videoutils/videoutils.xml
-grep -qF qmplay2-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY qmplay2-version "22.06.16">' >> ../blfs_root/blfs-xml/packages.ent
+grep -qF qmplay2-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY qmplay2-version "22.10.23">' >> ../blfs_root/blfs-xml/packages.ent
