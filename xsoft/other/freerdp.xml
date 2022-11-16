@@ -4,9 +4,9 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY freerdp-download-http "https://github.com/FreeRDP/FreeRDP/releases/download/2.6.1/freerdp-2.6.1.tar.gz">
+  <!ENTITY freerdp-download-http "https://github.com/FreeRDP/FreeRDP/releases/download/2.8.1/freerdp-2.8.1.tar.gz">
   <!ENTITY freerdp-download-ftp  " ">
-  <!ENTITY freerdp-md5sum        "e06ef73a6803391beee6e704c437ac34">
+  <!ENTITY freerdp-md5sum        "886b262644ad1cd0b9d16bde2a43830e">
   <!ENTITY freerdp-size          "4.6 MB">
   <!ENTITY freerdp-buildsize     "500 MB">
   <!ENTITY freerdp-time          "2 SBU (using parallelism=4)">
