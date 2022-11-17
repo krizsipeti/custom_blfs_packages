@@ -4,7 +4,7 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY minidlna-download-http "https://sourceforge.net/projects/minidlna/files/minidlna/1.3.0/minidlna-1.3.0.tar.gz">
+  <!ENTITY minidlna-download-http "https://sourceforge.net/projects/minidlna/files/minidlna/1.3.2/minidlna-1.3.2.tar.gz">
   <!ENTITY minidlna-download-ftp  " ">
   <!ENTITY minidlna-md5sum        "89e92d1938ee3066631d4ca9fbf31507">
   <!ENTITY minidlna-size          "2.4 MB">
