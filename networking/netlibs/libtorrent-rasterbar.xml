@@ -66,16 +66,6 @@
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">Additional Downloads</bridgehead>
-    <itemizedlist spacing="compact">
-      <listitem>
-        <para>
-         Required patch:
-         <ulink url="&patch-root;/libtorrent-rasterbar-&libtorrent-rasterbar-version;-update-allocator-sizes-for-boost-1.78.patch"/>
-        </para>
-      </listitem>
-    </itemizedlist>
-
     <bridgehead renderas="sect3">libtorrent Dependencies</bridgehead>
 
     <bridgehead renderas="sect4">Required</bridgehead>
@@ -86,9 +76,6 @@
 
   <sect2 role="installation">
     <title>Installation of libtorrent</title>
-
-    <screen><userinput>patch -Np1 -i ../libtorrent-rasterbar-2.0.5-update-allocator-sizes-for-boost-1.78.patch</userinput></screen>
-
 
     <para>
       Install <application>libtorrent</application> by running the
