@@ -24,7 +24,7 @@ grep -qF libid3tag-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY 
 # Add minidlna
 cp -fv server/other/minidlna.xml ../blfs_root/blfs-xml/server/other
 grep -qF minidlna.xml ../blfs_root/blfs-xml/server/other/other.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="minidlna.xml"/>' ../blfs_root/blfs-xml/server/other/other.xml
-grep -qF minidlna-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY minidlna-version "1.3.0">' >> ../blfs_root/blfs-xml/packages.ent
+grep -qF minidlna-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY minidlna-version "1.3.2">' >> ../blfs_root/blfs-xml/packages.ent
 
 # Add QMPlay2
 cp -fv multimedia/videoutils/qmplay2.xml ../blfs_root/blfs-xml/multimedia/videoutils
