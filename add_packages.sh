@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # Add libtorrent-rasterbar
-#cp -fv libtorrent-rasterbar-2.0.5-update-allocator-sizes-for-boost-1.78.patch /sources
 cp -fv networking/netlibs/libtorrent-rasterbar.xml ../blfs_root/blfs-xml/networking/netlibs
 grep -qF libtorrent-rasterbar.xml ../blfs_root/blfs-xml/networking/netlibs/netlibs.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="libtorrent-rasterbar.xml"/>' ../blfs_root/blfs-xml/networking/netlibs/netlibs.xml
 grep -qF libtorrent-rasterbar-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY libtorrent-rasterbar-version "2.0.8">' >> ../blfs_root/blfs-xml/packages.ent
