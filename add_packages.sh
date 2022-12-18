@@ -29,3 +29,8 @@ grep -qF minidlna-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY m
 cp -fv multimedia/videoutils/qmplay2.xml ../blfs_root/blfs-xml/multimedia/videoutils
 grep -qF qmplay2.xml ../blfs_root/blfs-xml/multimedia/videoutils/videoutils.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="qmplay2.xml"/>' ../blfs_root/blfs-xml/multimedia/videoutils/videoutils.xml
 grep -qF qmplay2-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY qmplay2-version "22.10.23">' >> ../blfs_root/blfs-xml/packages.ent
+
+# Add SDL2_ttf
+cp -fv general/graphlib/sdl2-ttf.xml ../blfs_root/blfs-xml/general/graphlib
+grep -qF sdl2-ttf.xml ../blfs_root/blfs-xml/general/graphlib/graphlib.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sdl2-ttf.xml"/>' ../blfs_root/blfs-xml/general/graphlib/graphlib.xml
+grep -qF sdl2-ttf-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY sdl2-ttf-version "2.20.1">' >> ../blfs_root/blfs-xml/packages.ent

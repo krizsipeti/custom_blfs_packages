@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY sdl2-ttf-download-http "https://github.com/libsdl-org/SDL_ttf/releases/download/release-2.20.1/SDL2_ttf-2.20.1.tar.gz">
+  <!ENTITY sdl2-ttf-download-ftp  " ">
+  <!ENTITY sdl2-ttf-md5sum        " ">
+  <!ENTITY sdl2-ttf-size          "12.6 MB">
+  <!ENTITY sdl2-ttf-buildsize     "150 MB">
+  <!ENTITY sdl2-ttf-time          "1 SBU (using parallelism=4)">
+]>
+
+<sect1 id="sdl2-ttf" xreflabel="sdl2-ttf-&sdl2-ttf-version;">
+  <?dbhtml filename="sdl2-ttf.html"?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>sdl2-ttf-&sdl2-ttf-version;</title>
+
+  <indexterm zone="sdl2-ttf">
+    <primary sortas="a-sdl2-ttf">sdl2-ttf</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduction to sdl2-ttf</title>
+
+    <para>
+      <application>sdl2-ttf</application> is a wrapper around the FreeType and Harfbuzz libraries, allowing you to use TrueType fonts to render text in SDL applications.
+    </para>
+
+    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Download (HTTP): <ulink url="&sdl2-ttf-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download (FTP): <ulink url="&sdl2-ttf-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download MD5 sum: &sdl2-ttf-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download size: &sdl2-ttf-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated disk space required: &sdl2-ttf-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated build time: &sdl2-ttf-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">sdl2-ttf Dependencies</bridgehead>
+
+    <bridgehead renderas="sect4">Required</bridgehead>
+    <para role="required">
+      <xref linkend="sdl2"/>
+    </para>
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installation of sdl2-ttf</title>
+
+    <para>
+      Install <application>sdl2-ttf</application> by running the
+      following commands:
+    </para>
+
+<screen><userinput>./configure --prefix=/usr &amp;&amp;
+make</userinput></screen>
+
+    <para>
+      This package does not come with a test suite.
+    </para>
+
+    <para>
+      Now, as the <systemitem class="username">root</systemitem> user:
+    </para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+  </sect2>
+
+  <sect2 role="content">
+    <title>Contents</title>
+
+    <segmentedlist>
+      <segtitle>Installed Programs</segtitle>
+      <segtitle>Installed Libraries</segtitle>
+      <segtitle>Installed Directory</segtitle>
+
+      <seglistitem>
+	<seg>
+          sdl2-ttf
+        </seg>
+        <seg>
+          None
+        </seg>
+        <seg>
+          /usr/share/sdl2-ttf
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+  </sect2>
+
+</sect1>
