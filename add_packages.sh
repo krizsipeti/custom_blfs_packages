@@ -13,7 +13,7 @@ grep -qF qbittorrent-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTIT
 # Add FreeRDP
 cp -fv xsoft/other/freerdp.xml ../blfs_root/blfs-xml/xsoft/other
 grep -qF freerdp.xml ../blfs_root/blfs-xml/xsoft/other/other.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="freerdp.xml"/>' ../blfs_root/blfs-xml/xsoft/other/other.xml
-grep -qF freerdp-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY freerdp-version "2.8.1">' >> ../blfs_root/blfs-xml/packages.ent
+grep -qF freerdp-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY freerdp-version "3.2.0">' >> ../blfs_root/blfs-xml/packages.ent
 
 # Add libid3tag
 cp -fv multimedia/libdriv/libid3tag.xml ../blfs_root/blfs-xml/multimedia/libdriv
