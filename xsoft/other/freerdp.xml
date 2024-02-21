@@ -4,9 +4,9 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY freerdp-download-http "https://github.com/FreeRDP/FreeRDP/releases/download/2.8.1/freerdp-2.8.1.tar.gz">
+  <!ENTITY freerdp-download-http "https://github.com/FreeRDP/FreeRDP/releases/download/3.2.0/freerdp-3.2.0.tar.gz">
   <!ENTITY freerdp-download-ftp  " ">
-  <!ENTITY freerdp-md5sum        "886b262644ad1cd0b9d16bde2a43830e">
+  <!ENTITY freerdp-md5sum        "">
   <!ENTITY freerdp-size          "4.6 MB">
   <!ENTITY freerdp-buildsize     "500 MB">
   <!ENTITY freerdp-time          "2 SBU (using parallelism=4)">
@@ -89,7 +89,7 @@
 
 <screen><userinput>mkdir build &amp;&amp;
 cd build &amp;&amp;
-cmake -GNinja -DCMAKE_INSTALL_PREFIX=/usr -DCHANNEL_URBDRC=ON -DWITH_DSP_FFMPEG=ON -DWITH_CUPS=ON -DWITH_PULSE=ON -DWITH_FAAC=ON -DWITH_FAAD2=ON -DWITH_GSM=OFF -DWITH_CAIRO=ON -DWITH_ICU=ON -DWITH_VAAPI=ON -B. -H.. &amp;&amp;
+cmake -GNinja -DCMAKE_INSTALL_PREFIX=/usr -DCHANNEL_URBDRC=ON -DWITH_FFMPEG=ON -DWITH_SWSCALE=ON -DWITH_DSP_FFMPEG=ON -DWITH_CUPS=ON -DWITH_PULSE=ON -DWITH_FAAC=ON -DWITH_FAAD2=ON -DWITH_GSM=OFF -DWITH_CAIRO=ON -DWITH_ICU=ON -DWITH_VAAPI=ON -B. -H.. &amp;&amp;
 cmake --build .</userinput></screen>
         
 <screen role="root"><userinput>cmake --build . --target install</userinput></screen>
