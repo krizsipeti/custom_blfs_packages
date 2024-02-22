@@ -70,6 +70,7 @@
 
         <bridgehead renderas="sect4">Required</bridgehead>
         <para role="required">
+            <xref linkend="pkcs11-helper"/>, and
             <xref linkend="libusb"/>, and
             <xref linkend="ffmpeg"/>, and
             <xref linkend="faad2"/>, and
@@ -82,7 +83,7 @@
             <xref linkend="icu"/>, and           
             <xref linkend="sdl2"/>, and
             <xref linkend="sdl2-ttf"/>, and
-            <xref linkend="sdl2-image"/>           
+            <xref linkend="sdl2-image"/>
         </para>
     </sect2>
 
