@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY pkcs11-helper-download-http "https://github.com/OpenSC/pkcs11-helper/releases/download/pkcs11-helper-1.30.0/pkcs11-helper-1.30.0.tar.bz2">
+  <!ENTITY pkcs11-helper-download-ftp  " ">
+  <!ENTITY pkcs11-helper-md5sum        " ">
+  <!ENTITY pkcs11-helper-size          "12.6 MB">
+  <!ENTITY pkcs11-helper-buildsize     "150 MB">
+  <!ENTITY pkcs11-helper-time          "1 SBU (using parallelism=4)">
+]>
+
+<sect1 id="pkcs11-helper" xreflabel="pkcs11-helper-&pkcs11-helper-version;">
+  <?dbhtml filename="pkcs11-helper.html"?>
+
+  <sect1info>
+    <date>$Date$</date>
+  </sect1info>
+
+  <title>pkcs11-helper-&pkcs11-helper-version;</title>
+
+  <indexterm zone="pkcs11-helper">
+    <primary sortas="a-pkcs11-helper">pkcs11-helper</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduction to pkcs11-helper</title>
+
+    <para>
+      <application>pkcs11-helper</application> is a Library that simplifies the interaction with PKCS#11 providers for end-user applications using a simple API and optional OpenSSL engine.
+    </para>
+
+    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Download (HTTP): <ulink url="&pkcs11-helper-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download (FTP): <ulink url="&pkcs11-helper-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download MD5 sum: &pkcs11-helper-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download size: &pkcs11-helper-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated disk space required: &pkcs11-helper-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated build time: &pkcs11-helper-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">pkcs11-helper Dependencies</bridgehead>
+
+    <bridgehead renderas="sect4">Required</bridgehead>
+    <para role="required">
+    </para>
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installation of pkcs11-helper</title>
+
+    <para>
+      Install <application>pkcs11-helper</application> by running the
+      following commands:
+    </para>
+
+<screen><userinput>./configure --prefix=/usr &amp;&amp;
+make</userinput></screen>
+
+    <para>
+      This package does not come with a test suite.
+    </para>
+
+    <para>
+      Now, as the <systemitem class="username">root</systemitem> user:
+    </para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+  </sect2>
+
+  <sect2 role="content">
+    <title>Contents</title>
+
+    <segmentedlist>
+      <segtitle>Installed Programs</segtitle>
+      <segtitle>Installed Libraries</segtitle>
+      <segtitle>Installed Directory</segtitle>
+
+      <seglistitem>
+	<seg>
+          pkcs11-helper
+        </seg>
+        <seg>
+          None
+        </seg>
+        <seg>
+          /usr/share/pkcs11-helper
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+  </sect2>
+
+</sect1>
