@@ -8,7 +8,7 @@ grep -qF libtorrent-rasterbar-version ../blfs_root/blfs-xml/packages.ent || echo
 # Add qBittorrent
 cp -fv xsoft/other/qbittorrent.xml ../blfs_root/blfs-xml/xsoft/other
 grep -qF qbittorrent.xml ../blfs_root/blfs-xml/xsoft/other/other.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="qbittorrent.xml"/>' ../blfs_root/blfs-xml/xsoft/other/other.xml
-grep -qF qbittorrent-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY qbittorrent-version "4.4.5">' >> ../blfs_root/blfs-xml/packages.ent
+grep -qF qbittorrent-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY qbittorrent-version "4.6.3">' >> ../blfs_root/blfs-xml/packages.ent
 
 # Add FreeRDP
 cp -fv xsoft/other/freerdp.xml ../blfs_root/blfs-xml/xsoft/other
