@@ -80,7 +80,10 @@
             <xref linkend="pulseaudio"/>, and
             <xref linkend="alsa-oss"/>, and
             <xref linkend="cups"/>, and
-            <xref linkend="icu"/>
+            <xref linkend="icu"/>, and           
+            <xref linkend="sdl2"/>, and
+            <xref linkend="sdl2-ttf"/>, and
+            <xref linkend="sdl2-image"/>           
         </para>
     </sect2>
 
