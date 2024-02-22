@@ -10,6 +10,11 @@ cp -fv xsoft/other/qbittorrent.xml ../blfs_root/blfs-xml/xsoft/other
 grep -qF qbittorrent.xml ../blfs_root/blfs-xml/xsoft/other/other.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="qbittorrent.xml"/>' ../blfs_root/blfs-xml/xsoft/other/other.xml
 grep -qF qbittorrent-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY qbittorrent-version "4.6.3">' >> ../blfs_root/blfs-xml/packages.ent
 
+# Add pkcs11-helper
+cp -fv postlfs/security/pkcs11-helper.xml ../blfs_root/blfs-xml/postlfs/security
+grep -qF pkcs11-helper.xml ../blfs_root/blfs-xml/postlfs/security/security.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="pkcs11-helper.xml"/>' ../blfs_root/blfs-xml/postlfs/security/security.xml
+grep -qF pkcs11-helper-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY pkcs11-helper-version "1.30.0">' >> ../blfs_root/blfs-xml/packages.ent
+
 # Add FreeRDP
 cp -fv xsoft/other/freerdp.xml ../blfs_root/blfs-xml/xsoft/other
 grep -qF freerdp.xml ../blfs_root/blfs-xml/xsoft/other/other.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="freerdp.xml"/>' ../blfs_root/blfs-xml/xsoft/other/other.xml
