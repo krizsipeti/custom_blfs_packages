@@ -92,7 +92,7 @@
 
 <screen><userinput>mkdir build &amp;&amp;
 cd build &amp;&amp;
-cmake -GNinja -DCMAKE_INSTALL_PREFIX=/usr -DCHANNEL_URBDRC=ON -DWITH_FFMPEG=ON -DWITH_SWSCALE=ON -DWITH_DSP_FFMPEG=ON -DWITH_CUPS=ON -DWITH_PULSE=ON -DWITH_FAAC=ON -DWITH_FAAD2=ON -DWITH_GSM=OFF -DWITH_CAIRO=ON -DWITH_ICU=ON -DWITH_VAAPI=ON -B. -H.. &amp;&amp;
+cmake -GNinja -DCMAKE_INSTALL_PREFIX=/usr -DWITH_KRB5=OFF -DCHANNEL_URBDRC=ON -DWITH_FFMPEG=ON -DWITH_SWSCALE=ON -DWITH_DSP_FFMPEG=ON -DWITH_CUPS=ON -DWITH_PULSE=ON -DWITH_FAAC=ON -DWITH_FAAD2=ON -DWITH_GSM=OFF -DWITH_CAIRO=ON -DWITH_ICU=ON -DWITH_VAAPI=ON -B. -H.. &amp;&amp;
 cmake --build .</userinput></screen>
         
 <screen role="root"><userinput>cmake --build . --target install</userinput></screen>
