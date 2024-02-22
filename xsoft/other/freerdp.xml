@@ -83,7 +83,8 @@
             <xref linkend="icu"/>, and           
             <xref linkend="sdl2"/>, and
             <xref linkend="sdl2-ttf"/>, and
-            <xref linkend="sdl2-image"/>
+            <xref linkend="sdl2-image"/>, and
+            <xref linkend="webkitgtk"/> (built with GTK-4)
         </para>
     </sect2>
 
