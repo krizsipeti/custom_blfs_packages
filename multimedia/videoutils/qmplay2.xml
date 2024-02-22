@@ -78,7 +78,6 @@
             <xref linkend="alsa"/>, and
             <xref linkend="alsa-lib"/>, and
             <xref linkend="pulseaudio"/>, and
-            <xref linkend="alsa-oss"/>, and
             <xref linkend="libcddb"/>
         </para>
     </sect2>
