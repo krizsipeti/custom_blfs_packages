@@ -15,9 +15,6 @@
 <sect1 id="libid3tag" xreflabel="libid3tag-&libid3tag-version;">
   <?dbhtml filename="libid3tag.html"?>
 
-  <sect1info>
-    <date>$Date$</date>
-  </sect1info>
 
   <title>libid3tag-&libid3tag-version;</title>
 

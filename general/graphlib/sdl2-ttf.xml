@@ -15,9 +15,6 @@
 <sect1 id="sdl2-ttf" xreflabel="sdl2-ttf-&sdl2-ttf-version;">
   <?dbhtml filename="sdl2-ttf.html"?>
 
-  <sect1info>
-    <date>$Date$</date>
-  </sect1info>
 
   <title>sdl2-ttf-&sdl2-ttf-version;</title>
 

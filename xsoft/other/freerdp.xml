@@ -15,9 +15,6 @@
 <sect1 id="freerdp" xreflabel="FreeRDP-&freerdp-version;">
     <?dbhtml filename="freerdp.html"?>
 
-    <sect1info>
-        <date>$Date$</date>
-    </sect1info>
 
     <title>FreeRDP-&freerdp-version;</title>
 

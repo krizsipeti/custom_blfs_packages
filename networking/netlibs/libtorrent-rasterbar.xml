@@ -15,9 +15,6 @@
 <sect1 id="libtorrent-rasterbar" xreflabel="libtorrent-&libtorrent-rasterbar-version;">
   <?dbhtml filename="libtorrent-rasterbar.html"?>
 
-  <sect1info>
-    <date>$Date$</date>
-  </sect1info>
 
   <title>libtorrent-&libtorrent-rasterbar-version;</title>
 

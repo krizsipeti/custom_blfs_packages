@@ -15,9 +15,6 @@
 <sect1 id="pkcs11-helper" xreflabel="pkcs11-helper-&pkcs11-helper-version;">
   <?dbhtml filename="pkcs11-helper.html"?>
 
-  <sect1info>
-    <date>$Date$</date>
-  </sect1info>
 
   <title>pkcs11-helper-&pkcs11-helper-version;</title>
 

@@ -15,9 +15,6 @@
 <sect1 id="qbittorrent" xreflabel="qBittorrent-&qbittorrent-version;">
   <?dbhtml filename="qbittorrent.html"?>
 
-  <sect1info>
-    <date>$Date$</date>
-  </sect1info>
 
   <title>qBittorrent-&qbittorrent-version;</title>
 

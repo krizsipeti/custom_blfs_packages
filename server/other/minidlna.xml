@@ -15,9 +15,6 @@
 <sect1 id="minidlna" xreflabel="MiniDLNA-&minidlna-version;">
   <?dbhtml filename="minidlna.html"?>
 
-  <sect1info>
-    <date>$Date$</date>
-  </sect1info>
 
   <title>MiniDLNA-&minidlna-version;</title>
 
