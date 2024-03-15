@@ -91,7 +91,9 @@ make</userinput></screen>
       Now, as the <systemitem class="username">root</systemitem> user:
     </para>
 
-<screen role="root"><userinput>make install</userinput></screen>
+    <screen role="root"><userinput>make install &amp;&amp;
+gio mime application/x-bittorrent org.qbittorrent.qBittorrent.desktop &amp;&amp;
+gio mime x-scheme-handler/magnet org.qbittorrent.qBittorrent.desktop</userinput></screen>
   </sect2>
 
   <sect2 role="content">
