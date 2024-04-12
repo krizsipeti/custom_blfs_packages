@@ -4,7 +4,7 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY freerdp-download-http "https://github.com/FreeRDP/FreeRDP/releases/download/3.2.0/freerdp-3.2.0.tar.gz">
+  <!ENTITY freerdp-download-http "https://github.com/FreeRDP/FreeRDP/releases/download/3.4.0/freerdp-3.4.0.tar.gz">
   <!ENTITY freerdp-download-ftp  " ">
   <!ENTITY freerdp-md5sum        "">
   <!ENTITY freerdp-size          "4.6 MB">
