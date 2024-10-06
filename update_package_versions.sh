@@ -80,4 +80,4 @@ DOWNLOAD_URL="https://github.com/libsdl-org/SDL_ttf/archive/refs/heads/main.zip 
 sed -i -E "s@(sdl2-ttf-download-http \"+)(.+\">)@\1$DOWNLOAD_URL\">@" ./general/graphlib/sdl2-ttf.xml
 
 # Patch scripts.xsl to handle -O parameter in wget urls
-sed -i "s/basename \$URL/basename \$URL | awk -F' ' '{ print \$NF}'/g" ../blfs_root/xsl/scripts.xsl
+sed -i "s/BOOTPACKG=\$(basename \$URL)/BOOTPACKG=\$(basename \$URL | awk -F' ' '{ print \$NF}')/g" ../blfs_root/xsl/scripts.xsl
