@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 # first parameter is the blfs tool's script folder
 # second parameter is the blfs tool's installed packages xml file
 

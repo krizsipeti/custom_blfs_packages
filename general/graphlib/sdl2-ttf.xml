@@ -4,7 +4,7 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY sdl2-ttf-download-http "https://github.com/libsdl-org/SDL_ttf/releases/download/release-2.22.0/SDL2_ttf-2.22.0.tar.gz">
+  <!ENTITY sdl2-ttf-download-http "https://github.com/libsdl-org/SDL_ttf/archive/refs/heads/main.zip -O SDL2-ttf-2.22.0-c37ced3.zip">
   <!ENTITY sdl2-ttf-download-ftp  " ">
   <!ENTITY sdl2-ttf-md5sum        " ">
   <!ENTITY sdl2-ttf-size          "12.6 MB">

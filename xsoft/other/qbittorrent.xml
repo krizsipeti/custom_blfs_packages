@@ -4,7 +4,7 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY qbittorrent-download-http "https://sourceforge.net/projects/qbittorrent/files/qbittorrent/qbittorrent-4.6.4/qbittorrent-4.6.4.tar.xz">
+  <!ENTITY qbittorrent-download-http "https://sourceforge.net/projects/qbittorrent/files/qbittorrent/qbittorrent-5.0.0/qbittorrent-5.0.0.tar.xz">
   <!ENTITY qbittorrent-download-ftp  " ">
   <!ENTITY qbittorrent-md5sum        " ">
   <!ENTITY qbittorrent-size          "4.6 MB">
@@ -67,7 +67,7 @@
 
     <bridgehead renderas="sect4">Required</bridgehead>
     <para role="required">
-      <xref linkend="qt5"/>, and
+      <xref linkend="qt6"/>, and
       <xref linkend="libtorrent-rasterbar"/>
     </para>
   </sect2>
