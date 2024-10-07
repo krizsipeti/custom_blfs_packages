@@ -63,6 +63,17 @@
       </listitem>
     </itemizedlist>
 
+    <bridgehead renderas="sect3">Additional Downloads</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Required patch:
+          <ulink url="https://github.com/krizsipeti/custom_blfs_packages/raw/refs/heads/main/minidlna.patch"/>
+        </para>
+      </listitem>
+    </itemizedlist>
+
+
     <bridgehead renderas="sect3">MiniDLNA Dependencies</bridgehead>
 
     <bridgehead renderas="sect4">Required</bridgehead>
@@ -79,6 +90,8 @@
 
   <sect2 role="installation">
     <title>Installation of MiniDLNA</title>
+
+<screen><userinput remap="pre">patch -Np1 -i ../minidlna.patch</userinput></screen>
 
     <para>
       Install <application>MiniDLNA</application> by running the
