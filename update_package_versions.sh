@@ -1,6 +1,21 @@
 #!/bin/bash
 # This script checks and updates the latest versions of the packages
 
+# Function that gets the latest release of a specific package.
+# This function works only with packages stored on github.
+getLatestGithubRelease()
+{
+    printf "\nUpdating package: $2\n"
+    URL="https://github.com/$1/releases"
+    URL=`curl -v --silent $URL 2>&1 | grep 'loading="lazy" src=' | tr '"' '\n' | grep /releases/ -m1`
+    URL="https://github.com`curl -v --silent $URL 2>&1 | grep '<a href=' | grep '.tar.' -m1 | tr '"' '\n' | grep /releases/`"
+    sed -i -E "s@($2-download-http \"+)(.+\">)@\1$URL\">@" ./$3/$2.xml
+    VER=`echo $URL | awk -F/ '{ print $(NF-1) }' | awk -F- '{ print $NF }'`
+    sed -i -E "s@($2-version \"+)(.+\">)@\1$VER\">@" add_packages.sh
+    echo "Latest version: $VER"
+    printf "Found package: $URL\n"
+}
+
 #minidlna
 DOWNLOAD_URL=`curl -v --silent https://sourceforge.net/projects/minidlna/files/minidlna/ 2>&1 | grep net.sf.files | tr '"' '\n' | grep http -m1`
 DOWNLOAD_URL="${DOWNLOAD_URL%/download}"
@@ -18,30 +33,10 @@ DOWNLOAD_URL=$DOWNLOAD_URL/libid3tag-$LATEST_VERSION.tar.gz
 sed -i -E "s@(libid3tag-download-http \"+)(.+\">)@\1$DOWNLOAD_URL\">@" ./multimedia/libdriv/libid3tag.xml
 
 #pkcs11-helper
-#DOWNLOAD_URL=`curl -v --silent https://github.com/OpenSC/pkcs11-helper/releases 2>&1 | grep src= | tr '"' '\n' | grep pkcs11-helper- | head -1`
-#DOWNLOAD_URL="https://github.com`curl -v --silent $DOWNLOAD_URL 2>&1 | tr '"' '\n' | grep .tar.bz2 -m 1`"
-#sed -i -E "s@(pkcs11-helper-download-http \"+)(.+\">)@\1$DOWNLOAD_URL\">@" ./postlfs/security/pkcs11-helper.xml
-#LATEST_VERSION=`echo $DOWNLOAD_URL | tr '-' '\n' | tr '/' '\n' | grep '.tar.bz2'`
-#LATEST_VERSION="${LATEST_VERSION%.tar.bz2}"
-#sed -i -E "s@(pkcs11-helper-version \"+)(.+\">)@\1$LATEST_VERSION\">@" add_packages.sh
-
-#pkcs11-helper
-URL="https://github.com/OpenSC/pkcs11-helper/"
-LAST_COMMIT=`curl -v --silent $URL 2>&1 | tr '"' '\n' | grep 'spoofed_commit_check' | awk -F/ '{ print $NF }' | cut -c1-7`
-LAST_RELEASE=`curl -v --silent $URL 2>&1 | tr '"' '\n' | grep '/releases/tag' | awk -F\/ '{ print $NF }' | cut -c 15-`
-LATEST_VERSION="$LAST_RELEASE-$LAST_COMMIT"
-sed -i -E "s/(pkcs11-helper-version \"+)(.+\">)/\1$LATEST_VERSION\">/" add_packages.sh
-DOWNLOAD_URL="https://github.com/OpenSC/pkcs11-helper/archive/refs/heads/master.zip -O pkcs11-helper-$LATEST_VERSION.zip"
-sed -i -E "s@(pkcs11-helper-download-http \"+)(.+\">)@\1$DOWNLOAD_URL\">@" ./postlfs/security/pkcs11-helper.xml
+getLatestGithubRelease OpenSC/pkcs11-helper pkcs11-helper postlfs/security
 
 #QMPlay2
-URL="https://github.com/zaps166/QMPlay2/"
-LAST_COMMIT=`curl -v --silent $URL 2>&1 | tr '"' '\n' | grep 'spoofed_commit_check' | awk -F/ '{ print $NF }' | cut -c1-7`
-LAST_RELEASE=`curl -v --silent $URL 2>&1 | tr '"' '\n' | grep '/releases/tag' | awk -F\/ '{ print $NF }'`
-LATEST_VERSION="$LAST_RELEASE-$LAST_COMMIT"
-sed -i -E "s/(qmplay2-version \"+)(.+\">)/\1$LATEST_VERSION\">/" add_packages.sh
-DOWNLOAD_URL="https://github.com/zaps166/QMPlay2/archive/refs/heads/master.zip -O QMPlay2-$LATEST_VERSION.zip"
-sed -i -E "s@(qmplay2-download-http \"+)(.+\">)@\1$DOWNLOAD_URL\">@" ./multimedia/videoutils/qmplay2.xml
+getLatestGithubRelease zaps166/QMPlay2 qmplay2 multimedia/videoutils
 
 #qBittorrent
 URL="https://www.qbittorrent.org/download"
@@ -53,31 +48,12 @@ LATEST_VERSION="${LATEST_VERSION%.tar.xz}"
 sed -i -E "s@(qbittorrent-version \"+)(.+\">)@\1$LATEST_VERSION\">@" add_packages.sh
 
 #libtorrent-rasterbar
-URL="https://github.com/arvidn/libtorrent/"
-LAST_COMMIT=`curl -v --silent $URL 2>&1 | tr '"' '\n' | grep 'spoofed_commit_check' | awk -F/ '{ print $NF }' | cut -c1-7`
-LAST_RELEASE=`curl -v --silent $URL 2>&1 | tr '"' '\n' | grep '/releases/tag' | awk -F\/ '{ print $NF }' | cut -c 2-`
-LATEST_VERSION="$LAST_RELEASE-$LAST_COMMIT"
-sed -i -E "s/(libtorrent-rasterbar-version \"+)(.+\">)/\1$LATEST_VERSION\">/" add_packages.sh
-DOWNLOAD_URL="https://github.com/arvidn/libtorrent/archive/refs/heads/RC_2_0.zip -O libtorrent-rasterbar-$LATEST_VERSION.zip"
-sed -i -E "s@(libtorrent-rasterbar-download-http \"+)(.+\">)@\1$DOWNLOAD_URL\">@" ./networking/netlibs/libtorrent-rasterbar.xml
+getLatestGithubRelease arvidn/libtorrent libtorrent-rasterbar networking/netlibs
 
 #SDL2-image
-URL="https://github.com/libsdl-org/SDL_image/"
-LAST_COMMIT=`curl -v --silent $URL 2>&1 | tr '"' '\n' | grep 'spoofed_commit_check' | awk -F/ '{ print $NF }' | cut -c1-7`
-LAST_RELEASE=`curl -v --silent $URL 2>&1 | tr '"' '\n' | grep '/releases/tag' | awk -F\/ '{ print $NF }' | cut -c 9-`
-LATEST_VERSION="$LAST_RELEASE-$LAST_COMMIT"
-sed -i -E "s/(sdl2-image-version \"+)(.+\">)/\1$LATEST_VERSION\">/" add_packages.sh
-DOWNLOAD_URL="https://github.com/libsdl-org/SDL_image/archive/refs/heads/main.zip -O SDL2-image-$LATEST_VERSION.zip"
-sed -i -E "s@(sdl2-image-download-http \"+)(.+\">)@\1$DOWNLOAD_URL\">@" ./general/graphlib/sdl2-image.xml
+getLatestGithubRelease libsdl-org/SDL_image sdl2-image general/graphlib
 
 #SDL2-ttf
-URL="https://github.com/libsdl-org/SDL_ttf/"
-LAST_COMMIT=`curl -v --silent $URL 2>&1 | tr '"' '\n' | grep 'spoofed_commit_check' | awk -F/ '{ print $NF }' | cut -c1-7`
-LAST_RELEASE=`curl -v --silent $URL 2>&1 | tr '"' '\n' | grep '/releases/tag' | awk -F\/ '{ print $NF }' | cut -c 9-`
-LATEST_VERSION="$LAST_RELEASE-$LAST_COMMIT"
-sed -i -E "s/(sdl2-ttf-version \"+)(.+\">)/\1$LATEST_VERSION\">/" add_packages.sh
-DOWNLOAD_URL="https://github.com/libsdl-org/SDL_ttf/archive/refs/heads/main.zip -O SDL2-ttf-$LATEST_VERSION.zip"
-sed -i -E "s@(sdl2-ttf-download-http \"+)(.+\">)@\1$DOWNLOAD_URL\">@" ./general/graphlib/sdl2-ttf.xml
+getLatestGithubRelease libsdl-org/SDL_ttf sdl2-ttf general/graphlib
 
-# Patch scripts.xsl to handle -O parameter in wget urls
-sed -i "s/BOOTPACKG=\$(basename \$URL)/BOOTPACKG=\$(basename \$URL | awk -F' ' '{ print \$NF}')/g" ../blfs_root/xsl/scripts.xsl
+
