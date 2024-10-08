@@ -67,8 +67,9 @@
 
     <bridgehead renderas="sect4">Required</bridgehead>
     <para role="required">
-      <xref linkend="qt6"/>, and
-      <xref linkend="libtorrent-rasterbar"/>
+      <xref linkend="boost"/>, and
+      <xref linkend="libtorrent-rasterbar"/>, and
+      <xref linkend="qt6"/>
     </para>
   </sect2>
 
@@ -80,8 +81,8 @@
       following commands:
     </para>
 
-<screen><userinput>./configure --prefix=/usr &amp;&amp;
-make</userinput></screen>
+<screen><userinput>cmake -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release &amp;&amp;
+cmake --build build</userinput></screen>
 
     <para>
       This package does not come with a test suite.
@@ -91,7 +92,7 @@ make</userinput></screen>
       Now, as the <systemitem class="username">root</systemitem> user:
     </para>
 
-    <screen role="root"><userinput>make install &amp;&amp;
+    <screen role="root"><userinput>cmake --install build &amp;&amp;
 gio mime application/x-bittorrent org.qbittorrent.qBittorrent.desktop &amp;&amp;
 gio mime x-scheme-handler/magnet org.qbittorrent.qBittorrent.desktop</userinput></screen>
   </sect2>
