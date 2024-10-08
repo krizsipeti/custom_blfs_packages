@@ -11,6 +11,9 @@ getLatestGithubRelease()
     URL="https://github.com`curl -v --silent $URL 2>&1 | grep '<a href=' | grep '.tar.' -m1 | tr '"' '\n' | grep /releases/`"
     sed -i -E "s@($2-download-http \"+)(.+\">)@\1$URL\">@" ./$3/$2.xml
     VER=`echo $URL | awk -F/ '{ print $(NF-1) }' | awk -F- '{ print $NF }'`
+    if [[ $4 ]]; then
+        VER=`echo $VER | cut -c$4`
+    fi
     sed -i -E "s@($2-version \"+)(.+\">)@\1$VER\">@" add_packages.sh
     echo "Latest version: $VER"
     printf "Found package: $URL\n"
@@ -48,7 +51,7 @@ LATEST_VERSION="${LATEST_VERSION%.tar.xz}"
 sed -i -E "s@(qbittorrent-version \"+)(.+\">)@\1$LATEST_VERSION\">@" add_packages.sh
 
 #libtorrent-rasterbar
-getLatestGithubRelease arvidn/libtorrent libtorrent-rasterbar networking/netlibs
+getLatestGithubRelease arvidn/libtorrent libtorrent-rasterbar networking/netlibs 2-
 
 #SDL2-image
 getLatestGithubRelease libsdl-org/SDL_image sdl2-image general/graphlib
