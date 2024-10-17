@@ -1,39 +1,54 @@
 #!/bin/bash
 # This script checks and updates the latest versions of the packages
 
+# Prints which package is about to update.
+greetMsg()
+{
+    printf "\nUpdating package: $1\n"
+}
+
+# Does the actual update of the package with the found version.
+updatePkg()
+{
+    sed -i -E "s@($1-version \"+)(.+\">)@\1$2\">@" add_packages.sh
+    sed -i -E "s@($1-download-http \"+)(.+\">)@\1$3\">@" ./$4/$1.xml
+    echo "Latest version: $2"
+    printf "Found package: $3\n"
+}
+
 # Function that gets the latest release of a specific package.
 # This function works only with packages stored on github.
 getLatestGithubRelease()
 {
-    printf "\nUpdating package: $2\n"
-    URL="https://github.com/$1/releases"
-    URL=`curl -v --silent $URL 2>&1 | grep 'loading="lazy" src=' | tr '"' '\n' | grep /releases/ -m1`
+    greetMsg $2
+    URL=`curl -v --silent "https://github.com/$1/releases" 2>&1 | grep 'loading="lazy" src=' | tr '"' '\n' | grep /releases/ -m1`
     URL="https://github.com`curl -v --silent $URL 2>&1 | grep '<a href=' | grep '.tar.' -m1 | tr '"' '\n' | grep /releases/`"
-    sed -i -E "s@($2-download-http \"+)(.+\">)@\1$URL\">@" ./$3/$2.xml
     VER=`echo $URL | awk -F/ '{ print $(NF-1) }' | awk -F- '{ print $NF }'`
     if [[ $4 ]]; then
         VER=`echo $VER | cut -c$4`
     fi
-    sed -i -E "s@($2-version \"+)(.+\">)@\1$VER\">@" add_packages.sh
-    echo "Latest version: $VER"
-    printf "Found package: $URL\n"
+    updatePkg $2 $VER $URL $3
+}
+
+# Function that gets the latest release of a specific package.
+# This function works only with packages stored on sourceforge.
+getLatestSourceforgeRelease()
+{
+    greetMsg $2
+    URL=`curl -v --silent "https://sourceforge.net/projects/$1/files/$2/" 2>&1 | grep net.sf.files | tr '"' '\n' | grep http -m1 | rev | cut -c10- | rev`
+    VER=`echo $URL | awk -F/ '{ print $NF }'`
+    if [[ $4 ]]; then
+        VER=`echo $VER | cut -c$4`
+    fi
+    URL=$URL/$2-$VER.tar.gz
+    updatePkg $2 $VER $URL $3
 }
 
 #minidlna
-DOWNLOAD_URL=`curl -v --silent https://sourceforge.net/projects/minidlna/files/minidlna/ 2>&1 | grep net.sf.files | tr '"' '\n' | grep http -m1`
-DOWNLOAD_URL="${DOWNLOAD_URL%/download}"
-LATEST_VERSION=`echo $DOWNLOAD_URL | awk -F/ '{ print $NF }'`
-sed -i -E "s@(minidlna-version \"+)(.+\">)@\1$LATEST_VERSION\">@" add_packages.sh
-DOWNLOAD_URL=$DOWNLOAD_URL/minidlna-$LATEST_VERSION.tar.gz
-sed -i -E "s@(minidlna-download-http \"+)(.+\">)@\1$DOWNLOAD_URL\">@" ./server/other/minidlna.xml
+getLatestSourceforgeRelease minidlna minidlna server/other
 
 #libid3tag
-DOWNLOAD_URL=`curl -v --silent https://sourceforge.net/projects/mad/files/libid3tag/ 2>&1 | grep net.sf.files | tr '"' '\n' | grep http -m1`
-DOWNLOAD_URL="${DOWNLOAD_URL%/download}"
-LATEST_VERSION=`echo $DOWNLOAD_URL | awk -F/ '{ print $NF }'`
-sed -i -E "s@(libid3tag-version \"+)(.+\">)@\1$LATEST_VERSION\">@" add_packages.sh
-DOWNLOAD_URL=$DOWNLOAD_URL/libid3tag-$LATEST_VERSION.tar.gz
-sed -i -E "s@(libid3tag-download-http \"+)(.+\">)@\1$DOWNLOAD_URL\">@" ./multimedia/libdriv/libid3tag.xml
+getLatestSourceforgeRelease mad libid3tag multimedia/libdriv
 
 #pkcs11-helper
 getLatestGithubRelease OpenSC/pkcs11-helper pkcs11-helper postlfs/security
@@ -42,13 +57,7 @@ getLatestGithubRelease OpenSC/pkcs11-helper pkcs11-helper postlfs/security
 getLatestGithubRelease zaps166/QMPlay2 qmplay2 multimedia/videoutils
 
 #qBittorrent
-URL="https://www.qbittorrent.org/download"
-DOWNLOAD_URL=`curl -v --silent $URL 2>&1 | tr '"' '\n' | grep '.tar.xz/'`
-DOWNLOAD_URL="${DOWNLOAD_URL%/download}"
-sed -i -E "s@(qbittorrent-download-http \"+)(.+\">)@\1$DOWNLOAD_URL\">@" ./xsoft/other/qbittorrent.xml
-LATEST_VERSION=`echo $DOWNLOAD_URL | tr '-' '\n' | tr '/' '\n' | grep '.tar.xz'`
-LATEST_VERSION="${LATEST_VERSION%.tar.xz}"
-sed -i -E "s@(qbittorrent-version \"+)(.+\">)@\1$LATEST_VERSION\">@" add_packages.sh
+getLatestSourceforgeRelease qbittorrent qbittorrent xsoft/other 13-
 
 #libtorrent-rasterbar
 getLatestGithubRelease arvidn/libtorrent libtorrent-rasterbar networking/netlibs 2-
