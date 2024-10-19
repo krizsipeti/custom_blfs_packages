@@ -4,7 +4,7 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY qbittorrent-download-http "https://sourceforge.net/projects/qbittorrent/files/qbittorrent/qbittorrent-5.0.0/qbittorrent-5.0.0.tar.xz">
+  <!ENTITY qbittorrent-download-http "https://sourceforge.net/projects/qbittorrent/files/qbittorrent/qbittorrent-5.0.0/qbittorrent-5.0.0.tar.gz">
   <!ENTITY qbittorrent-download-ftp  " ">
   <!ENTITY qbittorrent-md5sum        " ">
   <!ENTITY qbittorrent-size          "4.6 MB">
