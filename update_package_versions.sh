@@ -1,47 +1,49 @@
 #!/bin/bash
 # This script checks and updates the latest versions of the packages
 
+set -e
+
 # Prints which package is about to update.
 greetMsg()
 {
-    printf "\nUpdating package: $1\n"
+    printf "\nUpdating package: %s\n" "$1"
 }
 
 # Does the actual update of the package with the found version.
 updatePkg()
 {
     sed -i -E "s@($1-version \"+)(.+\">)@\1$2\">@" add_packages.sh
-    sed -i -E "s@($1-download-http \"+)(.+\">)@\1$3\">@" ./$4/$1.xml
+    sed -i -E "s@($1-download-http \"+)(.+\">)@\1$3\">@" ./"$4"/"$1".xml
     echo "Latest version: $2"
-    printf "Found package: $3\n"
+    printf "Found package: %s\n" "$3"
 }
 
 # Function that gets the latest release of a specific package.
 # This function works only with packages stored on github.
 getLatestGithubRelease()
 {
-    greetMsg $2
-    URL=`curl -v --silent "https://github.com/$1/releases" 2>&1 | grep 'loading="lazy" src=' | tr '"' '\n' | grep /releases/ -m1`
-    URL="https://github.com`curl -v --silent $URL 2>&1 | grep '<a href=' | grep '.tar.' -m1 | tr '"' '\n' | grep /releases/`"
-    VER=`echo $URL | awk -F/ '{ print $(NF-1) }' | awk -F- '{ print $NF }'`
+    greetMsg "$2"
+    URL=$(curl -v --silent "https://github.com/$1/releases" 2>&1 | grep 'loading="lazy" src=' | tr '"' '\n' | grep /releases/ -m1)
+    URL="https://github.com$(curl -v --silent "$URL" 2>&1 | grep '<a href=' | grep '.tar.' -m1 | tr '"' '\n' | grep /releases/)"
+    VER=$(echo "$URL" | awk -F/ '{ print $(NF-1) }' | awk -F- '{ print $NF }')
     if [[ $4 ]]; then
-        VER=`echo $VER | cut -c$4`
+        VER=$(echo "$VER" | cut -c"$4")
     fi
-    updatePkg $2 $VER $URL $3
+    updatePkg "$2" "$VER" "$URL" "$3"
 }
 
 # Function that gets the latest release of a specific package.
 # This function works only with packages stored on sourceforge.
 getLatestSourceforgeRelease()
 {
-    greetMsg $2
-    URL=`curl -v --silent "https://sourceforge.net/projects/$1/files/$2/" 2>&1 | grep net.sf.files | tr '"' '\n' | grep http -m1 | rev | cut -c10- | rev`
-    VER=`echo $URL | awk -F/ '{ print $NF }'`
+    greetMsg "$2"
+    URL=$(curl -v --silent "https://sourceforge.net/projects/$1/files/$2/" 2>&1 | grep net.sf.files | tr '"' '\n' | grep http -m1 | rev | cut -c10- | rev)
+    VER=$(echo "$URL" | awk -F/ '{ print $NF }')
     if [[ $4 ]]; then
-        VER=`echo $VER | cut -c$4`
+        VER=$(echo "$VER" | cut -c"$4")
     fi
     URL=$URL/$2-$VER.tar.gz
-    updatePkg $2 $VER $URL $3
+    updatePkg "$2" "$VER" "$URL" "$3"
 }
 
 #minidlna
