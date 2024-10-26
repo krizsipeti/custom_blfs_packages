@@ -113,7 +113,7 @@ DNS2="8.8.8.8"
 # Console configuration
 #
 FONT="lat2-16"
-KEYMAP="us"
+KEYMAP="xxx"
 # LOCAL is not set
 # end of Console configuration
 # end of System configuration

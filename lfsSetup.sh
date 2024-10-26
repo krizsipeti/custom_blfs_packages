@@ -133,6 +133,7 @@ FILE_CFG="$DIR_SETUP/configuration"
 sed -i -E "\@BUILDDIR=\"xxx\"@s@xxx@$1@g" "$FILE_CFG"
 sed -i -E "\@FSTAB=\"xxx\"@s@xxx@/home/$U/fstab@g" "$FILE_CFG"
 sed -i -E "\@CONFIG=\"xxx\"@s@xxx@/home/$U/config-$LATEST_KERNEL_VER@g" "$FILE_CFG"
+sed -i -E "\@KEYMAP=\"xxx\"@s@xxx@$(localectl | grep Keymap | awk -F' ' '{printf $NF}')@g" "$FILE_CFG"
 
 # Enter to setup folder and start installer
 cd "$DIR_SETUP"
