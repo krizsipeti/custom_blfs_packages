@@ -127,7 +127,7 @@ echo Patching optimization config file...
 sed -i -E '/DEF_OPT_MODE=/s/noOpt/O3pipe_march/g' "$DIR_SETUP/optimize/opt_config"
 
 # Copy jhalfs config file and adjust some settings in it
-cp -iv configuration "$DIR_SETUP/"
+cp -iv lfs_configs/configuration "$DIR_SETUP/"
 echo Patching setup configuration file...
 FILE_CFG="$DIR_SETUP/configuration"
 sed -i -E "\@BUILDDIR=\"xxx\"@s@xxx@$1@g" "$FILE_CFG"
