@@ -105,6 +105,39 @@ else
 fi
 patchKernelVersion "$MAIN_VER" "$MINOR_VER" "$PATCH_VER" "$MD5_SUM" "$DIR_BOOK/packages.ent"
 
+# Check for the kernel config and try to create it based on a previous one if not found
+KERNEL_CONFIG="$HOME/config-$LATEST_KERNEL_VER"
+if [ ! -f "$KERNEL_CONFIG" ] ; then
+    # Look for older config files in the user's home directory
+    CONFIG_FILE=$(find "$HOME" -type f -iwholename "$HOME/config-*")
+    if [ -z "$CONFIG_FILE" ] ; then
+        echo "Cannot find $KERNEL_CONFIG and also no old configs found to create it."
+        exit 4
+    fi
+
+    # Select the most recent file based on modification date if there are more
+    CONFIG_FILE=$(ls -Art $CONFIG_FILE | tail -n1)
+    echo "Using the following old config: $CONFIG_FILE"
+
+    # Extract the latest kernel tar ball and run 'make oldconfig'
+    ORIG_FOLDER=$(pwd)
+    cd "$DIR_SOURCES"
+    if [ -d "linux-$LATEST_KERNEL_VER" ] ; then
+        rm -rf "linux-$LATEST_KERNEL_VER"
+    fi
+    tar -xf "$KERNEL_FILE_NAME"
+    cd "linux-$LATEST_KERNEL_VER"
+    cp -v "$CONFIG_FILE" .config
+    make oldconfig
+
+    # After config created based on old config, copy it back to user's folder
+    cp -v .config "$HOME/config-$LATEST_KERNEL_VER"
+
+    # Go back to original folder and delete unpacked linux folder in sources
+    cd "$ORIG_FOLDER"
+    rm -rf "$DIR_SOURCES/linux-$LATEST_KERNEL_VER"
+fi
+
 # Check if setup folder is already exist and delete it if yes
 DIR_SETUP="$1/setup"
 if [ -d "$DIR_SETUP" ]
