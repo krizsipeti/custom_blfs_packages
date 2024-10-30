@@ -135,6 +135,14 @@ sed -i -E "\@FSTAB=\"xxx\"@s@xxx@/home/$U/fstab@g" "$FILE_CFG"
 sed -i -E "\@CONFIG=\"xxx\"@s@xxx@/home/$U/config-$LATEST_KERNEL_VER@g" "$FILE_CFG"
 sed -i -E "\@KEYMAP=\"xxx\"@s@xxx@$(localectl | grep Keymap | awk -F' ' '{printf $NF}')@g" "$FILE_CFG"
 
+# Add additional blfs packages to build config if specified any
+if [ -n "$2" ] ; then
+    SCRIPT_DIR="$DIR_SETUP/common/libs/func_install_blfs"
+    LINE_NUMBER=$(grep "$SCRIPT_DIR" -e '$LINE_SUDO' -n -m1 | cut -d: -f1)
+    ADDITIONAL_CONFIGS=$(sed 's/,/\n/g' <<< "$2" | sed 's/$/=y/' | sed 's/^/CONFIG_/' | sed '$!s/$/\\/')
+    sed -i "$((LINE_NUMBER+1))i$ADDITIONAL_CONFIGS" "$SCRIPT_DIR"
+fi
+
 # Enter to setup folder and start installer
 cd "$DIR_SETUP"
 yes "yes" | ./jhalfs run
