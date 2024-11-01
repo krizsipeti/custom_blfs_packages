@@ -81,7 +81,7 @@
       following commands:
     </para>
 
-<screen><userinput>sed "/git config /s/^/\/\//" build/npm/postinstall.js &amp;&amp;
+<screen><userinput>sed -i "/git config /s/^/\/\//" build/npm/postinstall.js &amp;&amp;
 npm install &amp;&amp;
 npm run watch</userinput></screen>
 
