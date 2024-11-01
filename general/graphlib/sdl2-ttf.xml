@@ -6,7 +6,7 @@
 
   <!ENTITY sdl2-ttf-download-http "https://github.com/libsdl-org/SDL_ttf/releases/download/release-2.22.0/SDL2_ttf-2.22.0.tar.gz">
   <!ENTITY sdl2-ttf-download-ftp  " ">
-  <!ENTITY sdl2-ttf-md5sum        " ">
+  <!ENTITY sdl2-ttf-md5sum        "686e685caaa215d8fa1ac7bb02b2cf54">
   <!ENTITY sdl2-ttf-size          "12.6 MB">
   <!ENTITY sdl2-ttf-buildsize     "150 MB">
   <!ENTITY sdl2-ttf-time          "1 SBU (using parallelism=4)">

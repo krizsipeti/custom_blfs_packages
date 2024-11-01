@@ -6,7 +6,7 @@
 
   <!ENTITY minidlna-download-http "https://sourceforge.net/projects/minidlna/files/minidlna/1.3.3/minidlna-1.3.3.tar.gz">
   <!ENTITY minidlna-download-ftp  " ">
-  <!ENTITY minidlna-md5sum        " ">
+  <!ENTITY minidlna-md5sum        "a8b010d8803811f4e26e57894c30fa6c">
   <!ENTITY minidlna-size          "2.4 MB">
   <!ENTITY minidlna-buildsize     "50 MB">
   <!ENTITY minidlna-time          "0.5 SBU (using parallelism=4)">

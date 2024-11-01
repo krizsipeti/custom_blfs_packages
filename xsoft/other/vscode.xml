@@ -4,83 +4,86 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY sdl2-image-download-http "https://github.com/libsdl-org/SDL_image/releases/download/release-2.8.2/SDL2_image-2.8.2.tar.gz">
-  <!ENTITY sdl2-image-download-ftp  " ">
-  <!ENTITY sdl2-image-md5sum        "8464c8aaad39fe9be6a9c1e85b370cd1">
-  <!ENTITY sdl2-image-size          "12.6 MB">
-  <!ENTITY sdl2-image-buildsize     "150 MB">
-  <!ENTITY sdl2-image-time          "1 SBU (using parallelism=4)">
+  <!ENTITY vscode-download-http "https://codeload.github.com/microsoft/vscode/tar.gz/refs/tags/1.95.1">
+  <!ENTITY vscode-download-ftp  " ">
+  <!ENTITY vscode-md5sum        "4db63724a16f2c4b9dc2fe7b6a38d6c7">
+  <!ENTITY vscode-size          "4.6 MB">
+  <!ENTITY vscode-buildsize     "500 MB">
+  <!ENTITY vscode-time          "2 SBU (using parallelism=4)">
 ]>
 
-<sect1 id="sdl2-image" xreflabel="sdl2-image-&sdl2-image-version;">
-  <?dbhtml filename="sdl2-image.html"?>
+<sect1 id="vscode" xreflabel="VSCode-&vscode-version;">
+  <?dbhtml filename="vscode.html"?>
 
 
-  <title>sdl2-image-&sdl2-image-version;</title>
+  <title>VSCode-&vscode-version;</title>
 
-  <indexterm zone="sdl2-image">
-    <primary sortas="a-sdl2-image">sdl2-image</primary>
+  <indexterm zone="vscode">
+    <primary sortas="a-VSCode">VSCode</primary>
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to sdl2-image</title>
+    <title>Introduction to VSCode</title>
 
     <para>
-      <application>sdl2-image</application> is a simple library to load images of various formats as SDL surfaces.
+      <application>VSCode</application> is a nice IDE for different programming languages.
     </para>
 
     <bridgehead renderas="sect3">Package Information</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&sdl2-image-download-http;"/>
+          Download (HTTP): <ulink url="&vscode-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&sdl2-image-download-ftp;"/>
+          Download (FTP): <ulink url="&vscode-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &sdl2-image-md5sum;
+          Download MD5 sum: &vscode-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &sdl2-image-size;
+          Download size: &vscode-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &sdl2-image-buildsize;
+          Estimated disk space required: &vscode-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &sdl2-image-time;
+          Estimated build time: &vscode-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">sdl2-image Dependencies</bridgehead>
+    <bridgehead renderas="sect3">VSCode Dependencies</bridgehead>
 
     <bridgehead renderas="sect4">Required</bridgehead>
     <para role="required">
-      <xref linkend="sdl2"/>
+      <xref linkend="mitkrb"/>, and
+      <xref linkend="libsecret"/>, and
+      <xref linkend="python3"/>
     </para>
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of sdl2-image</title>
+    <title>Installation of VSCode</title>
 
     <para>
-      Install <application>sdl2-image</application> by running the
+      Install <application>VSCode</application> by running the
       following commands:
     </para>
 
-<screen><userinput>./configure --prefix=/usr &amp;&amp;
-make</userinput></screen>
+<screen><userinput>sed "/git config /s/^/\/\//" build/npm/postinstall.js &amp;&amp;
+npm install &amp;&amp;
+npm run watch</userinput></screen>
 
     <para>
       This package does not come with a test suite.
@@ -90,7 +93,7 @@ make</userinput></screen>
       Now, as the <systemitem class="username">root</systemitem> user:
     </para>
 
-<screen role="root"><userinput>make install</userinput></screen>
+    <screen role="root"><userinput>cmake --install build</userinput></screen>
   </sect2>
 
   <sect2 role="content">
@@ -103,13 +106,13 @@ make</userinput></screen>
 
       <seglistitem>
 	<seg>
-          sdl2-image
+          vscode
         </seg>
         <seg>
           None
         </seg>
         <seg>
-          /usr/share/sdl2-image
+          /usr/share/vscode
         </seg>
       </seglistitem>
     </segmentedlist>
