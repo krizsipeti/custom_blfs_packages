@@ -179,3 +179,25 @@ fi
 # Enter to setup folder and start installer
 cd "$DIR_SETUP"
 yes "yes" | ./jhalfs run
+
+# Patch network script
+DIR_COMMANDS="$DIR_JHALFS/lfs-commands"
+NET_SCRIPT=$(find "$DIR_COMMANDS" -type f -iname "*-network")
+if [ -n "$NET_SCRIPT" ] ; then
+    sed "s/-static/0/g" "$NET_SCRIPT"
+    sed "/^\(Gateway\)\|\(Address\)\|\(DNS\)\|\(Domains\)=/d" "$NET_SCRIPT"
+    sed "/^\[Network\]/a DHCP=yes" "$NET_SCRIPT"
+    
+    if [ "$2" == "*wpa_supplicant*" ] ; then
+        sed "/^cat > \/etc\/systemd\/network/i cat > \/etc\/systemd\/network\/20-wlan0.network << \"EOF\"\n\[Match\]\nName=wlan0\n\n\[Network\]\nDHCP=yes\nEOF" "$NET_SCRIPT"
+        sed "/20-wlan0.network/i mkdir -pv \/etc\/wpa_supplicant\ncat > \/etc\/wpa_supplicant\/wpa_supplicant-wlan0.conf"
+    fi
+fi
+
+# Patch LFS kernel script to keep build folder
+sed -i "/^rm -rf \$PKGDIR/s/^/#/" "$(find "$DIR_JHALFS/lfs-commands/chapter10/" -type f -iname "*-kernel")"
+
+# Check if wpa_supplicant is required and patch its install script if yes
+if [ "$2" == "*wpa_supplicant*" ] ; then
+    sed -i "/wpa_supplicant@/s/@.*/@wlan0/" "$(find "$1/blfs_root/scripts/" -type f -iname "*-wpa_supplicant")"
+fi
