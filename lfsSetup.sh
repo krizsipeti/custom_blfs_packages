@@ -184,18 +184,21 @@ yes "yes" | ./jhalfs run
 DIR_COMMANDS="$DIR_JHALFS/lfs-commands"
 NET_SCRIPT=$(find "$DIR_COMMANDS" -type f -iname "*-network")
 if [ -n "$NET_SCRIPT" ] ; then
-    sed "s/-static/0/g" "$NET_SCRIPT"
-    sed "/^\(Gateway\)\|\(Address\)\|\(DNS\)\|\(Domains\)=/d" "$NET_SCRIPT"
-    sed "/^\[Network\]/a DHCP=yes" "$NET_SCRIPT"
+    sed -i "s/-static/0/g" "$NET_SCRIPT"
+    sed -i "/^\(Gateway\)\|\(Address\)\|\(DNS\)\|\(Domains\)=/d" "$NET_SCRIPT"
+    sed -i "/^\[Network\]/a DHCP=yes" "$NET_SCRIPT"
+    sed -i "s/^.*PKR-LINUX.local/127.0.0.1 PKR-LINUX.local/" "$NET_SCRIPT"
     
     if [ "$2" == "*wpa_supplicant*" ] ; then
-        sed "/^cat > \/etc\/systemd\/network/i cat > \/etc\/systemd\/network\/20-wlan0.network << \"EOF\"\n\[Match\]\nName=wlan0\n\n\[Network\]\nDHCP=yes\nEOF" "$NET_SCRIPT"
-        sed "/20-wlan0.network/i mkdir -pv \/etc\/wpa_supplicant\ncat > \/etc\/wpa_supplicant\/wpa_supplicant-wlan0.conf"
+        sed -i "/^cat > \/etc\/systemd\/network/i cat > \/etc\/systemd\/network\/20-wlan0.network << \"EOF\"\n\[Match\]\nName=wlan0\n\n\[Network\]\nDHCP=yes\nEOF" "$NET_SCRIPT"
+        sed -i "/20-wlan0.network/i mkdir -pv \/etc\/wpa_supplicant\ncat > \/etc\/wpa_supplicant\/wpa_supplicant-wlan0.conf << \"EOF\"\nnetwork=\{\nssid=\"T-E797F1\"\n#psk=\"Q2729eq9338qQJ7s\"\npsk=a41c0853c906d7db271a007af55afa9dce2efa8efa994d614b2d7b1d0b38bc72\n\}\nEOF" "$NET_SCRIPT"
     fi
 fi
 
 # Patch LFS kernel script to keep build folder
-sed -i "/^rm -rf \$PKGDIR/s/^/#/" "$(find "$DIR_JHALFS/lfs-commands/chapter10/" -type f -iname "*-kernel")"
+KERNEL_SCRIPT=$(find "$DIR_COMMANDS" -type f -iname "*-kernel")
+sed -i "/^rm -rf \$PKGDIR/s/^/#/" "$KERNEL_SCRIPT"
+sed -i "/^EOF$/a groupadd pkr\nuseradd -s /bin/bash -g pkr -m -k /dev/null pkr\nusermod -a -G audio,video,input,systemd-journal" "$KERNEL_SCRIPT"
 
 # Check if wpa_supplicant is required and patch its install script if yes
 if [ "$2" == "*wpa_supplicant*" ] ; then
