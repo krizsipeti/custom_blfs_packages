@@ -198,7 +198,7 @@ fi
 # Patch LFS kernel script to keep build folder and add new user
 KERNEL_SCRIPT=$(find "$DIR_COMMANDS" -type f -iname "*-kernel")
 sed -i "/^rm -rf \$PKGDIR/s/^/#/" "$KERNEL_SCRIPT"
-sed -i "/^EOF$/a # Add new user\ngroupadd pkr\nuseradd -s /bin/bash -g pkr -m -k /dev/null pkr\nusermod -a -G audio,video,input,systemd-journal\npasswd -s pkr <<< pkr\npasswd -s root <<< root" "$KERNEL_SCRIPT"
+sed -i "/^EOF$/a # Add new user\ngroupadd pkr\nuseradd -s /bin/bash -g pkr -m -k /dev/null pkr\nusermod -a -G audio,video,input,systemd-journal pkr\npasswd -s pkr <<< pkr\npasswd -s root <<< root" "$KERNEL_SCRIPT"
 
 # Check if wpa_supplicant is required and patch its install script if yes
 if [[ $2 == *"wpa_supplicant"* ]] ; then
