@@ -29,6 +29,37 @@ patchKernelVersion()
     fi
 }
 
+# Function that createst an fstab based on the incoming folder
+createFstab()
+{
+    # Get mount info from lsblk output
+    LSBLK_INFO=$(lsblk -l -o MOUNTPOINT,PATH,NAME,PKNAME,UUID,FSTYPE,PTTYPE | sed "/^ /d")
+
+    printf "# Begin /etc/fstab\n\n"
+    printf '%-41s    %-11s    %-4s    %-16s    %-4s    %-10s\n' "# File system (UUID)" "mount-point" "type" "options" "dump" "fsck"
+    printf '#%100s\n\n' "order"
+
+    # Find the root mount point
+    DIR_ROOT=$(grep "^/ " <<< "$LSBLK_INFO")
+    if [ -n "$DIR_ROOT" ] ; then
+        printf '%-41s    %-11s    %-4s    %-16s    %-4s    %-10s\n' "UUID=$(awk '{print $5}' <<< "$DIR_ROOT")" / "$(awk '{print $6}' <<< "$DIR_ROOT")" defaults 1 1
+    fi
+
+    # Find if there is a separate boot drive
+    DIR_BOOT=$(grep "^/boot " <<< "$LSBLK_INFO")
+    if [ -n "$DIR_BOOT" ] ; then
+        printf '%-41s    %-11s    %-4s    %-16s    %-4s    %-10s\n' "UUID=$(awk '{print $5}' <<< "$DIR_BOOT")" /boot "$(awk '{print $6}' <<< "$DIR_BOOT")" noauto,defaults 0 0
+    fi
+
+    # Find if there is a swap partition
+    DIR_SWAP=$(grep "^\[SWAP\] " <<< "$LSBLK_INFO")
+    if [ -n "$DIR_SWAP" ] ; then
+        printf '%-41s    %-11s    %-4s    %-16s    %-4s    %-10s\n' "UUID=$(awk '{print $5}' <<< "$DIR_SWAP")" swap "$(awk '{print $6}' <<< "$DIR_SWAP")" pri=1 0 0
+    fi
+
+    printf "\n# End /etc/fstab\n"
+}
+
 # Check if the lfs mount point folder is specified as the first argument
 if [ -z "$1" ]
 then
@@ -164,6 +195,8 @@ cp -iv lfs_configs/configuration "$DIR_SETUP/"
 echo Patching setup configuration file...
 FILE_CFG="$DIR_SETUP/configuration"
 sed -i -E "\@BUILDDIR=\"xxx\"@s@xxx@$1@g" "$FILE_CFG"
+#sed -i -E "\@FSTAB=\"xxx\"@s@xxx@/home/$U/fstab@g" "$FILE_CFG"
+sed -i -E "/^FSTAB=/s/^/#/g" "$FILE_CFG"
 sed -i -E "\@FSTAB=\"xxx\"@s@xxx@/home/$U/fstab@g" "$FILE_CFG"
 sed -i -E "\@CONFIG=\"xxx\"@s@xxx@/home/$U/config-$LATEST_KERNEL_VER@g" "$FILE_CFG"
 sed -i -E "\@KEYMAP=\"xxx\"@s@xxx@$(localectl | grep Keymap | awk -F' ' '{printf $NF}')@g" "$FILE_CFG"
@@ -193,6 +226,13 @@ if [ -n "$NET_SCRIPT" ] ; then
         sed -i "/^cat > \/etc\/systemd\/network/i cat > /etc/systemd/network/20-wlan0.network << \"EOF\"\n\[Match\]\nName=wlan0\n\n\[Network\]\nDHCP=yes\nEOF" "$NET_SCRIPT"
         sed -i "/20-wlan0.network/i mkdir -pv /etc/wpa_supplicant\ncat > /etc/wpa_supplicant/wpa_supplicant-wlan0.conf << \"EOF\"\nnetwork=\{\nssid=\"T-E797F1\"\n#psk=\"Q2729eq9338qQJ7s\"\npsk=a41c0853c906d7db271a007af55afa9dce2efa8efa994d614b2d7b1d0b38bc72\n\}\nEOF" "$NET_SCRIPT"
     fi
+fi
+
+# Patch fstab script
+FSTAB_SCRIPT=$(find "$DIR_COMMANDS" -type f -iname "*-fstab")
+if [ -n "$FSTAB_SCRIPT" ] ; then
+    sed -i '/^cat /,/^EOF/{/^cat /!{/^EOF/!d}}' "$FSTAB_SCRIPT"
+    sed -i "/^cat /a $(createFstab | sed '$!s/$/\\/')/" "$FSTAB_SCRIPT"
 fi
 
 # Patch LFS kernel script to keep build folder and add new user
