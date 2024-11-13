@@ -40,13 +40,16 @@ createFstab()
     printf '#%100s\n\n' "order"
 
     # Find the root mount point
-    DIR_ROOT=$(grep "^/ " <<< "$LSBLK_INFO")
+    DIR_ROOT=$(grep "^$1 " <<< "$LSBLK_INFO")
+    if [ -z "$DIR_ROOT" ] ; then
+        DIR_ROOT=$(grep "^/ " <<< "$LSBLK_INFO")
+    fi
     if [ -n "$DIR_ROOT" ] ; then
         printf '%-41s    %-11s    %-4s    %-16s    %-4s    %-10s\n' "UUID=$(awk '{print $5}' <<< "$DIR_ROOT")" / "$(awk '{print $6}' <<< "$DIR_ROOT")" defaults 1 1
     fi
 
     # Find if there is a separate boot drive
-    DIR_BOOT=$(grep "^/boot " <<< "$LSBLK_INFO")
+    DIR_BOOT=$(grep "^$1/boot " <<< "$LSBLK_INFO")
     if [ -n "$DIR_BOOT" ] ; then
         printf '%-41s    %-11s    %-4s    %-16s    %-4s    %-10s\n' "UUID=$(awk '{print $5}' <<< "$DIR_BOOT")" /boot "$(awk '{print $6}' <<< "$DIR_BOOT")" noauto,defaults 0 0
     fi
@@ -232,7 +235,7 @@ fi
 FSTAB_SCRIPT=$(find "$DIR_COMMANDS" -type f -iname "*-fstab")
 if [ -n "$FSTAB_SCRIPT" ] ; then
     sed -i '/^cat /,/^EOF/{/^cat /!{/^EOF/!d}}' "$FSTAB_SCRIPT"
-    sed -i "/^cat /a $(createFstab | sed '$!s/$/\\/')/" "$FSTAB_SCRIPT"
+    sed -i "/^cat /a $(createFstab "$1" | sed '$!s/$/\\/')" "$FSTAB_SCRIPT"
 fi
 
 # Patch LFS kernel script to keep build folder and add new user
@@ -243,4 +246,20 @@ sed -i "/^EOF$/a # Add new user\ngroupadd pkr\nuseradd -s /bin/bash -g pkr -m -k
 # Check if wpa_supplicant is required and patch its install script if yes
 if [[ $2 == *"wpa_supplicant"* ]] ; then
     sed -i "/wpa_supplicant@/s/@.*/@wlan0/" "$(find "$1/blfs_root/scripts/" -type f -iname "*-wpa_supplicant")"
+fi
+
+# Patch master.sh to run also the grub config related script
+sed -i '/^ .*10\*grub/s/^/#/g' "$DIR_SETUP/LFS/master.sh"
+
+# Patch grub script
+GRUB_SCRIPT=$(find "$DIR_COMMANDS" -type f -iname "1*-grub")
+if [ -n "$GRUB_SCRIPT" ] ; then
+    sed -i "/^cat /i grub-install $(lsblk -l -o MOUNTPOINT,PATH,NAME,PKNAME | grep "^$1 " | awk '{gsub($3,$4,$2); print $2}')\n" "$GRUB_SCRIPT"
+    KERNEL_NAME=$(grep "$GRUB_SCRIPT" -e vmlinuz | awk '{gsub("/boot/","",$2); print $2}')
+    sed -i "/menuentry/a\    set opts=\"net.ifnames=0\ nvidia_drm.modeset=1\"\n    set lnx_root=\"$(lsblk -l -o MOUNTPOINT,PATH | grep "^$1 " | awk '{print $2}')\"\n    set knl_name=\"/$KERNEL_NAME\"" "$GRUB_SCRIPT"
+    if [ -n "$(lsblk -l -o MOUNTPOINT,PATH | grep "^$1/boot " | awk '{print $2}')" ] ; then
+        sed -i 's/knl_name="/knl_name="\/boot/g' "$GRUB_SCRIPT"
+    fi
+    sed -i "/set root=/d;/^ .*linux /c\    linux \${knl_name} root=\${lnx_root} ro \${opts}" "$GRUB_SCRIPT"
+    sed -i '/set timeout/a set color_normal=white/black\nset color_highlight=yellow/black\nset menu_color_normal=light-blue/black\nset menu_color_highlight=yellow/blue' "$GRUB_SCRIPT"
 fi
