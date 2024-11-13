@@ -143,7 +143,7 @@ patchKernelVersion "$MAIN_VER" "$MINOR_VER" "$PATCH_VER" "$MD5_SUM" "$DIR_BOOK/p
 KERNEL_CONFIG="$HOME/config-$LATEST_KERNEL_VER"
 if [ ! -f "$KERNEL_CONFIG" ] ; then
     # Look for older config files in the user's home directory
-    CONFIG_FILE=$(find "$HOME" -type f -iwholename "$HOME/config-*")
+    CONFIG_FILE=$(find /boot "$HOME" -type f -iwholename "$HOME/config-*" -o iwholename "/boot/config-*")
     if [ -z "$CONFIG_FILE" ] ; then
         echo "Cannot find $KERNEL_CONFIG and also no old configs found to create it."
         exit 4
