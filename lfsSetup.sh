@@ -172,6 +172,14 @@ if [ ! -f "$KERNEL_CONFIG" ] ; then
     rm -rf "$DIR_SOURCES/linux-$LATEST_KERNEL_VER"
 fi
 
+# Check for possible needed firmwares defined in kernel config
+FIRMWARE_FILES=$(grep "$KERNEL_CONFIG" -e 'CONFIG_EXTRA_FIRMWARE="' | awk -F'"' '{print $2}')
+if [ -n "$FIRMWARE_FILES" ] ; then
+    #sudo mkdir -pv $(dirname $(sed "s|^|$1/usr/lib/firmware/|g;s| | $1/usr/lib/firmware/|g" <<< "$FIRMWARE_FILES"))
+    DIR_FIRMWARE=/usr/lib/firmware/
+    for FX in "$FIRMWARE_FILES" ; do sudo mkdir -pv $(dirname "$1$DIR_FIRMWARE$FX") ; sudo cp -fv "$DIR_FIRMWARE$FX" "$1$DIR_FIRMWARE$FX" ; done
+fi
+
 # Check if setup folder is already exist and delete it if yes
 DIR_SETUP="$1/setup"
 if [ -d "$DIR_SETUP" ]
