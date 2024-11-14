@@ -212,6 +212,9 @@ if [ -n "$2" ] ; then
     sed -i "$((LINE_NUMBER+1))i$ADDITIONAL_CONFIGS" "$SCRIPT_DIR"
 fi
 
+# Patch master.sh to run also the grub config related script
+sed -i '/^ .*10\*grub/s/^/#/g' "$DIR_SETUP/LFS/master.sh"
+
 # Enter to setup folder and start installer
 cd "$DIR_SETUP"
 yes "yes" | ./jhalfs run
@@ -247,9 +250,6 @@ sed -i "/^EOF$/a # Add new user\ngroupadd pkr\nuseradd -s /bin/bash -g pkr -m -k
 if [[ $2 == *"wpa_supplicant"* ]] ; then
     sed -i "/wpa_supplicant@/s/@.*/@wlan0/" "$(find "$1/blfs_root/scripts/" -type f -iname "*-wpa_supplicant")"
 fi
-
-# Patch master.sh to run also the grub config related script
-sed -i '/^ .*10\*grub/s/^/#/g' "$DIR_SETUP/LFS/master.sh"
 
 # Patch grub script
 GRUB_SCRIPT=$(find "$DIR_COMMANDS" -type f -iname "1*-grub")
