@@ -257,7 +257,7 @@ if [ -n "$GRUB_SCRIPT" ] ; then
     sed -i "/^cat /i grub-install $(lsblk -l -o MOUNTPOINT,PATH,NAME,PKNAME | grep "^$1 " | awk '{gsub($3,$4,$2); print $2}')\n" "$GRUB_SCRIPT"
     KERNEL_NAME=$(grep "$GRUB_SCRIPT" -e vmlinuz | awk '{gsub("/boot/","",$2); print $2}')
     sed -i "/menuentry/a\    set opts=\"net.ifnames=0\ nvidia_drm.modeset=1\"\n    set lnx_root=\"$(lsblk -l -o MOUNTPOINT,PATH | grep "^$1 " | awk '{print $2}')\"\n    set knl_name=\"/$KERNEL_NAME\"" "$GRUB_SCRIPT"
-    if [ -n "$(lsblk -l -o MOUNTPOINT,PATH | grep "^$1/boot " | awk '{print $2}')" ] ; then
+    if [ -z "$(lsblk -l -o MOUNTPOINT,PATH | grep "^$1/boot " | awk '{print $2}')" ] ; then
         sed -i 's/knl_name="/knl_name="\/boot/g' "$GRUB_SCRIPT"
     fi
     sed -i "/set root=/d;/^ .*linux /c\    linux \${knl_name} root=\${lnx_root} ro \${opts}" "$GRUB_SCRIPT"
