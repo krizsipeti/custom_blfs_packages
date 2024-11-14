@@ -205,12 +205,14 @@ sed -i -E "\@CONFIG=\"xxx\"@s@xxx@/home/$U/config-$LATEST_KERNEL_VER@g" "$FILE_C
 sed -i -E "\@KEYMAP=\"xxx\"@s@xxx@$(localectl | grep Keymap | awk -F' ' '{printf $NF}')@g" "$FILE_CFG"
 
 # Add additional blfs packages to build config if specified any
+BLFS_PACKS=postlfs-config-profile,postlfs-config-vimrc
 if [ -n "$2" ] ; then
-    SCRIPT_DIR="$DIR_SETUP/common/libs/func_install_blfs"
-    LINE_NUMBER=$(grep "$SCRIPT_DIR" -e '$LINE_SUDO' -n -m1 | cut -d: -f1)
-    ADDITIONAL_CONFIGS=$(sed 's/,/\n/g' <<< "$2" | sed 's/$/=y/' | sed 's/^/CONFIG_/' | sed '$!s/$/\\/')
-    sed -i "$((LINE_NUMBER+1))i$ADDITIONAL_CONFIGS" "$SCRIPT_DIR"
+    BLFS_PACKS="$BLFS_PACKS,$2"
 fi
+SCRIPT_DIR="$DIR_SETUP/common/libs/func_install_blfs"
+LINE_NUMBER=$(grep "$SCRIPT_DIR" -e '$LINE_SUDO' -n -m1 | cut -d: -f1)
+ADDITIONAL_CONFIGS=$(sed 's/,/\n/g' <<< "$BLFS_PACKS" | sed 's/$/=y/' | sed 's/^/CONFIG_/' | sed '$!s/$/\\/')
+sed -i "$((LINE_NUMBER+1))i$ADDITIONAL_CONFIGS" "$SCRIPT_DIR"
 
 # Patch master.sh to run also the grub config related script
 sed -i '/^ .*10\*grub/s/^/#/g' "$DIR_SETUP/LFS/master.sh"
