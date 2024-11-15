@@ -270,7 +270,11 @@ if [ -n "$GRUB_SCRIPT" ] ; then
     if [ -z "$(lsblk -l -o MOUNTPOINT,PATH | grep "^$1/boot " | awk '{print $2}')" ] ; then
         sed -i 's/knl_name="/knl_name="\/boot/g' "$GRUB_SCRIPT"
     fi
-    sed -i "/set root=/c\search --set=root --fs-uuid $(lsblk -l -o MOUNTPOINT,UUID | grep "^$1 " | awk '{print $2}')" "$GRUB_SCRIPT"
+    BOOT_FS=$(lsblk -l -o MOUNTPOINT,UUID | grep "^$1/boot " | awk '{print $2}')
+    if [ -z "$BOOT_FS" ] ; then
+        BOOT_FS=$(lsblk -l -o MOUNTPOINT,UUID | grep "^$1 " | awk '{print $2}')
+    fi
+    sed -i "/set root=/c\search --set=root --fs-uuid $BOOT_FS" "$GRUB_SCRIPT"
     sed -i "/^ .*linux /c\    linux \${knl_name} root=PARTUUID=\${lnx_root} ro \${opts}" "$GRUB_SCRIPT"
     sed -i '/set timeout/a set color_normal=white/black\nset color_highlight=yellow/black\nset menu_color_normal=light-blue/black\nset menu_color_highlight=yellow/blue' "$GRUB_SCRIPT"
 fi
