@@ -177,7 +177,7 @@ FIRMWARE_FILES=$(grep "$KERNEL_CONFIG" -e 'CONFIG_EXTRA_FIRMWARE="' | awk -F'"' 
 if [ -n "$FIRMWARE_FILES" ] ; then
     #sudo mkdir -pv $(dirname $(sed "s|^|$1/usr/lib/firmware/|g;s| | $1/usr/lib/firmware/|g" <<< "$FIRMWARE_FILES"))
     DIR_FIRMWARE=/usr/lib/firmware/
-    for FX in "$FIRMWARE_FILES" ; do sudo mkdir -pv $(dirname "$1$DIR_FIRMWARE$FX") ; sudo cp -fv "$DIR_FIRMWARE$FX" "$1$DIR_FIRMWARE$FX" ; done
+    for FX in $(tr ' ' '\n' <<< "$FIRMWARE_FILES") ; do sudo mkdir -pv "$(dirname "$1$DIR_FIRMWARE$FX")" ; sudo cp -fv "$DIR_FIRMWARE$FX" "$1$DIR_FIRMWARE$FX" ; done
 fi
 
 # Check if setup folder is already exist and delete it if yes
