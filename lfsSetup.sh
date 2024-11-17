@@ -33,11 +33,11 @@ patchKernelVersion()
 createFstab()
 {
     # Get mount info from lsblk output
-    LSBLK_INFO=$(lsblk -l -o MOUNTPOINT,PATH,NAME,PKNAME,UUID,FSTYPE,PTTYPE | sed "/^ /d")
+    LSBLK_INFO=$(lsblk -l -o MOUNTPOINT,PATH,NAME,PKNAME,PARTUUID,FSTYPE,PTTYPE | sed "/^ /d")
 
     printf "# Begin /etc/fstab\n\n"
-    printf '%-41s    %-11s    %-4s    %-16s    %-4s    %-10s\n' "# File system (UUID)" "mount-point" "type" "options" "dump" "fsck"
-    printf '#%100s\n\n' "order"
+    printf '%-45s    %-11s    %-4s    %-16s    %-4s    %-10s\n' "# File system (PARTUUID)" "mount-point" "type" "options" "dump" "fsck"
+    printf '#%104s\n\n' "order"
 
     # Find the root mount point
     DIR_ROOT=$(grep "^$1 " <<< "$LSBLK_INFO")
@@ -45,19 +45,19 @@ createFstab()
         DIR_ROOT=$(grep "^/ " <<< "$LSBLK_INFO")
     fi
     if [ -n "$DIR_ROOT" ] ; then
-        printf '%-41s    %-11s    %-4s    %-16s    %-4s    %-10s\n' "UUID=$(awk '{print $5}' <<< "$DIR_ROOT")" / "$(awk '{print $6}' <<< "$DIR_ROOT")" defaults 1 1
+        printf '%-45s    %-11s    %-4s    %-16s    %-4s    %-10s\n' "PARTUUID=$(awk '{print $5}' <<< "$DIR_ROOT")" / "$(awk '{print $6}' <<< "$DIR_ROOT")" defaults 1 1
     fi
 
     # Find if there is a separate boot drive
     DIR_BOOT=$(grep "^$1/boot " <<< "$LSBLK_INFO")
     if [ -n "$DIR_BOOT" ] ; then
-        printf '%-41s    %-11s    %-4s    %-16s    %-4s    %-10s\n' "UUID=$(awk '{print $5}' <<< "$DIR_BOOT")" /boot "$(awk '{print $6}' <<< "$DIR_BOOT")" noauto,defaults 0 0
+        printf '%-45s    %-11s    %-4s    %-16s    %-4s    %-10s\n' "PARTUUID=$(awk '{print $5}' <<< "$DIR_BOOT")" /boot "$(awk '{print $6}' <<< "$DIR_BOOT")" noauto,defaults 0 0
     fi
 
     # Find if there is a swap partition
     DIR_SWAP=$(grep "^\[SWAP\] " <<< "$LSBLK_INFO")
     if [ -n "$DIR_SWAP" ] ; then
-        printf '%-41s    %-11s    %-4s    %-16s    %-4s    %-10s\n' "UUID=$(awk '{print $5}' <<< "$DIR_SWAP")" swap "$(awk '{print $6}' <<< "$DIR_SWAP")" pri=1 0 0
+        printf '%-45s    %-11s    %-4s    %-16s    %-4s    %-10s\n' "PARTUUID=$(awk '{print $5}' <<< "$DIR_SWAP")" swap "$(awk '{print $6}' <<< "$DIR_SWAP")" pri=1 0 0
     fi
 
     printf "\n# End /etc/fstab\n"
@@ -278,3 +278,16 @@ if [ -n "$GRUB_SCRIPT" ] ; then
     sed -i "/^ .*linux /c\    linux \${knl_name} root=PARTUUID=\${lnx_root} ro \${opts}" "$GRUB_SCRIPT"
     sed -i '/set timeout/a set color_normal=white/black\nset color_highlight=yellow/black\nset menu_color_normal=light-blue/black\nset menu_color_highlight=yellow/blue' "$GRUB_SCRIPT"
 fi
+
+# Enter to jhalfs folder and start the build
+cd "DIR_JHALFS"
+make
+
+# Patch the sudoers file
+sudo sed -i "/^root ALL=(ALL:ALL) ALL/a pkr ALL=(ALL:ALL) NOPASSWD: ALL" "$1/etc/sudoers"
+
+# Move blfs folder to pkr home folder
+sudo mv -v "$1/blfs_root" "$1/home/pkr"
+sudo chown -hR pkr:pkr "$1/home/pkr"
+sudo chown -hR pkr:pkr "$1/var/lib/jhalfs"
+sudo sed -i "s|/blfs_root/packdesc.dtd|/home/pkr/blfs_root/packdesc.dtd|g" "$1/var/lib/jhalfs/BLFS/instpkg.xml"
