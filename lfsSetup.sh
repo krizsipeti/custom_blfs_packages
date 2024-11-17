@@ -287,7 +287,7 @@ make
 sudo sed -i "/^root ALL=(ALL:ALL) ALL/a pkr ALL=(ALL:ALL) NOPASSWD: ALL" "$1/etc/sudoers"
 
 # Move blfs folder to pkr home folder
-sudo mv -v "$1/blfs_root" "$1/home/pkr"
-sudo chown -hR pkr:pkr "$1/home/pkr"
+sudo mv -v "$1/blfs_root" "$1/home/pkr/"
+sudo chown -hR pkr:pkr "$1/home/pkr/blfs_root"
 sudo chown -hR pkr:pkr "$1/var/lib/jhalfs"
 sudo sed -i "s|/blfs_root/packdesc.dtd|/home/pkr/blfs_root/packdesc.dtd|g" "$1/var/lib/jhalfs/BLFS/instpkg.xml"
