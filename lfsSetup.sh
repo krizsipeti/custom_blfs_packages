@@ -280,7 +280,7 @@ if [ -n "$GRUB_SCRIPT" ] ; then
 fi
 
 # Enter to jhalfs folder and start the build
-cd "DIR_JHALFS"
+cd "$DIR_JHALFS"
 make
 
 # Patch the sudoers file
