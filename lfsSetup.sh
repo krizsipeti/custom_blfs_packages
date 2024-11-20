@@ -221,6 +221,9 @@ SCRIPT_DIR="$DIR_SETUP/common/libs/func_install_blfs"
 LINE_NUMBER=$(grep "$SCRIPT_DIR" -e '$LINE_SUDO' -n -m1 | cut -d: -f1)
 ADDITIONAL_CONFIGS=$(sed 's/,/\n/g' <<< "$BLFS_PACKS" | sed 's/$/=y/' | sed 's/^/CONFIG_/' | sed '$!s/$/\\/')
 sed -i "$((LINE_NUMBER+1))i$ADDITIONAL_CONFIGS" "$SCRIPT_DIR"
+#sed -i "/^MAIL_SERVER=/i MS_sendmail=y" "$SCRIPT_DIR"
+#sed -i "/^MAIL_SERVER=/a DEPLVL_2=y" "$SCRIPT_DIR"
+#sed -i "/^SUDO=/c SUDO=y" "$SCRIPT_DIR"
 
 # Patch master.sh to run also the grub config related script
 sed -i '/^ .*10\*grub/s/^/#/g' "$DIR_SETUP/LFS/master.sh"
@@ -291,3 +294,16 @@ sudo mv -v "$1/blfs_root" "$1/home/pkr/"
 sudo chown -hR pkr:pkr "$1/home/pkr/blfs_root"
 sudo chown -hR pkr:pkr "$1/var/lib/jhalfs"
 sudo sed -i "s|/blfs_root/packdesc.dtd|/home/pkr/blfs_root/packdesc.dtd|g" "$1/var/lib/jhalfs/BLFS/instpkg.xml"
+
+# Create autologin script to run blfs build after reboot
+AUTOBUILDBLFS="$1/etc/systemd/system/autobuildblfs@.service"
+sudo cp -v "$1/usr/lib/systemd/system/getty@.service" "$AUTOBUILDBLFS"
+sudo ln -sf "$AUTOBUILDBLFS" "$1/etc/systemd/system/getty.target.wants/getty@tty9.service"
+sudo sed -i "/^ExecStart=/c ExecStart=-/sbin/agetty -a pkr" "$AUTOBUILDBLFS"
+
+cat > "$1/home/pkr/.profile" << EOF
+if [ "$(tty)" == "/dev/tty9" ] ; then
+  echo "Continue the build with blfs packages..."
+  cd /home/pkr/blfs_root/work
+fi
+EOF
