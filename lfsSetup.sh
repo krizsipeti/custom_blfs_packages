@@ -302,18 +302,21 @@ printf "[Service]\nType=simple\nExecStart=\nExecStart=-/sbin/agetty --autologin 
 
 cat > "$1/home/pkr/.profile" << EOF
 #!/bin/bash
-cd "$HOME/blfs_root/blfs-xml"
+cd "/home/pkr/blfs_root/blfs-xml"
 git reset --hard
 git clean -xfd
-cd "$HOME/blfs_root/lfs-xml"
+cd "/home/pkr/blfs_root/lfs-xml"
 git reset --hard
 git clean -xfd
-cd "$HOME/blfs_root"
+cd "/home/pkr/blfs_root"
 make update
 . gen_pkg_book.sh <<< yes
 cd work
 ../gen-makefile.sh
 make
+sudo rm -rfv /etc/systemd/system/getty@tty1.service.d
+rm -fv /home/pkr/.profile
+sudo systemctl poweroff
 EOF
 
 # Create new blfs config
