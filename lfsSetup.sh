@@ -296,14 +296,15 @@ sudo chown -hR pkr:pkr "$1/var/lib/jhalfs"
 sudo sed -i "s|/blfs_root/packdesc.dtd|/home/pkr/blfs_root/packdesc.dtd|g" "$1/var/lib/jhalfs/BLFS/instpkg.xml"
 
 # Create autologin script to run blfs build after reboot
-AUTOBUILDBLFS="$1/etc/systemd/system/autobuildblfs@.service"
-sudo cp -v "$1/usr/lib/systemd/system/getty@.service" "$AUTOBUILDBLFS"
-sudo ln -sf "$AUTOBUILDBLFS" "$1/etc/systemd/system/getty.target.wants/getty@tty9.service"
-sudo sed -i "/^ExecStart=/c ExecStart=-/sbin/agetty -a pkr" "$AUTOBUILDBLFS"
+DIR_AUTOLOGIN="$1/etc/systemd/system/getty@tty1.service.d"
+sudo mkdir -pv "$DIR_AUTOLOGIN"
+printf "[Service]\nType=simple\nExecStart=\nExecStart=-/sbin/agetty --autologin pkr %%I 38400 linux\n" | sudo tee "$DIR_AUTOLOGIN/override.conf" > /dev/null
 
 cat > "$1/home/pkr/.profile" << EOF
-if [ "$(tty)" == "/dev/tty9" ] ; then
-  echo "Continue the build with blfs packages..."
-  cd /home/pkr/blfs_root/work
-fi
+#!/bin/bash
+cd "$HOME/blfs_root"
+. gen_pkg_book.sh <<< yes
+cd work
+../gen-makefile.sh
+make
 EOF
