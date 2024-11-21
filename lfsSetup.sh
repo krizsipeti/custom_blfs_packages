@@ -317,9 +317,12 @@ make
 EOF
 
 # Create new blfs config
-cd "$1/home/pkr/blfs_root"
-rm -fv configuration
-cat > configuration << EOF
+DIR_BLFSCFG="$1/home/pkr/blfs_root/configuration"
+if [ -f "$DIR_BLFSCFG" ] ; then
+    sudo rm -fv "$DIR_BLFSCFG"
+fi
+
+cat > "$DIR_BLFSCFG" << EOF
 CONFIG_pciutils=y
 CONFIG_twm=y
 CONFIG_xinit=y
