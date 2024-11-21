@@ -96,7 +96,17 @@ sudo install -v -o "$U" -g "$G" -m 1777 -d "$DIR_BOOK"
 
 # Clone the LFS book repository to book-source folder
 echo Cloning lfs book sources...
-git clone https://git.linuxfromscratch.org/lfs.git "$DIR_BOOK"
+git clone --depth 1 https://git.linuxfromscratch.org/lfs.git "$DIR_BOOK"
+
+# Now create the blfs_root folder and blfs-xml sub-folder owned by the current user
+DIR_BLFS_BOOK="$1/blfs_root/blfs-xml"
+echo Creating blfs_root folder...
+sudo install -v -o "$U" -g root -m 1777 -d "$1/blfs_root"
+sudo install -v -o "$U" -g "$G" -m 1777 -d "$DIR_BLFS_BOOK"
+
+# Clone the BLFS book repository to blfs-xml folder
+echo Cloning blfs book sources...
+git clone --depth 1 https://git.linuxfromscratch.org/blfs.git "$DIR_BLFS_BOOK"
 
 # Get the latest kernel version and download link from kernel.org
 echo Getting latest kernel from kernel.org...
@@ -195,7 +205,7 @@ sudo install -v -o "$U" -g "$G" -m 755 -d "$DIR_SETUP"
 
 # Clone the jhalfs repository to setup folder
 echo Cloning jhalfs sources...
-git clone https://git.linuxfromscratch.org/jhalfs.git "$DIR_SETUP"
+git clone --depth 1 https://git.linuxfromscratch.org/jhalfs.git "$DIR_SETUP"
 
 # Patch opt_config to use -O3 -pipe -march=native
 echo Patching optimization config file...
