@@ -302,9 +302,63 @@ printf "[Service]\nType=simple\nExecStart=\nExecStart=-/sbin/agetty --autologin 
 
 cat > "$1/home/pkr/.profile" << EOF
 #!/bin/bash
+cd "$HOME/blfs_root/blfs-xml"
+git reset --hard
+git clean -xfd
+cd "$HOME/blfs_root/lfs-xml"
+git reset --hard
+git clean -xfd
 cd "$HOME/blfs_root"
+make update
 . gen_pkg_book.sh <<< yes
 cd work
 ../gen-makefile.sh
 make
+EOF
+
+# Create new blfs config
+cd "$1/home/pkr/blfs_root"
+rm -fv configuration
+cat > configuration << EOF
+CONFIG_pciutils=y
+CONFIG_twm=y
+CONFIG_xinit=y
+CONFIG_xorg-evdev-driver=y
+CONFIG_xorg-libinput-driver=y
+CONFIG_xwayland=y
+CONFIG_sddm=y
+CONFIG_openbox=y
+CONFIG_lxqt-menu-data=y
+CONFIG_lxqt-panel=y
+CONFIG_lxqt-post-install=y
+CONFIG_lxqt-pre-install=y
+CONFIG_lxqt-runner=y
+CONFIG_lxqt-session=y
+CONFIG_lxqt-sudo=y
+CONFIG_lxqt-themes=y
+CONFIG_pcmanfm-qt=y
+CONFIG_lxqt-notificationd=y
+CONFIG_pavucontrol-qt=y
+CONFIG_qterminal=y
+CONFIG_firefox=y
+
+# Build settings
+MS_sendmail=y
+MAIL_SERVER="sendmail"
+DEPLVL_2=y
+optDependency=2
+LANGUAGE="hu_HU.UTF-8"
+SUDO=y
+DEL_LA_FILES=y
+
+# Build Layout
+SRC_ARCHIVE="/sources"
+BUILD_ROOT="/sources"
+BUILD_SUBDIRS=y
+
+# Optimization
+JOBS=0
+CFG_CFLAGS=" -O3 -pipe -march=native "
+CFG_CXXFLAGS=" -O3 -pipe -march=native "
+CFG_LDFLAGS="EMPTY"
 EOF
