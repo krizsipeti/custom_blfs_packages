@@ -30,13 +30,9 @@ patchKernelVersion()
 # Function that createst an fstab based on the incoming folder
 createFstab()
 {(
-    # Get mount info from lsblk output
+    # Check if we got a mount point as a parameter
     local DIR_ROOT
     local DIR_BOOT
-    local LSBLK_INFO
-    LSBLK_INFO=$(lsblk -l -o MOUNTPOINT,PATH,NAME,PKNAME,PARTUUID,FSTYPE,PTTYPE | sed "/^ /d")
-
-    # Check if we got a mount point as a parameter
     if [ -n "$1" ] ; then
         # In case of an invalid mount point (not existing folder) we return here
         if [ ! -d "$1" ] ; then
@@ -45,38 +41,44 @@ createFstab()
         fi
 
         # If a mount point is given then we generate fstab based on that mount point.
-        DIR_ROOT="^$1 "
-        DIR_BOOT="^$1/boot "
+        DIR_ROOT="$1 "
+        DIR_BOOT="$1/boot "
     else
         # No mount point is given. We generate fstab for the current running system.
-        DIR_ROOT="^/ "
-        DIR_BOOT="^/boot "
+        DIR_ROOT="/ "
+        DIR_BOOT="/boot "
     fi
 
     # Print out the header part of our fstab
     printf "# Begin /etc/fstab\n\n"
-    printf '%-45s    %-11s    %-4s    %-16s    %-4s    %-10s\n' "# File system (PARTUUID)" "mount-point" "type" "options" "dump" "fsck"
+    printf '%-49s%-15s%-8s%-20s%-8s%-10s\n' "# File system (PARTUUID)" "mount-point" "type" "options" "dump" "fsck"
     printf '#%104s\n\n' "order"
 
-    # Find the root mount point and print out if found
-    DIR_ROOT=$(grep "$DIR_ROOT" <<< "$LSBLK_INFO")
-    if [ -n "$DIR_ROOT" ] ; then
-        printf '%-45s    %-11s    %-4s    %-16s    %-4s    %-10s\n' "PARTUUID=$(awk '{print $5}' <<< "$DIR_ROOT")" / "$(awk '{print $6}' <<< "$DIR_ROOT")" defaults 1 1
-    fi
+    local PUID
+    local FST
+    local PAT
+    local PF="PARTUUID=%-40s%-15s%-8s%-20s%-8s%-10s\n"
+    local PRI=0
+    local IFS=$'\n'
+    for L in $(lsblk -l -o MOUNTPOINT,PATH,NAME,PKNAME,PARTUUID,FSTYPE | tail -n +2) ; do
+        PUID=$(awk '{print $5}' <<< "$L")
+        if [ -z "$PUID" ] ; then
+            continue
+        fi
+        FST=$(awk '{print $6}' <<< "$L")
+        PAT=$(awk '{print $2}' <<< "$L" | sed "s|/dev/|/mnt/|g")
+        if [[ $L == "$DIR_ROOT"* ]] ; then
+            printf "$PF" "$PUID" / "$FST" defaults 1 1
+        elif [[ $L == "$DIR_BOOT"* ]] ; then
+            printf "$PF" "$PUID" /boot "$FST" noauto,defaults 0 0
+        elif [[ $L == "[SWAP]"* ]] ; then
+            PRI=$((PRI+1))
+            printf "$PF" "$PUID" swap "$FST" "pri=$PRI" 0 0
+        else
+            printf "$PF" "$PUID" "$PAT" "$FST" defaults 0 0
+        fi
+    done
 
-    # Find the boot mount point and print out if found
-    DIR_BOOT=$(grep "$DIR_BOOT" <<< "$LSBLK_INFO")
-    if [ -n "$DIR_BOOT" ] ; then
-        printf '%-45s    %-11s    %-4s    %-16s    %-4s    %-10s\n' "PARTUUID=$(awk '{print $5}' <<< "$DIR_BOOT")" /boot "$(awk '{print $6}' <<< "$DIR_BOOT")" noauto,defaults 0 0
-    fi
-
-    # Find the swap partition and print out if found
-    local DIR_SWAP
-    DIR_SWAP=$(grep "^\[SWAP\] " <<< "$LSBLK_INFO")
-    if [ -n "$DIR_SWAP" ] ; then
-        printf '%-45s    %-11s    %-4s    %-16s    %-4s    %-10s\n' "PARTUUID=$(awk '{print $5}' <<< "$DIR_SWAP")" swap "$(awk '{print $6}' <<< "$DIR_SWAP")" pri=1 0 0
-    fi
-
-    # Print out the closing line of out fstab
-    printf "\n# End /etc/fstab\n"    
+    # Print out the closing line of fstab
+    printf "\n# End /etc/fstab\n"
 )}
