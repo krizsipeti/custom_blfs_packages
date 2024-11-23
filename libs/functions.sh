@@ -41,8 +41,9 @@ createFstab()
         fi
 
         # If a mount point is given then we generate fstab based on that mount point.
-        DIR_ROOT="$1 "
-        DIR_BOOT="$1/boot "
+
+        DIR_ROOT="$(realpath -sm "$1") "
+        DIR_BOOT="$(realpath -sm "$1")/boot "
     else
         # No mount point is given. We generate fstab for the current running system.
         DIR_ROOT="/ "
