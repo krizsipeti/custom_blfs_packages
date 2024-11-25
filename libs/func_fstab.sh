@@ -110,7 +110,7 @@ _patch_fstab()
     # Check if the folder exists
     local script_folder="$1/jhalfs/lfs-commands"
     if [ ! -d "$script_folder" ] ; then
-        echo "Invalid folder: $script_folder"
+        echo "Invalid folder: $script_folder" >&2
         return 1
     fi
 
@@ -118,7 +118,7 @@ _patch_fstab()
     local fstab_script=
     fstab_script=$(find "$script_folder" -type f -iname "*-fstab")
     if [ ! -f "$fstab_script" ] ; then
-        echo "Cannot find fstab script."
+        echo "Cannot find fstab script." >&2
         return 1
     fi
 
@@ -126,10 +126,11 @@ _patch_fstab()
     local new_fstab=
     new_fstab=$(_create_fstab "$1")
     if [ -z "$new_fstab" ] ; then
-        echo "Failed to create new fstab."
+        echo "Failed to create new fstab." >&2
+        return 1
     fi
 
     # Replace old fstab with the new one
-    sed -i '/^cat /,/^EOF/{/^cat /!{/^EOF/!d}}' "$fstab_script" || { echo "Error while removing old fstab from script." ; return 1 ;}
-    sed -i "/^cat /a $(sed '$!s/$/\\/' <<< "$new_fstab")" "$fstab_script" || { echo "Error while adding new fstab to script." ; return 1 ;}
+    sed -i '/^cat /,/^EOF/{/^cat /!{/^EOF/!d}}' "$fstab_script" || { echo "Error while removing old fstab from script." >&2 ; return 1 ;}
+    sed -i "/^cat /a $(sed '$!s/$/\\/' <<< "$new_fstab")" "$fstab_script" || { echo "Error while adding new fstab to script." >&2 ; return 1 ;}
 }

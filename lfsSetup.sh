@@ -29,40 +29,6 @@ patchKernelVersion()
     fi
 }
 
-# Function that createst an fstab based on the incoming folder
-createFstab()
-{
-    # Get mount info from lsblk output
-    LSBLK_INFO=$(lsblk -l -o MOUNTPOINT,PATH,NAME,PKNAME,PARTUUID,FSTYPE,PTTYPE | sed "/^ /d")
-
-    printf "# Begin /etc/fstab\n\n"
-    printf '%-45s    %-11s    %-4s    %-16s    %-4s    %-10s\n' "# File system (PARTUUID)" "mount-point" "type" "options" "dump" "fsck"
-    printf '#%104s\n\n' "order"
-
-    # Find the root mount point
-    DIR_ROOT=$(grep "^$1 " <<< "$LSBLK_INFO")
-    if [ -z "$DIR_ROOT" ] ; then
-        DIR_ROOT=$(grep "^/ " <<< "$LSBLK_INFO")
-    fi
-    if [ -n "$DIR_ROOT" ] ; then
-        printf '%-45s    %-11s    %-4s    %-16s    %-4s    %-10s\n' "PARTUUID=$(awk '{print $5}' <<< "$DIR_ROOT")" / "$(awk '{print $6}' <<< "$DIR_ROOT")" defaults 1 1
-    fi
-
-    # Find if there is a separate boot drive
-    DIR_BOOT=$(grep "^$1/boot " <<< "$LSBLK_INFO")
-    if [ -n "$DIR_BOOT" ] ; then
-        printf '%-45s    %-11s    %-4s    %-16s    %-4s    %-10s\n' "PARTUUID=$(awk '{print $5}' <<< "$DIR_BOOT")" /boot "$(awk '{print $6}' <<< "$DIR_BOOT")" noauto,defaults 0 0
-    fi
-
-    # Find if there is a swap partition
-    DIR_SWAP=$(grep "^\[SWAP\] " <<< "$LSBLK_INFO")
-    if [ -n "$DIR_SWAP" ] ; then
-        printf '%-45s    %-11s    %-4s    %-16s    %-4s    %-10s\n' "PARTUUID=$(awk '{print $5}' <<< "$DIR_SWAP")" swap "$(awk '{print $6}' <<< "$DIR_SWAP")" pri=1 0 0
-    fi
-
-    printf "\n# End /etc/fstab\n"
-}
-
 # Check if the lfs mount point folder is specified as the first argument
 if [ -z "$1" ]
 then
@@ -258,11 +224,8 @@ if [ -n "$NET_SCRIPT" ] ; then
 fi
 
 # Patch fstab script
-FSTAB_SCRIPT=$(find "$DIR_COMMANDS" -type f -iname "*-fstab")
-if [ -n "$FSTAB_SCRIPT" ] ; then
-    sed -i '/^cat /,/^EOF/{/^cat /!{/^EOF/!d}}' "$FSTAB_SCRIPT"
-    sed -i "/^cat /a $(createFstab "$1" | sed '$!s/$/\\/')" "$FSTAB_SCRIPT"
-fi
+source libs/func_fstab.sh
+_patch_fstab $1 || return 1
 
 # Patch LFS kernel script to keep build folder and add new user
 KERNEL_SCRIPT=$(find "$DIR_COMMANDS" -type f -iname "*-kernel")
