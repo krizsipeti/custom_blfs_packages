@@ -9,7 +9,7 @@ _create_fstab()
     local d_boot=
     if [ -n "$1" ] ; then
         # In case of an invalid mount point or not existing folder we return here
-        mountpoint "$1" || return 1
+        mountpoint -q "$1" || return 1
 
         # If a mount point is given then we generate fstab based on that mount point.
         d_root="$(realpath -sm "$1")"
@@ -85,6 +85,9 @@ _create_fstab()
         if [ ${#fsck} -gt "$col_6_size" ]; then col_6_size=${#fsck} ; fi
     done
 
+    # If nothing found then return here
+    if [ -z "$values" ] ; then return 1 ; fi
+
     # Print out the header part of our fstab
     local print_format="%-$((col_1_size+gap_size))s%-$((col_2_size+gap_size))s%-$((col_3_size+gap_size))s%-$((col_4_size+gap_size))s%-$((col_5_size+gap_size))s%-$((col_6_size+gap_size))s\n"
     printf "# Begin /etc/fstab\n\n"
@@ -97,4 +100,36 @@ _create_fstab()
 
     # Print out the closing line of fstab
     printf "\n# End /etc/fstab\n"
+}
+
+
+# This function is to patch the LFS fstab creator script with our own created fstab
+# There should be one incoming parameters which is the root mount point of the new LFS system to be built
+_patch_fstab()
+{
+    # Check if the folder exists
+    local script_folder="$1/jhalfs/lfs-commands"
+    if [ ! -d "$script_folder" ] ; then
+        echo "Invalid folder: $script_folder"
+        return 1
+    fi
+
+    # Look for the LFS fstab script
+    local fstab_script=
+    fstab_script=$(find "$script_folder" -type f -iname "*-fstab")
+    if [ ! -f "$fstab_script" ] ; then
+        echo "Cannot find fstab script."
+        return 1
+    fi
+
+    # Create new fstab
+    local new_fstab=
+    new_fstab=$(_create_fstab "$1")
+    if [ -z "$new_fstab" ] ; then
+        echo "Failed to create new fstab."
+    fi
+
+    # Replace old fstab with the new one
+    sed -i '/^cat /,/^EOF/{/^cat /!{/^EOF/!d}}' "$fstab_script" || { echo "Error while removing old fstab from script." ; return 1 ;}
+    sed -i "/^cat /a $(sed '$!s/$/\\/' <<< "$new_fstab")" "$fstab_script" || { echo "Error while adding new fstab to script." ; return 1 ;}
 }
