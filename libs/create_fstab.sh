@@ -8,11 +8,8 @@ _create_fstab()
     local d_root=
     local d_boot=
     if [ -n "$1" ] ; then
-        # In case of an invalid mount point (not existing folder) we return here
-        if [ ! -d "$1" ] ; then
-            echo "The given mount point is invalid: $1"
-            return 1
-        fi
+        # In case of an invalid mount point or not existing folder we return here
+        mountpoint "$1" || return 1
 
         # If a mount point is given then we generate fstab based on that mount point.
         d_root="$(realpath -sm "$1")"
@@ -49,29 +46,28 @@ _create_fstab()
     local swap_priority=0
     local values=
     local IFS=$'\n'
-    for line in $(lsblk -P -o MOUNTPOINT,PATH,PARTUUID,FSTYPE | grep -vE '(MOUNTPOINT="")|(PATH="")|(PARTUUID="")|(FSTYPE="")') ; do
-        mount_point=$(awk '{gsub("MOUNTPOINT=","",$1); print $1}' <<< "$line")
-        device_path=$(awk '{gsub("PATH=","",$2); print $2}' <<< "$line")
-        partition_uuid=$(awk '{gsub("PARTUUID=","",$3); print $3}' <<< "$line")
-        file_system_type=$(awk '{gsub("FSTYPE=","",$4); print $4}' <<< "$line")
+    for line in $(lsblk -P -o MOUNTPOINT,PATH,PARTUUID,FSTYPE -x MOUNTPOINT | grep -vE '(MOUNTPOINT="")|(PATH="")|(PARTUUID="")|(FSTYPE="")') ; do
+        mount_point=$(awk '{gsub(/MOUNTPOINT=|"/,"",$1); print $1}' <<< "$line")
+        device_path=$(awk '{gsub(/PATH=|"/,"",$2); print $2}' <<< "$line")
+        partition_uuid=$(awk '{gsub(/"/,"",$3); print $3}' <<< "$line")
+        file_system_type=$(awk '{gsub(/FSTYPE=|"/,"",$4); print $4}' <<< "$line")
 
         if [ -z "$mount_point" ] || [ -z "$device_path" ] || [ -z "$partition_uuid" ] || [ -z "$file_system_type" ]; then
             continue
         fi
 
-        partition_uuid="PARTUUID=$partition_uuid"
         options="defaults"
         dump=0
         fsck=0
 
-        if [ "$mount_point" == "\"$d_root\"" ] ; then
+        if [ "$mount_point" == "$d_root" ] ; then
             device_path="/"
             dump=1
             fsck=1
-        elif [ "$mount_point" == "\"$d_boot\"" ] ; then
+        elif [ "$mount_point" == "$d_boot" ] ; then
             device_path="/boot"
             options="noauto,$options"
-        elif [ "$mount_point" == "\"[SWAP]\"" ] ; then
+        elif [ "$mount_point" == "[SWAP]" ] ; then
             device_path="swap"
             swap_priority=$((swap_priority+1))
             options="pri=$swap_priority"
