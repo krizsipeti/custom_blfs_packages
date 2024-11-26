@@ -1,259 +1,46 @@
 #!/bin/bash
 # Script that setups LFS installer
 
-set -e
-
-# Helper function to pach the packages.ent
-# Parameters are in this order: major, minor, patch, md5 and full path to packages.ent
-patchKernelVersion()
-{
-    if [ ! -f "$5" ] ; then
-        echo "The packages.ent file is not exist or not defined." >&2
-        echo "File: $5"
-        return 4
-    fi
-
-    sed -i -E "s@(<\!ENTITY linux-major-version \"+)(.+\">)@\1$1\">@" "$5"
-    sed -i -E "s@(<\!ENTITY linux-minor-version \"+)(.+\">)@\1$2\">@" "$5"    
-    sed -i -E "s@(<\!ENTITY linux-md5 \"+)(.+\">)@\1$4\">@" "$5"
-
-    if [ "-" == "$3" ] ; then
-        sed -i -E '/<!--/ n; /<\!ENTITY linux-patch-version "/{s/<!E/<!--<!E/g;s/">/">-->/g;}' "$5"
-        sed -i -E '/linux-minor-version;">-->/{s/<!--//g;s/-->//g;}' "$5"
-        sed -i -E '/<!--/ n; /linux-patch-version;">/{s/<!E/<!--<!E/g;s/;">/;">-->/g;}' "$5"
-    else
-        sed -i -E '/<!ENTITY linux-patch-version "/{s/<!--//g;s/-->//g;}' "$5"
-        sed -i -E "s@(<\!ENTITY linux-patch-version \"+)(.+\">)@\1$3\">@" "$5"
-        sed -i -E '/linux-patch-version;">-->/{s/<!--//g;s/-->//g;}' "$5"
-        sed -i -E '/<!--/ n; /linux-minor-version;">/{s/<!E/<!--<!E/g;s/;">/;">-->/g;}' "$5"
-    fi
-}
-
 # Check if the lfs mount point folder is specified as the first argument
-if [ -z "$1" ]
-then
+if [ -z "$1" ] ; then
     echo "Please specify the lfs mount point folder as the first argument!" >&2
     exit 1
 fi
 
-# Check if the lfs folder is exists
-if [ ! -d "$1" ]
-then
-    echo "LFS mount point folder does not exist!" >&2
-    exit 2
-fi
+# Create folder structure and get LFS and BLFS sources
+source lib/func_general.sh
+_create_folders_and_get_sources "$1" || return 1
 
-# Check if jhalfs folder is already exist and delete it if yes
-DIR_JHALFS="$1/jhalfs"
-if [ -d "$DIR_JHALFS" ]
-then
-    echo Deleting old jhalfs folder: "$DIR_JHALFS"
-    sudo rm -rf "$DIR_JHALFS"
-    echo Done!
-fi
-
-# Now create the jhalfs folder and book-source sub-folder owned by the current user
-DIR_BOOK="$DIR_JHALFS/book-source"
-U="$(id -un)" # current user
-G="$(id -gn)" # current group
-echo Creating jhalfs folder...
-sudo install -v -o "$U" -g root -m 1777 -d "$DIR_JHALFS"
-sudo install -v -o "$U" -g "$G" -m 1777 -d "$DIR_BOOK"
-
-# Clone the LFS book repository to book-source folder
-echo Cloning lfs book sources...
-git clone --depth 1 https://git.linuxfromscratch.org/lfs.git "$DIR_BOOK"
-
-# Now create the blfs_root folder and blfs-xml sub-folder owned by the current user
-DIR_BLFS_BOOK="$1/blfs_root/blfs-xml"
-echo Creating blfs_root folder...
-sudo install -v -o "$U" -g root -m 1777 -d "$1/blfs_root"
-sudo install -v -o "$U" -g "$G" -m 1777 -d "$DIR_BLFS_BOOK"
-
-# Clone the BLFS book repository to blfs-xml folder
-echo Cloning blfs book sources...
-git clone --depth 1 https://git.linuxfromscratch.org/blfs.git "$DIR_BLFS_BOOK"
-
-# Get the latest kernel version and download link from kernel.org
-echo Getting latest kernel from kernel.org...
-LATEST_KERNEL_URL="$(curl -v --silent https://www.kernel.org/ 2>&1 | sed -n '/<td id="latest_link">/{n; p}' | cut -d '"' -f 2)"
-LATEST_KERNEL_VER="$(cut -d '-' -f 2 <<< "$LATEST_KERNEL_URL" | rev | cut -c8- | rev)"
-echo Latest kernel version: "$LATEST_KERNEL_VER"
-echo Download URL: "$LATEST_KERNEL_URL"
-
-# Check sources folder existence and create if needed
-DIR_SOURCES="$1/sources"
-if [ ! -d "$DIR_SOURCES" ] ; then
-    sudo install -v -o "$U" -g "$G" -m 1777 -d "$DIR_SOURCES"
-else
-    sudo chmod -v 1777 "$DIR_SOURCES"
-fi
-
-# Download latest kernel if not done yet
-KERNEL_FILE_NAME="$(rev <<< "$LATEST_KERNEL_URL" | cut -d '/' -f1 | rev)"
-if [ ! -f "$DIR_SOURCES/$KERNEL_FILE_NAME" ] ; then
-    echo Downloading kernel tar ball...
-    wget -T 30 -t 5 --directory-prefix="$DIR_SOURCES" "$LATEST_KERNEL_URL"
-    echo Done!
-fi
-
-# Patch packages.ent with latest kernel
-MD5_SUM="$(md5sum "$DIR_SOURCES/$KERNEL_FILE_NAME" | cut -d ' ' -f 1)"
-NUM_VER_DOTS="$(awk -F. '{print NF-1}' <<< "$LATEST_KERNEL_VER")"
-if [ "2" == "$NUM_VER_DOTS" ] ; then
-    MAIN_VER="$(awk -F. '{print $(NF-2)}' <<< "$LATEST_KERNEL_VER")"
-    MINOR_VER="$(awk -F. '{print $(NF-1)}' <<< "$LATEST_KERNEL_VER")"
-    PATCH_VER="$(awk -F. '{print $(NF)}' <<< "$LATEST_KERNEL_VER")"
-elif [ "1" == "$NUM_VER_DOTS" ] ; then
-    MAIN_VER="$(awk -F. '{print $(NF-1)}' <<< "$LATEST_KERNEL_VER")"
-    MINOR_VER="$(awk -F. '{print $(NF)}' <<< "$LATEST_KERNEL_VER")"
-    PATCH_VER="-"
-else
-    echo Invalid count of version dots: "$NUM_VER_DOTS" >&2
-    echo Where version number is: "$LATEST_KERNEL_VER" >&2
-    exit 3
-fi
-patchKernelVersion "$MAIN_VER" "$MINOR_VER" "$PATCH_VER" "$MD5_SUM" "$DIR_BOOK/packages.ent"
+# Patch the LFS book's packages.ent with latest kernel
+source libs/func_kernel.sh
+_update_lfs_with_latest_kernel $1 || return 1
 
 # Check for the kernel config and try to create it based on a previous one if not found
-KERNEL_CONFIG="$HOME/config-$LATEST_KERNEL_VER"
-if [ ! -f "$KERNEL_CONFIG" ] ; then
-    # Look for older config files in the user's home directory
-    CONFIG_FILE=$(find /boot "$HOME" -type f -iwholename "$HOME/config-*" -o -iwholename "/boot/config-*")
-    if [ -z "$CONFIG_FILE" ] ; then
-        echo "Cannot find $KERNEL_CONFIG and also no old configs found to create it."
-        exit 4
-    fi
-
-    # Select the most recent file based on modification date if there are more
-    CONFIG_FILE=$(ls -Art $CONFIG_FILE | tail -n1)
-    echo "Using the following old config: $CONFIG_FILE"
-
-    # Extract the latest kernel tar ball and run 'make oldconfig'
-    ORIG_FOLDER=$(pwd)
-    cd "$DIR_SOURCES"
-    if [ -d "linux-$LATEST_KERNEL_VER" ] ; then
-        rm -rf "linux-$LATEST_KERNEL_VER"
-    fi
-    tar -xf "$KERNEL_FILE_NAME"
-    cd "linux-$LATEST_KERNEL_VER"
-    cp -v "$CONFIG_FILE" .config
-    make oldconfig
-
-    # After config created based on old config, copy it back to user's folder
-    cp -v .config "$HOME/config-$LATEST_KERNEL_VER"
-
-    # Go back to original folder and delete unpacked linux folder in sources
-    cd "$ORIG_FOLDER"
-    rm -rf "$DIR_SOURCES/linux-$LATEST_KERNEL_VER"
-fi
+_create_kernel_config_if_needed "$1" || return 1
 
 # Check for possible needed firmwares defined in kernel config
-FIRMWARE_FILES=$(grep "$KERNEL_CONFIG" -e 'CONFIG_EXTRA_FIRMWARE="' | awk -F'"' '{print $2}')
-if [ -n "$FIRMWARE_FILES" ] ; then
-    #sudo mkdir -pv $(dirname $(sed "s|^|$1/usr/lib/firmware/|g;s| | $1/usr/lib/firmware/|g" <<< "$FIRMWARE_FILES"))
-    DIR_FIRMWARE=/usr/lib/firmware/
-    for FX in $(tr ' ' '\n' <<< "$FIRMWARE_FILES") ; do sudo mkdir -pv "$(dirname "$1$DIR_FIRMWARE$FX")" ; sudo cp -fv "$DIR_FIRMWARE$FX" "$1$DIR_FIRMWARE$FX" ; done
-fi
+_check_and_copy_needed_firmwares || return 1
 
-# Check if setup folder is already exist and delete it if yes
-DIR_SETUP="$1/setup"
-if [ -d "$DIR_SETUP" ]
-then
-    echo Deleting old setup folder: "$DIR_SETUP"
-    sudo rm -rf "$DIR_SETUP"
-    echo Done!
-fi
-
-# Now create the setup folder owned by the current user
-echo Creating setup folder...
-sudo install -v -o "$U" -g "$G" -m 755 -d "$DIR_SETUP"
-
-# Clone the jhalfs repository to setup folder
-echo Cloning jhalfs sources...
-git clone --depth 1 https://git.linuxfromscratch.org/jhalfs.git "$DIR_SETUP"
-
-# Patch opt_config to use -O3 -pipe -march=native
-echo Patching optimization config file...
-sed -i -E '/DEF_OPT_MODE=/s/noOpt/O3pipe_march/g' "$DIR_SETUP/optimize/opt_config"
-
-# Copy jhalfs config file and adjust some settings in it
-cp -iv lfs_configs/configuration "$DIR_SETUP/"
-echo Patching setup configuration file...
-FILE_CFG="$DIR_SETUP/configuration"
-sed -i -E "\@BUILDDIR=\"xxx\"@s@xxx@$1@g" "$FILE_CFG"
-#sed -i -E "\@FSTAB=\"xxx\"@s@xxx@/home/$U/fstab@g" "$FILE_CFG"
-sed -i -E "/^FSTAB=/s/^/#/g" "$FILE_CFG"
-sed -i -E "\@FSTAB=\"xxx\"@s@xxx@/home/$U/fstab@g" "$FILE_CFG"
-sed -i -E "\@CONFIG=\"xxx\"@s@xxx@/home/$U/config-$LATEST_KERNEL_VER@g" "$FILE_CFG"
-sed -i -E "\@KEYMAP=\"xxx\"@s@xxx@$(localectl | grep Keymap | awk -F' ' '{printf $NF}')@g" "$FILE_CFG"
-
-# Add additional blfs packages to build config if specified any
-BLFS_PACKS=postlfs-config-profile,postlfs-config-vimrc
-if [ -n "$2" ] ; then
-    BLFS_PACKS="$BLFS_PACKS,$2"
-fi
-SCRIPT_DIR="$DIR_SETUP/common/libs/func_install_blfs"
-LINE_NUMBER=$(grep "$SCRIPT_DIR" -e '$LINE_SUDO' -n -m1 | cut -d: -f1)
-ADDITIONAL_CONFIGS=$(sed 's/,/\n/g' <<< "$BLFS_PACKS" | sed 's/$/=y/' | sed 's/^/CONFIG_/' | sed '$!s/$/\\/')
-sed -i "$((LINE_NUMBER+1))i$ADDITIONAL_CONFIGS" "$SCRIPT_DIR"
-#sed -i "/^MAIL_SERVER=/i MS_sendmail=y" "$SCRIPT_DIR"
-#sed -i "/^MAIL_SERVER=/a DEPLVL_2=y" "$SCRIPT_DIR"
-#sed -i "/^SUDO=/c SUDO=y" "$SCRIPT_DIR"
-
-# Patch master.sh to run also the grub config related script
-sed -i '/^ .*10\*grub/s/^/#/g' "$DIR_SETUP/LFS/master.sh"
+# Patch jhalfs sources
+_patch_jhalfs_sources "$1" "$2" || return 1
 
 # Enter to setup folder and start installer
-cd "$DIR_SETUP"
+cd "$1/setup" || return 1
 yes "yes" | ./jhalfs run
+if [[ $? -gt 0 ]] ; then return 1; fi
 
 # Patch network script
-DIR_COMMANDS="$DIR_JHALFS/lfs-commands"
-NET_SCRIPT=$(find "$DIR_COMMANDS" -type f -iname "*-network")
-if [ -n "$NET_SCRIPT" ] ; then
-    sed -i "s/-static/0/g" "$NET_SCRIPT"
-    sed -i "/^\(Gateway\)\|\(Address\)\|\(DNS\)\|\(Domains\)=/d" "$NET_SCRIPT"
-    sed -i "/^\[Network\]/a DHCP=yes" "$NET_SCRIPT"
-    sed -i "s/^.*PKR-LINUX.local/127.0.0.1 PKR-LINUX.local/" "$NET_SCRIPT"
-    
-    if [[ $2 == *"wpa_supplicant"* ]] ; then
-        sed -i "/^cat > \/etc\/systemd\/network/i cat > /etc/systemd/network/20-wlan0.network << \"EOF\"\n\[Match\]\nName=wlan0\n\n\[Network\]\nDHCP=yes\nEOF" "$NET_SCRIPT"
-        sed -i "/20-wlan0.network/i mkdir -pv /etc/wpa_supplicant\ncat > /etc/wpa_supplicant/wpa_supplicant-wlan0.conf << \"EOF\"\nnetwork=\{\nssid=\"T-E797F1\"\n#psk=\"Q2729eq9338qQJ7s\"\npsk=a41c0853c906d7db271a007af55afa9dce2efa8efa994d614b2d7b1d0b38bc72\n\}\nEOF" "$NET_SCRIPT"
-    fi
-fi
+_patch_network_scripts "$1" || return 1
 
 # Patch fstab script
 source libs/func_fstab.sh
 _patch_fstab $1 || return 1
 
 # Patch LFS kernel script to keep build folder and add new user
-KERNEL_SCRIPT=$(find "$DIR_COMMANDS" -type f -iname "*-kernel")
-sed -i "/^rm -rf \$PKGDIR/s/^/#/" "$KERNEL_SCRIPT"
-sed -i "/^EOF$/a # Add new user\ngroupadd pkr\nuseradd -s /bin/bash -g pkr -m -k /dev/null pkr\nusermod -a -G audio,video,input,systemd-journal pkr\npasswd -s pkr <<< pkr\npasswd -s root <<< root" "$KERNEL_SCRIPT"
-
-# Check if wpa_supplicant is required and patch its install script if yes
-if [[ $2 == *"wpa_supplicant"* ]] ; then
-    sed -i "/wpa_supplicant@/s/@.*/@wlan0/" "$(find "$1/blfs_root/scripts/" -type f -iname "*-wpa_supplicant")"
-fi
+_patch_kernel_script "$1" || return 1
 
 # Patch grub script
-GRUB_SCRIPT=$(find "$DIR_COMMANDS" -type f -iname "1*-grub")
-if [ -n "$GRUB_SCRIPT" ] ; then
-    sed -i "/^cat /i grub-install $(lsblk -l -o MOUNTPOINT,PATH,NAME,PKNAME | grep "^$1 " | awk '{gsub($3,$4,$2); print $2}')\n" "$GRUB_SCRIPT"
-    KERNEL_NAME=$(grep "$GRUB_SCRIPT" -e vmlinuz | awk '{gsub("/boot/","",$2); print $2}')
-    sed -i "/menuentry/a\    set opts=\"net.ifnames=0\ nvidia_drm.modeset=1\"\n    set lnx_root=\"$(lsblk -l -o MOUNTPOINT,PARTUUID | grep "^$1 " | awk '{print $2}')\"\n    set knl_name=\"/$KERNEL_NAME\"" "$GRUB_SCRIPT"
-    if [ -z "$(lsblk -l -o MOUNTPOINT,PATH | grep "^$1/boot " | awk '{print $2}')" ] ; then
-        sed -i 's/knl_name="/knl_name="\/boot/g' "$GRUB_SCRIPT"
-    fi
-    BOOT_FS=$(lsblk -l -o MOUNTPOINT,UUID | grep "^$1/boot " | awk '{print $2}')
-    if [ -z "$BOOT_FS" ] ; then
-        BOOT_FS=$(lsblk -l -o MOUNTPOINT,UUID | grep "^$1 " | awk '{print $2}')
-    fi
-    sed -i "/set root=/c\search --set=root --fs-uuid $BOOT_FS" "$GRUB_SCRIPT"
-    sed -i "/^ .*linux /c\    linux \${knl_name} root=PARTUUID=\${lnx_root} ro \${opts}" "$GRUB_SCRIPT"
-    sed -i '/set timeout/a set color_normal=white/black\nset color_highlight=yellow/black\nset menu_color_normal=light-blue/black\nset menu_color_highlight=yellow/blue' "$GRUB_SCRIPT"
-fi
+_patch_grub_script "$1" || return 1
 
 # Enter to jhalfs folder and start the build
 cd "$DIR_JHALFS"
@@ -269,9 +56,9 @@ sudo chown -hR pkr:pkr "$1/var/lib/jhalfs"
 sudo sed -i "s|/blfs_root/packdesc.dtd|/home/pkr/blfs_root/packdesc.dtd|g" "$1/var/lib/jhalfs/BLFS/instpkg.xml"
 
 # Create autologin script to run blfs build after reboot
-DIR_AUTOLOGIN="$1/etc/systemd/system/getty@tty1.service.d"
-sudo mkdir -pv "$DIR_AUTOLOGIN"
-printf "[Service]\nType=simple\nExecStart=\nExecStart=-/sbin/agetty --autologin pkr %%I 38400 linux\n" | sudo tee "$DIR_AUTOLOGIN/override.conf" > /dev/null
+local dir_autologin="$1/etc/systemd/system/getty@tty1.service.d"
+sudo mkdir -pv "$dir_autologin"
+printf "[Service]\nType=simple\nExecStart=\nExecStart=-/sbin/agetty --autologin pkr %%I 38400 linux\n" | sudo tee "$dir_autologin/override.conf" > /dev/null
 
 cat > "$1/home/pkr/.profile" << EOF
 #!/bin/bash
@@ -293,12 +80,12 @@ sudo systemctl poweroff
 EOF
 
 # Create new blfs config
-DIR_BLFSCFG="$1/home/pkr/blfs_root/configuration"
-if [ -f "$DIR_BLFSCFG" ] ; then
-    sudo rm -fv "$DIR_BLFSCFG"
+local dir_blfscfg="$1/home/pkr/blfs_root/configuration"
+if [ -f "$dir_blfscfg" ] ; then
+    sudo rm -fv "$dir_blfscfg"
 fi
 
-cat > "$DIR_BLFSCFG" << EOF
+cat > "$dir_blfscfg" << EOF
 CONFIG_pciutils=y
 CONFIG_twm=y
 CONFIG_xinit=y
