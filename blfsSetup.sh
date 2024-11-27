@@ -7,7 +7,11 @@ _build_blfs()
     source $current_dir/libs/func_general.sh
 
     # Run lfsSetup
-    ./lfsSetup.sh "$1" "$2" || return 1
+    ./lfsSetup.sh "$1" "$2"
+    if [[ $? -gt 0 ]] ; then
+        echo "Failed building LFS system." >&2
+        return 1
+    fi
 
     # Setup autologin
     local dir_lfs="$(realpath "$1")"

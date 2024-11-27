@@ -54,7 +54,9 @@ _build_lfs()
     # Enter to jhalfs folder and start the build
     cd "$dir_lfs/jhalfs" || return 1
     make || return 1
+
+    # Finalize the lfs build
+    _finalize_lfs_build "$1"
 }
 
 _build_lfs "$1" "$2" || exit 1
-_finalize_lfs_build "$1"

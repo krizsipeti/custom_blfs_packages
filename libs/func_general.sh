@@ -144,8 +144,8 @@ _finalize_lfs_build()
 
     # Move blfs folder to pkr home folder
     sudo mv -v "$dir_lfs/blfs_root" "$dir_lfs/home/pkr/" &&
-    sudo chown -hR pkr:pkr "$dir_lfs/home/pkr/blfs_root" &&
-    sudo chown -hR pkr:pkr "$dir_lfs/var/lib/jhalfs" &&
+    sudo chroot "$dir_lfs" chown -hR pkr:pkr "/home/pkr/blfs_root" &&
+    sudo chroot "$dir_lfs" chown -hR pkr:pkr "/var/lib/jhalfs" &&
     sudo sed -i "s|/blfs_root/packdesc.dtd|/home/pkr/blfs_root/packdesc.dtd|g" "$dir_lfs/var/lib/jhalfs/BLFS/instpkg.xml"
 }
 
@@ -180,7 +180,7 @@ _create_blfs_config()
     # Create new blfs config
     local dir_blfscfg="$dir_lfs/home/pkr/blfs_root/configuration"
     if [ -f "$dir_blfscfg" ] ; then
-        sudo rm -fv "$dir_blfscfg"
+        sudo rm -fv "$dir_blfscfg" || return 1
     fi
 
     cat > "$dir_blfscfg" << EOF
