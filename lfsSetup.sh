@@ -40,7 +40,7 @@ _build_lfs()
     if [[ $? -gt 0 ]] ; then return 1; fi
 
     # Patch network script
-    _patch_network_scripts "$dir_lfs" || return 1
+    _patch_network_scripts "$dir_lfs" "$2" || return 1
 
     # Patch fstab script
     _patch_fstab $dir_lfs || return 1

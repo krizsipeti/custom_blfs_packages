@@ -1,6 +1,8 @@
 #!/bin/bash
 
 # Do network related script patches
+# First parameter is the root mount point of the new LFS system
+# Second parameter is the user requested BLFS packages
 _patch_network_scripts()
 {
     # Patch network script
