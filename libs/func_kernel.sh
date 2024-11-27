@@ -213,7 +213,7 @@ _create_kernel_config_if_needed()
     local orig_folder=$(pwd)
     cd "$dir_sources" || return 1
     if [ -d "linux-$latest_kernel_ver" ] ; then
-        rm -rf "linux-$latest_kernel_ver" || return 1
+        sudo rm -rf "linux-$latest_kernel_ver" || return 1
     fi
     tar -xf "$file_name" || return 1
     cd "linux-$latest_kernel_ver" || return 1
