@@ -1,15 +1,27 @@
 #!/bin/bash
 
-# Check if the lfs mount point folder is specified as the first argument
-if [ -z "$1" ]
-then
-    echo "Please specify the lfs mount point folder as the first argument!" >&2
-    exit 1
-fi
+_build_blfs()
+{
+    # First include the needed external script files
+    local current_dir="$(dirname "$0")"
+    source $current_dir/libs/func_general.sh
 
-# Run lfsSetup and reboot if success otherwise power off in 5 minutes
-if ! ./lfsSetup.sh "$1" "$2" ; then
-    sudo shutdown --poweroff +5
-else
+    # Run lfsSetup
+    ./lfsSetup.sh "$1" "$2" || return 1
+
+    # Setup autologin
+    local dir_lfs="$(realpath "$1")"
+    _setup_autologin "$dir_lfs" || return 1
+        
+    # Create new blfs config
+    _create_blfs_config "$dir_lfs" || return 1
+
+    # Create autologin script to run blfs build after reboot
+    _create_blfs_builder_script "$dir_lfs" || return 1
+
+    # Reboot system
     sudo systemctl reboot
-fi
+}
+
+# Shutdown on failure
+_build_blfs "$1" "$2" || sudo shutdown --poweroff +5

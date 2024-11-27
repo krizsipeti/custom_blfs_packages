@@ -5,7 +5,7 @@ _patch_network_scripts()
 {
     # Patch network script
     local dir_commands="$1/jhalfs/lfs-commands"
-    net_script=$(find "$dir_commands" -type f -iname "*-network")
+    local net_script=$(find "$dir_commands" -type f -iname "*-network")
     if [ ! -f "$net_script" ] ; then
         echo "Failed to find the network script file." >&2
         return 1

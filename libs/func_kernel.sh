@@ -20,17 +20,17 @@ _patch_packages_ent_kernel_version()
 {
     # Check parameters
     local number_regex='^[0-9]+$'
-    if ! [ "$1" =~ $number_regex ] ; then
+    if ! [[ "$1" =~ $number_regex ]] ; then
         echo "Invalid major version: $1" >&2
         return 1
     fi
 
-    if ! [ "$2" =~ $number_regex ] ; then
+    if ! [[ "$2" =~ $number_regex ]] ; then
         echo "Invalid minor version: $2" >&2
         return 1
     fi
 
-    if ! [ "$3" == "-" ] && ! [ "$3" =~ $number_regex ] ; then
+    if ! [ "$3" == "-" ] && ! [[ "$3" =~ $number_regex ]] ; then
         echo "Invalid patch version: $3" >&2
         return 1
     fi
@@ -42,18 +42,19 @@ _patch_packages_ent_kernel_version()
         return 1
     fi
 
-    sed -i -E "s@(<\!ENTITY linux-major-version \"+)(.+\">)@\1$1\">@" "$5"
-    sed -i -E "s@(<\!ENTITY linux-minor-version \"+)(.+\">)@\1$2\">@" "$5"    
+    sed -i -E "s@(<\!ENTITY linux-major-version \"+)(.+\">)@\1$1\">@" "$5" &&
+    sed -i -E "s@(<\!ENTITY linux-minor-version \"+)(.+\">)@\1$2\">@" "$5" &&
     sed -i -E "s@(<\!ENTITY linux-md5 \"+)(.+\">)@\1$4\">@" "$5"
+    if [[ $? -gt 0 ]] ; then return 1; fi
 
     if [ "-" == "$3" ] ; then
-        sed -i -E '/<!--/ n; /<\!ENTITY linux-patch-version "/{s/<!E/<!--<!E/g;s/">/">-->/g;}' "$5"
-        sed -i -E '/linux-minor-version;">-->/{s/<!--//g;s/-->//g;}' "$5"
+        sed -i -E '/<!--/ n; /<\!ENTITY linux-patch-version "/{s/<!E/<!--<!E/g;s/">/">-->/g;}' "$5" &&
+        sed -i -E '/linux-minor-version;">-->/{s/<!--//g;s/-->//g;}' "$5" &&
         sed -i -E '/<!--/ n; /linux-patch-version;">/{s/<!E/<!--<!E/g;s/;">/;">-->/g;}' "$5"
     else
-        sed -i -E '/<!ENTITY linux-patch-version "/{s/<!--//g;s/-->//g;}' "$5"
-        sed -i -E "s@(<\!ENTITY linux-patch-version \"+)(.+\">)@\1$3\">@" "$5"
-        sed -i -E '/linux-patch-version;">-->/{s/<!--//g;s/-->//g;}' "$5"
+        sed -i -E '/<!ENTITY linux-patch-version "/{s/<!--//g;s/-->//g;}' "$5" &&
+        sed -i -E "s@(<\!ENTITY linux-patch-version \"+)(.+\">)@\1$3\">@" "$5" &&
+        sed -i -E '/linux-patch-version;">-->/{s/<!--//g;s/-->//g;}' "$5" &&
         sed -i -E '/<!--/ n; /linux-minor-version;">/{s/<!E/<!--<!E/g;s/;">/;">-->/g;}' "$5"
     fi
 }
@@ -231,6 +232,12 @@ _create_kernel_config_if_needed()
 # Check for possible needed firmwares defined in kernel config and copy them for the new LFS system
 _check_and_copy_needed_firmwares()
 {
+    # Check parameter
+    if [ ! -d "$1" ] ; then
+        echo "Invalid or missing folder: $1" >&2
+        return 1
+    fi
+
     local latest_kernel_ver=
     latest_kernel_ver=$(_get_latest_kernel_version)
     if [[ $? -gt 0 ]] ; then return 1; fi

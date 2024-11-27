@@ -19,6 +19,15 @@ _create_folders_and_get_sources()
         echo Done!
     fi
 
+    # Check if jhalfs folder is already exist and delete it if yes
+    local dir_blfs="$1/blfs_root"
+    if [ -d "$dir_blfs" ]
+    then
+        echo Deleting old blfs_root folder: "$dir_blfs"
+        sudo rm -rf "$dir_blfs" || { echo "Failed to delete folder: $dir_blfs" >&2; return 1; }
+        echo Done!
+    fi
+
     # Now create the jhalfs folder and book-source sub-folder owned by the current user
     local dir_book="$dir_jhalfs/book-source"
     local u="$(id -un)" # current user
@@ -32,9 +41,9 @@ _create_folders_and_get_sources()
     git clone https://git.linuxfromscratch.org/lfs.git "$dir_book" || return 1
 
     # Now create the blfs_root folder and blfs-xml sub-folder owned by the current user
-    local dir_blfs_book="$1/blfs_root/blfs-xml"
+    local dir_blfs_book="$dir_blfs/blfs-xml"
     echo Creating blfs_root folder...
-    sudo install -v -o "$u" -g root -m 1777 -d "$1/blfs_root" || return 1
+    sudo install -v -o "$u" -g root -m 1777 -d "$dir_blfs" || return 1
     sudo install -v -o "$u" -g "$g" -m 1777 -d "$dir_blfs_book" || return 1
 
     # Clone the BLFS book repository to blfs-xml folder
@@ -94,7 +103,7 @@ _patch_jhalfs_sources()
     sed -i -E "\@BUILDDIR=\"xxx\"@s@xxx@$1@g" "$file_cfg" &&
     sed -i -E "/^FSTAB=/s/^/#/g" "$file_cfg" &&
     sed -i -E "\@FSTAB=\"xxx\"@s@xxx@/home/$u/fstab@g" "$file_cfg" &&
-    sed -i -E "\@CONFIG=\"xxx\"@s@xxx@/home/$g/config-$latest_kernel_ver@g" "$file_cfg" &&
+    sed -i -E "\@CONFIG=\"xxx\"@s@xxx@/home/$u/config-$latest_kernel_ver@g" "$file_cfg" &&
     sed -i -E "\@KEYMAP=\"xxx\"@s@xxx@$(localectl | grep Keymap | awk -F' ' '{printf $NF}')@g" "$file_cfg"
     if [[ $? -gt 0 ]] ; then
         echo "Failed to patch jhalfs configuration file." >&2
@@ -117,4 +126,135 @@ _patch_jhalfs_sources()
 
     # Patch master.sh to run also the grub config related script
     sed -i '/^ .*10\*grub/s/^/#/g' "$dir_setup/LFS/master.sh"
+}
+
+
+# Final adjustments to the newly created LFS system
+_finalize_lfs_build()
+{
+    # Check parameter
+    local dir_lfs="$(realpath "$1")"
+    if [ ! -d "$dir_lfs" ] ; then
+        echo "Invalid folder: $dir_lfs"
+        return 1
+    fi
+
+    # Patch the sudoers file
+    sudo sed -i "/^root ALL=(ALL:ALL) ALL/a pkr ALL=(ALL:ALL) NOPASSWD: ALL" "$dir_lfs/etc/sudoers" &&
+
+    # Move blfs folder to pkr home folder
+    sudo mv -v "$dir_lfs/blfs_root" "$dir_lfs/home/pkr/" &&
+    sudo chown -hR pkr:pkr "$dir_lfs/home/pkr/blfs_root" &&
+    sudo chown -hR pkr:pkr "$dir_lfs/var/lib/jhalfs" &&
+    sudo sed -i "s|/blfs_root/packdesc.dtd|/home/pkr/blfs_root/packdesc.dtd|g" "$dir_lfs/var/lib/jhalfs/BLFS/instpkg.xml"
+}
+
+
+# Create autologin script to run blfs build after reboot
+_setup_autologin()
+{
+    # Check parameter
+    local dir_lfs="$(realpath "$1")"
+    if [ ! -d "$dir_lfs" ] ; then
+        echo "Invalid folder: $dir_lfs"
+        return 1
+    fi
+
+    local dir_autologin="$dir_lfs/etc/systemd/system/getty@tty1.service.d"
+    sudo mkdir -pv "$dir_autologin" &&
+    printf "[Service]\nType=simple\nExecStart=\nExecStart=-/sbin/agetty --autologin pkr %%I 38400 linux\n" | sudo tee "$dir_autologin/override.conf" > /dev/null
+}
+
+
+# Creates the blfs configuration file with the packages to build.
+# The only parameter should be the new LFS system's root folder.
+_create_blfs_config()
+{
+    # Check parameter
+    local dir_lfs="$(realpath "$1")"
+    if [ ! -d "$dir_lfs" ] ; then
+        echo "Invalid folder: $dir_lfs"
+        return 1
+    fi
+
+    # Create new blfs config
+    local dir_blfscfg="$dir_lfs/home/pkr/blfs_root/configuration"
+    if [ -f "$dir_blfscfg" ] ; then
+        sudo rm -fv "$dir_blfscfg"
+    fi
+
+    cat > "$dir_blfscfg" << EOF
+CONFIG_pciutils=y
+CONFIG_twm=y
+CONFIG_xinit=y
+CONFIG_xorg-evdev-driver=y
+CONFIG_xorg-libinput-driver=y
+CONFIG_xwayland=y
+CONFIG_sddm=y
+CONFIG_openbox=y
+CONFIG_lxqt-menu-data=y
+CONFIG_lxqt-panel=y
+CONFIG_lxqt-post-install=y
+CONFIG_lxqt-pre-install=y
+CONFIG_lxqt-runner=y
+CONFIG_lxqt-session=y
+CONFIG_lxqt-sudo=y
+CONFIG_lxqt-themes=y
+CONFIG_pcmanfm-qt=y
+CONFIG_lxqt-notificationd=y
+CONFIG_pavucontrol-qt=y
+CONFIG_qterminal=y
+CONFIG_firefox=y
+
+# Build settings
+MS_sendmail=y
+MAIL_SERVER="sendmail"
+DEPLVL_2=y
+optDependency=2
+LANGUAGE="hu_HU.UTF-8"
+SUDO=y
+DEL_LA_FILES=y
+
+# Build Layout
+SRC_ARCHIVE="/sources"
+BUILD_ROOT="/sources"
+BUILD_SUBDIRS=y
+
+# Optimization
+JOBS=0
+CFG_CFLAGS=" -O3 -pipe -march=native "
+CFG_CXXFLAGS=" -O3 -pipe -march=native "
+CFG_LDFLAGS="EMPTY"
+EOF
+}
+
+
+# Creates script that auto builds the blfs system after successfull lfs build
+_create_blfs_builder_script()
+{
+    # Check parameter
+    local dir_lfs="$(realpath "$1")"
+    if [ ! -d "$dir_lfs" ] ; then
+        echo "Invalid folder: $dir_lfs"
+        return 1
+    fi
+    
+    cat > "$dir_lfs/home/pkr/.profile" << EOF
+#!/bin/bash
+cd "/home/pkr/blfs_root/blfs-xml"
+git reset --hard
+git clean -xfd
+cd "/home/pkr/blfs_root/lfs-xml"
+git reset --hard
+git clean -xfd
+cd "/home/pkr/blfs_root"
+make update
+. gen_pkg_book.sh <<< yes
+cd work
+../gen-makefile.sh
+make
+sudo rm -rfv /etc/systemd/system/getty@tty1.service.d
+rm -fv /home/pkr/.profile
+sudo systemctl poweroff
+EOF
 }
