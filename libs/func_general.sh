@@ -252,6 +252,8 @@ _create_blfs_builder_script()
 _build_blfs()
 {(
     if ! [ "$USER" == "pkr" ] ; then return 0; fi
+    echo "Wait 15 seconds before start to have network ready ..."
+    sleep 15
     local dir_home="/home/pkr"
     local dir_blfs_root="$dir_home/blfs_root"
     local dir_lfs_xml="$dir_blfs_root/lfs-xml"
