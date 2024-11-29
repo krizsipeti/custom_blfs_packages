@@ -144,9 +144,17 @@ _finalize_lfs_build()
 
     # Move blfs folder to pkr home folder
     sudo mv -v "$dir_lfs/blfs_root" "$dir_lfs/home/pkr/" &&
+    sudo chroot "$dir_lfs" sed -i -E "/(=configuration|python3)/s/^/#/g;/=configuration/i\        source /home/pkr/custom_blfs_packages/libs/func_general.sh && _create_blfs_config /" /home/pkr/blfs_root/Makefile &&
     sudo chroot "$dir_lfs" chown -hR pkr:pkr "/home/pkr/blfs_root" &&
     sudo chroot "$dir_lfs" chown -hR pkr:pkr "/var/lib/jhalfs" &&
     sudo sed -i "s|/blfs_root/packdesc.dtd|/home/pkr/blfs_root/packdesc.dtd|g" "$dir_lfs/var/lib/jhalfs/BLFS/instpkg.xml"
+
+    # Copy custom blfs folder to pkr home folder if exist
+    if [ ! -d "$HOME/custom_blfs_packages" ] ; then
+        return 0
+    fi
+    sudo cp -rv "$HOME/custom_blfs_packages" "$dir_lfs/home/pkr/" &&
+    sudo chroot "$dir_lfs" chown -hR pkr:pkr "/home/pkr/custom_blfs_packages"
 }
 
 
@@ -162,7 +170,7 @@ _setup_autologin()
 
     local dir_autologin="$dir_lfs/etc/systemd/system/getty@tty1.service.d"
     sudo mkdir -pv "$dir_autologin" &&
-    printf "[Service]\nType=simple\nExecStart=\nExecStart=-/sbin/agetty --autologin pkr %%I 38400 linux\n" | sudo tee "$dir_autologin/override.conf" > /dev/null
+    printf "[Service]\nType=simple\nExecStart=\nExecStart=-/sbin/agetty --autologin pkr --noclear - \$TERM\n" | sudo tee "$dir_autologin/override.conf" > /dev/null
 }
 
 
@@ -238,23 +246,32 @@ _create_blfs_builder_script()
         echo "Invalid folder: $dir_lfs"
         return 1
     fi
-    
-    cat > "$dir_lfs/home/pkr/.profile" << EOF
-#!/bin/bash
-cd "/home/pkr/blfs_root/blfs-xml"
-git reset --hard
-git clean -xfd
-cd "/home/pkr/blfs_root/lfs-xml"
-git reset --hard
-git clean -xfd
-cd "/home/pkr/blfs_root"
-make update
-. gen_pkg_book.sh <<< yes
-cd work
-../gen-makefile.sh
-make
-sudo rm -rfv /etc/systemd/system/getty@tty1.service.d
-rm -fv /home/pkr/.profile
-sudo systemctl poweroff
-EOF
+
+    printf '#!/bin/bash
+
+_build_blfs()
+{(
+    if ! [ "$USER" == "pkr" ] ; then return 0; fi
+    local dir_home="/home/pkr"
+    local dir_blfs_root="$dir_home/blfs_root"
+    local dir_lfs_xml="$dir_blfs_root/lfs-xml"
+    local dir_blfs_xml="$dir_blfs_root/blfs-xml"
+    local dir_blfs_work="$dir_blfs_root/work"
+    cd "$dir_lfs_xml"
+    git reset --hard
+    git clean -xfd
+    cd "$dir_blfs_xml"
+    git reset --hard
+    git clean -xfd
+    cd "$dir_blfs_root"
+    make clean
+    make update
+    make <<< yes
+    cd "$dir_blfs_work"
+    ../gen-makefile.sh
+    make
+    sudo rm -rfv /etc/systemd/system/getty@tty1.service.d
+)}
+
+_build_blfs\n' | sudo tee "$dir_lfs/etc/profile.d/x_build_blfs.sh" > /dev/null
 }
