@@ -253,6 +253,7 @@ _build_blfs()
 {(
     if ! [ "$USER" == "pkr" ] ; then return 0; fi
     sudo rm -rfv /etc/systemd/system/getty@tty1.service.d
+    sudo rm -fv /etc/profile.d/x_build_blfs.sh
     echo "Wait 15 seconds before start to have network ready ..."
     sleep 15
     local dir_home="/home/pkr"

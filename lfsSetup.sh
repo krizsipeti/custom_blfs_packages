@@ -23,7 +23,7 @@ _build_lfs()
     _create_folders_and_get_sources "$dir_lfs" || return 1
 
     # Patch the LFS book's packages.ent with latest kernel
-    _update_lfs_with_latest_kernel $dir_lfs || return 1
+    _update_lfs_with_latest_kernel "$dir_lfs" || return 1
 
     # Check for the kernel config and try to create it based on a previous one if not found
     _create_kernel_config_if_needed "$dir_lfs" || return 1
@@ -43,7 +43,7 @@ _build_lfs()
     _patch_network_scripts "$dir_lfs" "$2" || return 1
 
     # Patch fstab script
-    _patch_fstab $dir_lfs || return 1
+    _patch_fstab "$dir_lfs" || return 1
 
     # Patch LFS kernel script to keep build folder and add new user
     _patch_kernel_script "$dir_lfs" || return 1
