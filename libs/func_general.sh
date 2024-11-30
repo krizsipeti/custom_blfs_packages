@@ -252,6 +252,7 @@ _create_blfs_builder_script()
 _build_blfs()
 {(
     if ! [ "$USER" == "pkr" ] ; then return 0; fi
+    sudo rm -rfv /etc/systemd/system/getty@tty1.service.d
     echo "Wait 15 seconds before start to have network ready ..."
     sleep 15
     local dir_home="/home/pkr"
@@ -266,13 +267,12 @@ _build_blfs()
     git reset --hard
     git clean -xfd
     cd "$dir_blfs_root"
-    make clean
-    make update
-    make <<< yes
-    cd "$dir_blfs_work"
-    ../gen-makefile.sh
+    make clean &&
+    make update &&
+    make <<< yes &&
+    cd "$dir_blfs_work" &&
+    ../gen-makefile.sh &&
     make
-    sudo rm -rfv /etc/systemd/system/getty@tty1.service.d
 )}
 
 _build_blfs\n' | sudo tee "$dir_lfs/etc/profile.d/x_build_blfs.sh" > /dev/null
