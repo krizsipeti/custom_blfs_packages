@@ -144,7 +144,7 @@ _finalize_lfs_build()
 
     # Move blfs folder to pkr home folder
     sudo mv -v "$dir_lfs/blfs_root" "$dir_lfs/home/pkr/" &&
-    sudo chroot "$dir_lfs" sed -i -E "/(=configuration|python3)/s/^/#/g;/=configuration/i\	source /home/pkr/custom_blfs_packages/libs/func_general.sh && _create_blfs_config /" /home/pkr/blfs_root/Makefile &&
+    sudo chroot "$dir_lfs" sed -i -E "/(=configuration|python3)/s/^/#/g;/=configuration/i\	source /home/pkr/custom_blfs_packages/libs/func_general.sh && _create_blfs_config_xorg /" /home/pkr/blfs_root/Makefile &&
     sudo chroot "$dir_lfs" chown -hR pkr:pkr "/home/pkr/blfs_root" &&
     sudo chroot "$dir_lfs" chown -hR pkr:pkr "/var/lib/jhalfs" &&
     sudo sed -i "s|/blfs_root/packdesc.dtd|/home/pkr/blfs_root/packdesc.dtd|g" "$dir_lfs/var/lib/jhalfs/BLFS/instpkg.xml"
@@ -174,9 +174,9 @@ _setup_autologin()
 }
 
 
-# Creates the blfs configuration file with the packages to build.
+# Creates the blfs configuration file to build Xorg with wayland support.
 # The only parameter should be the new LFS system's root folder.
-_create_blfs_config()
+_create_blfs_config_xorg()
 {
     # Check parameter
     local dir_lfs="$(realpath "$1")"
@@ -193,17 +193,99 @@ _create_blfs_config()
 
     cat > "$dir_blfscfg" << EOF
 CONFIG_pciutils=y
-CONFIG_twm=y
 CONFIG_xinit=y
 CONFIG_xorg-evdev-driver=y
 CONFIG_xorg-libinput-driver=y
 CONFIG_xwayland=y
-CONFIG_sddm=y
-CONFIG_openbox=y
+
+# Build settings
+MS_sendmail=y
+MAIL_SERVER="sendmail"
+DEPLVL_2=y
+optDependency=2
+LANGUAGE="hu_HU.UTF-8"
+SUDO=y
+DEL_LA_FILES=y
+
+# Build Layout
+SRC_ARCHIVE="/sources"
+BUILD_ROOT="/sources"
+BUILD_SUBDIRS=y
+
+# Optimization
+JOBS=0
+CFG_CFLAGS=" -O3 -pipe -march=native "
+CFG_CXXFLAGS=" -O3 -pipe -march=native "
+CFG_LDFLAGS="EMPTY"
+EOF
+}
+
+
+# Creates the blfs configuration file to build Qt6.
+# The only parameter should be the new LFS system's root folder.
+_create_blfs_config_qt6()
+{
+    # Check parameter
+    local dir_lfs="$(realpath "$1")"
+    if [ ! -d "$dir_lfs" ] ; then
+        echo "Invalid folder: $dir_lfs"
+        return 1
+    fi
+
+    # Create new blfs config
+    local dir_blfscfg="$dir_lfs/home/pkr/blfs_root/configuration"
+    if [ -f "$dir_blfscfg" ] ; then
+        sudo rm -fv "$dir_blfscfg" || return 1
+    fi
+
+    cat > "$dir_blfscfg" << EOF
+CONFIG_qt6=y
+
+# Build settings
+MS_sendmail=y
+MAIL_SERVER="sendmail"
+DEPLVL_2=y
+optDependency=2
+LANGUAGE="hu_HU.UTF-8"
+SUDO=y
+DEL_LA_FILES=y
+
+# Build Layout
+SRC_ARCHIVE="/sources"
+BUILD_ROOT="/sources"
+BUILD_SUBDIRS=y
+
+# Optimization
+JOBS=0
+CFG_CFLAGS=" -O2 -pipe "
+CFG_CXXFLAGS=" -O2 -pipe "
+CFG_LDFLAGS="EMPTY"
+EOF
+}
+
+
+# Creates the blfs configuration file to build LXQt.
+# The only parameter should be the new LFS system's root folder.
+_create_blfs_config_lxqt()
+{
+    # Check parameter
+    local dir_lfs="$(realpath "$1")"
+    if [ ! -d "$dir_lfs" ] ; then
+        echo "Invalid folder: $dir_lfs"
+        return 1
+    fi
+
+    # Create new blfs config
+    local dir_blfscfg="$dir_lfs/home/pkr/blfs_root/configuration"
+    if [ -f "$dir_blfscfg" ] ; then
+        sudo rm -fv "$dir_blfscfg" || return 1
+    fi
+
+    cat > "$dir_blfscfg" << EOF
 CONFIG_lxqt-menu-data=y
 CONFIG_lxqt-panel=y
-CONFIG_lxqt-post-install=y
-CONFIG_lxqt-pre-install=y
+#CONFIG_lxqt-post-install=y
+#CONFIG_lxqt-pre-install=y
 CONFIG_lxqt-runner=y
 CONFIG_lxqt-session=y
 CONFIG_lxqt-sudo=y
@@ -212,7 +294,6 @@ CONFIG_pcmanfm-qt=y
 CONFIG_lxqt-notificationd=y
 CONFIG_pavucontrol-qt=y
 CONFIG_qterminal=y
-CONFIG_firefox=y
 
 # Build settings
 MS_sendmail=y
@@ -273,7 +354,20 @@ _build_blfs()
     make <<< yes &&
     cd "$dir_blfs_work" &&
     ../gen-makefile.sh &&
+    make &&
+    cd "$dir_blfs_root" &&
+    sed -i -E "s/_create_blfs_config_xorg/_create_blfs_config_qt6/g" "$dir_blfs_root/Makefile" &&
+    make <<< yes &&
+    cd "$dir_blfs_work" &&
+    ../gen-makefile.sh &&
+    make &&
+    cd "$dir_blfs_root" &&
+    sed -i -E "s/_create_blfs_config_qt6/_create_blfs_config_lxqt/g" "$dir_blfs_root/Makefile" &&
+    make <<< yes &&
+    cd "$dir_blfs_work" &&
+    ../gen-makefile.sh &&
     make
+    sudo shutdown --poweroff +1
 )}
 
 _build_blfs\n' | sudo tee "$dir_lfs/etc/profile.d/x_build_blfs.sh" > /dev/null
