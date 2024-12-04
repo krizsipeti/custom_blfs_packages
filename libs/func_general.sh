@@ -144,7 +144,6 @@ _finalize_lfs_build()
 
     # Move blfs folder to pkr home folder
     sudo mv -v "$dir_lfs/blfs_root" "$dir_lfs/home/pkr/" &&
-    sudo chroot "$dir_lfs" sed -i -E "/(=configuration|python3)/s/^/#/g;/=configuration/i\	source /home/pkr/custom_blfs_packages/libs/func_general.sh && _create_blfs_config_xorg /" /home/pkr/blfs_root/Makefile &&
     sudo chroot "$dir_lfs" chown -hR pkr:pkr "/home/pkr/blfs_root" &&
     sudo chroot "$dir_lfs" chown -hR pkr:pkr "/var/lib/jhalfs" &&
     sudo sed -i "s|/blfs_root/packdesc.dtd|/home/pkr/blfs_root/packdesc.dtd|g" "$dir_lfs/var/lib/jhalfs/BLFS/instpkg.xml"
@@ -351,6 +350,7 @@ _build_blfs()
     cd "$dir_blfs_root"
     make clean &&
     make update &&
+    sed -i -E "/(=configuration|python3)/s/^/#/g;/=configuration/i\	source /home/pkr/custom_blfs_packages/libs/func_general.sh && _create_blfs_config_xorg /" "$dir_blfs_root/Makefile" &&
     make <<< yes &&
     cd "$dir_blfs_work" &&
     ../gen-makefile.sh &&

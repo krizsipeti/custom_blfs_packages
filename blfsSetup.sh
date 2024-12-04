@@ -16,9 +16,6 @@ _build_blfs()
     # Setup autologin
     local dir_lfs="$(realpath "$1")"
     _setup_autologin "$dir_lfs" || return 1
-        
-    # Create new blfs config
-    _create_blfs_config "$dir_lfs" || return 1
 
     # Create autologin script to run blfs build after reboot
     _create_blfs_builder_script "$dir_lfs" || return 1
