@@ -256,8 +256,8 @@ BUILD_SUBDIRS=y
 
 # Optimization
 JOBS=0
-CFG_CFLAGS=" -O2 -pipe "
-CFG_CXXFLAGS=" -O2 -pipe "
+CFG_CFLAGS=" -O3 -pipe -march=native "
+CFG_CXXFLAGS=" -O3 -pipe -march=native "
 CFG_LDFLAGS="EMPTY"
 EOF
 }
@@ -293,6 +293,51 @@ CONFIG_pcmanfm-qt=y
 CONFIG_lxqt-notificationd=y
 CONFIG_pavucontrol-qt=y
 CONFIG_qterminal=y
+
+# Build settings
+MS_sendmail=y
+MAIL_SERVER="sendmail"
+DEPLVL_2=y
+optDependency=2
+LANGUAGE="hu_HU.UTF-8"
+SUDO=y
+DEL_LA_FILES=y
+
+# Build Layout
+SRC_ARCHIVE="/sources"
+BUILD_ROOT="/sources"
+BUILD_SUBDIRS=y
+
+# Optimization
+JOBS=0
+CFG_CFLAGS=" -O3 -pipe -march=native "
+CFG_CXXFLAGS=" -O3 -pipe -march=native "
+CFG_LDFLAGS="EMPTY"
+EOF
+}
+
+
+# Creates the blfs configuration file to build window and display managers.
+# For now we use openbox as window manager and sddm as display manager.
+# The only parameter should be the new LFS system's root folder.
+_create_blfs_config_dm()
+{
+    # Check parameter
+    local dir_lfs="$(realpath "$1")"
+    if [ ! -d "$dir_lfs" ] ; then
+        echo "Invalid folder: $dir_lfs"
+        return 1
+    fi
+
+    # Create new blfs config
+    local dir_blfscfg="$dir_lfs/home/pkr/blfs_root/configuration"
+    if [ -f "$dir_blfscfg" ] ; then
+        sudo rm -fv "$dir_blfscfg" || return 1
+    fi
+
+    cat > "$dir_blfscfg" << EOF
+CONFIG_openbox=y
+CONFIG_sddm=y
 
 # Build settings
 MS_sendmail=y
@@ -363,6 +408,12 @@ _build_blfs()
     make &&
     cd "$dir_blfs_root" &&
     sed -i -E "s/_create_blfs_config_qt6/_create_blfs_config_lxqt/g" "$dir_blfs_root/Makefile" &&
+    make <<< yes &&
+    cd "$dir_blfs_work" &&
+    ../gen-makefile.sh &&
+    make &&
+    cd "$dir_blfs_root" &&
+    sed -i -E "s/_create_blfs_config_lxqt/_create_blfs_config_dm/g" "$dir_blfs_root/Makefile" &&
     make <<< yes &&
     cd "$dir_blfs_work" &&
     ../gen-makefile.sh &&
