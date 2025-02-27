@@ -4,9 +4,9 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY libtorrent-rasterbar-download-http "https://github.com/arvidn/libtorrent/releases/download/v2.0.10/libtorrent-rasterbar-2.0.10.tar.gz">
+  <!ENTITY libtorrent-rasterbar-download-http "https://github.com/arvidn/libtorrent/releases/download/v2.0.11/libtorrent-rasterbar-2.0.11.tar.gz">
   <!ENTITY libtorrent-rasterbar-download-ftp  " ">
-  <!ENTITY libtorrent-rasterbar-md5sum        "bfe6fff84add3dc5d51e10547f85e217">
+  <!ENTITY libtorrent-rasterbar-md5sum        "dc497b6bb4de4304694fd9ed87257466">
   <!ENTITY libtorrent-rasterbar-size          "4.2 MB">
   <!ENTITY libtorrent-rasterbar-buildsize     "150 MB">
   <!ENTITY libtorrent-rasterbar-time          "1.5 SBU (using parallelism=4)">

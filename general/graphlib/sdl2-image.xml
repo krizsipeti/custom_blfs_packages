@@ -4,9 +4,9 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY sdl2-image-download-http "https://github.com/libsdl-org/SDL_image/releases/download/release-2.8.3/SDL2_image-2.8.3.tar.gz">
+  <!ENTITY sdl2-image-download-http "https://github.com/libsdl-org/SDL_image/releases/download/release-2.8.5/SDL2_image-2.8.5.tar.gz">
   <!ENTITY sdl2-image-download-ftp  " ">
-  <!ENTITY sdl2-image-md5sum        "ee23162d40bc57762392bf22ac2c0b94">
+  <!ENTITY sdl2-image-md5sum        "c34a32ee15ab31f6b549e521e4c94a04">
   <!ENTITY sdl2-image-size          "12.6 MB">
   <!ENTITY sdl2-image-buildsize     "150 MB">
   <!ENTITY sdl2-image-time          "1 SBU (using parallelism=4)">
