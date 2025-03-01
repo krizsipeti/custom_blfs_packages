@@ -27,7 +27,7 @@ getLatestGithubRelease()
 {
     greetMsg "$2"
     URL=$(curl -v --silent "https://github.com/$1/releases" 2>&1 | grep 'loading="lazy" src=' | tr '"' '\n' | grep /releases/ -m1)
-    URL="https://github.com$(curl -v --silent "$URL" 2>&1 | grep '<a href=' | grep '.tar.' -m1 | tr '"' '\n' | grep /releases/)"
+    URL="https://github.com$(curl -v --silent "$URL" 2>&1 | grep '<a href=' | grep '.tar.' -m1 | tr '"' '\n' | grep "$1")"
     VER=$(echo "$URL" | awk -F/ '{ print $(NF-1) }' | awk -F- '{ print $NF }')
     if [[ $4 ]]; then
         VER=$(echo "$VER" | cut -c"$4")
@@ -86,4 +86,7 @@ getLatestGithubRelease libsdl-org/SDL_ttf sdl2-ttf general/graphlib
 
 #vscode
 getLatestCodeloadRelease microsoft/vscode vscode xsoft/other
+
+#cmark
+getLatestGithubRelease commonmark/cmark cmark pst/sgml
 

@@ -44,3 +44,8 @@ grep -qF sdl2-image-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY
 cp -fv xsoft/other/vscode.xml ../blfs_root/blfs-xml/xsoft/other
 grep -qF vscode.xml ../blfs_root/blfs-xml/xsoft/other/other.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="vscode.xml"/>' ../blfs_root/blfs-xml/xsoft/other/other.xml
 grep -qF vscode-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY vscode-version "1.97.2">' >> ../blfs_root/blfs-xml/packages.ent
+
+# Add cmark
+cp -fv pst/sgml/cmark.xml ../blfs_root/blfs-xml/pst/sgml
+grep -qF cmark.xml ../blfs_root/blfs-xml/pst/sgml/sgml.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="cmark.xml"/>' ../blfs_root/blfs-xml/pst/sgml/sgml.xml
+grep -qF cmark-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY cmark-version "tags">' >> ../blfs_root/blfs-xml/packages.ent

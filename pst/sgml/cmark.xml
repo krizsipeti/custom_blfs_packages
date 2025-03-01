@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY cmark-download-http "https://github.com/commonmark/cmark/archive/refs/tags/0.31.1.tar.gz">
+  <!ENTITY cmark-download-ftp  " ">
+  <!ENTITY cmark-md5sum        "362160f1c0457389f5ad6e9d5eaf4cfb">
+  <!ENTITY cmark-size          "4.6 MB">
+  <!ENTITY cmark-buildsize     "500 MB">
+  <!ENTITY cmark-time          "2 SBU (using parallelism=4)">
+]>
+
+<sect1 id="cmark" xreflabel="cmark-&cmark-version;">
+  <?dbhtml filename="cmark.html"?>
+
+
+  <title>cmark-&cmark-version;</title>
+
+  <indexterm zone="cmark">
+    <primary sortas="a-cmark">cmark</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduction to cmark</title>
+
+    <para>
+      <application>cmark</application> is the C reference implementation of CommonMark, a rationalized version of Markdown syntax with a spec.
+    </para>
+
+    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Download (HTTP): <ulink url="&cmark-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download (FTP): <ulink url="&cmark-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download MD5 sum: &cmark-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download size: &cmark-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated disk space required: &cmark-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated build time: &cmark-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">cmark Dependencies</bridgehead>
+
+    <bridgehead renderas="sect4">Required</bridgehead>
+    <para role="required">
+      <xref linkend="cmake"/>
+    </para>
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installation of cmark</title>
+
+    <para>
+      Install <application>cmark</application> by running the
+      following commands:
+    </para>
+
+<screen><userinput>mkdir -pv build &amp;&amp;
+cmake -S . -B build -DCMAKE_INSTALL_PREFIX=/usr &amp;&amp;
+cmake --build build</userinput></screen>
+
+    <para>
+      This package does not come with a test suite.
+    </para>
+
+    <para>
+      Now, as the <systemitem class="username">root</systemitem> user:
+    </para>
+
+    <screen role="root"><userinput>cmake --install build</userinput></screen>
+  </sect2>
+
+  <sect2 role="content">
+    <title>Contents</title>
+
+    <segmentedlist>
+      <segtitle>Installed Programs</segtitle>
+      <segtitle>Installed Libraries</segtitle>
+      <segtitle>Installed Directory</segtitle>
+
+      <seglistitem>
+	<seg>
+          cmark
+        </seg>
+        <seg>
+          None
+        </seg>
+        <seg>
+          /usr/lib/libcmark
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+  </sect2>
+
+</sect1>
