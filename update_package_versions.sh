@@ -27,11 +27,11 @@ getLatestGithubRelease()
 {
     greetMsg "$2"
     URL=$(curl -v --silent "https://github.com/$1/releases" 2>&1 | grep 'loading="lazy" src=' | tr '"' '\n' | grep /releases/ -m1)
-    URL="https://github.com$(curl -v --silent "$URL" 2>&1 | grep '<a href=' | grep '.tar.' -m1 | tr '"' '\n' | grep "$1")"
-    VER=$(echo "$URL" | awk -F/ '{ print $(NF-1) }' | awk -F- '{ print $NF }')
+    VER=$(echo "$URL" | awk -F/ '{ print $(NF) }' | awk -F- '{ print $NF }')
+    URL="https://github.com$(curl -v --silent "$URL" 2>&1 | grep '<a href=' | grep '.tar.' -m1 | tr '"' '\n' | grep "$1")"    
     if [[ $4 ]]; then
         VER=$(echo "$VER" | cut -c"$4")
-    fi    
+    fi
     updatePkg "$2" "$VER" "$URL" "$3" "$MD5"
 }
 

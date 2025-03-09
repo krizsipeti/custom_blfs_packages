@@ -48,4 +48,4 @@ grep -qF vscode-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY vsc
 # Add cmark
 #cp -fv pst/sgml/cmark.xml ../blfs_root/blfs-xml/pst/sgml
 #grep -qF cmark.xml ../blfs_root/blfs-xml/pst/sgml/sgml.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="cmark.xml"/>' ../blfs_root/blfs-xml/pst/sgml/sgml.xml
-#grep -qF cmark-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY cmark-version "tags">' >> ../blfs_root/blfs-xml/packages.ent
+#grep -qF cmark-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY cmark-version "0.31.1">' >> ../blfs_root/blfs-xml/packages.ent
