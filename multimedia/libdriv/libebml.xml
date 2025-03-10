@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY libebml-download-http "https://github.com/Matroska-Org/libebml/archive/refs/tags/release-1.4.5.tar.gz">
+  <!ENTITY libebml-download-ftp  " ">
+  <!ENTITY libebml-md5sum        "2fb834d776f20b4c05fe80e2be219fa0">
+  <!ENTITY libebml-size          "1 MB">
+  <!ENTITY libebml-buildsize     "10 MB">
+  <!ENTITY libebml-time          "0.1 SBU (using parallelism=4)">
+]>
+
+<sect1 id="libebml" xreflabel="libebml-&libebml-version;">
+  <?dbhtml filename="libebml.html"?>
+
+
+  <title>libebml-&libebml-version;</title>
+
+  <indexterm zone="libebml">
+    <primary sortas="a-libebml">libebml</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduction to libebml</title>
+
+    <para>
+      <application>libebml</application> is a library for reading and (eventually) writing ID3 tags, both
+  ID3v1 and the various versions of ID3v2.
+    </para>
+
+    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Download (HTTP): <ulink url="&libebml-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download (FTP): <ulink url="&libebml-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download MD5 sum: &libebml-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download size: &libebml-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated disk space required: &libebml-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated build time: &libebml-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">libebml Dependencies</bridgehead>
+
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installation of libebml</title>
+
+    <para>
+      Install <application>libebml</application> by running the
+      following commands:
+    </para>
+
+<screen><userinput>mkdir build &amp;&amp;
+cd build &amp;&amp;
+cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_SHARED_LIBS=YES &amp;&amp;
+make</userinput></screen>
+
+    <para>
+      This package does not come with a test suite.
+    </para>
+
+    <para>
+      Now, as the <systemitem class="username">root</systemitem> user:
+    </para>
+
+    <screen role="root"><userinput>make install</userinput></screen>
+  </sect2>
+
+  <sect2 role="content">
+    <title>Contents</title>
+
+    <segmentedlist>
+      <segtitle>Installed Programs</segtitle>
+      <segtitle>Installed Libraries</segtitle>
+      <segtitle>Installed Directory</segtitle>
+
+      <seglistitem>
+	<seg>
+          libebml
+        </seg>
+        <seg>
+          None
+        </seg>
+        <seg>
+          /usr/share/libebml
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+  </sect2>
+
+</sect1>

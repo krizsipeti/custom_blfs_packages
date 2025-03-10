@@ -49,3 +49,8 @@ grep -qF vscode-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY vsc
 cp -fv pst/sgml/libcmark.xml ../blfs_root/blfs-xml/pst/sgml
 grep -qF libcmark.xml ../blfs_root/blfs-xml/pst/sgml/sgml.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="libcmark.xml"/>' ../blfs_root/blfs-xml/pst/sgml/sgml.xml
 grep -qF libcmark-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY libcmark-version "0.31.1">' >> ../blfs_root/blfs-xml/packages.ent
+
+# Add libebml
+cp -fv multimedia/libdriv/libebml.xml ../blfs_root/blfs-xml/multimedia/libdriv
+grep -qF libebml.xml ../blfs_root/blfs-xml/multimedia/libdriv/libdriv.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="libebml.xml"/>' ../blfs_root/blfs-xml/multimedia/libdriv/libdriv.xml
+grep -qF libebml-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY libebml-version "1.4.5">' >> ../blfs_root/blfs-xml/packages.ent

@@ -35,6 +35,20 @@ getLatestGithubRelease()
     updatePkg "$2" "$VER" "$URL" "$3" "$MD5"
 }
 
+# Function that gets the latest tag of a specific package.
+# This function works only with packages stored on github.
+getLatestGithubTag()
+{
+    greetMsg "$2"
+    URL=$(curl -v --silent "https://github.com/$1/tags" 2>&1 | grep -E '<h2 data.*<a href=' | tr '"' '\n' | grep /tag/$5 -m1)
+    VER=$(echo "$URL" | awk -F/ '{ print $(NF) }' | awk -F- '{ print $NF }')
+    URL="https://github.com$(curl -v --silent "https://github.com/$1/tags" 2>&1 | grep -E '<a class.*href=' | tr '"' '\n' | grep /tags/.*$VER.tar..*)"
+    if [[ $4 ]]; then
+        VER=$(echo "$VER" | cut -c"$4")
+    fi
+    updatePkg "$2" "$VER" "$URL" "$3" "$MD5"
+}
+
 # Function that gets the latest release of a specific package.
 # This function works only with packages stored on github.
 # It generates a codeload tar.gz download link
@@ -89,4 +103,7 @@ getLatestCodeloadRelease microsoft/vscode vscode xsoft/other
 
 #libcmark
 getLatestGithubRelease commonmark/cmark libcmark pst/sgml
+
+#libebml
+getLatestGithubTag Matroska-Org/libebml libebml multimedia/libdriv
 
