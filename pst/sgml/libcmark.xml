@@ -4,66 +4,66 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY cmark-download-http "https://github.com/commonmark/cmark/archive/refs/tags/0.31.1.tar.gz">
-  <!ENTITY cmark-download-ftp  " ">
-  <!ENTITY cmark-md5sum        "362160f1c0457389f5ad6e9d5eaf4cfb">
-  <!ENTITY cmark-size          "4.6 MB">
-  <!ENTITY cmark-buildsize     "500 MB">
-  <!ENTITY cmark-time          "2 SBU (using parallelism=4)">
+  <!ENTITY libcmark-download-http "https://github.com/commonmark/cmark/archive/refs/tags/0.31.1.tar.gz">
+  <!ENTITY libcmark-download-ftp  " ">
+  <!ENTITY libcmark-md5sum        "362160f1c0457389f5ad6e9d5eaf4cfb">
+  <!ENTITY libcmark-size          "4.6 MB">
+  <!ENTITY libcmark-buildsize     "500 MB">
+  <!ENTITY libcmark-time          "2 SBU (using parallelism=4)">
 ]>
 
-<sect1 id="cmark" xreflabel="cmark-&cmark-version;">
-  <?dbhtml filename="cmark.html"?>
+<sect1 id="libcmark" xreflabel="libcmark-&libcmark-version;">
+  <?dbhtml filename="libcmark.html"?>
 
 
-  <title>cmark-&cmark-version;</title>
+  <title>libcmark-&libcmark-version;</title>
 
-  <indexterm zone="cmark">
-    <primary sortas="a-cmark">cmark</primary>
+  <indexterm zone="libcmark">
+    <primary sortas="a-libcmark">libcmark</primary>
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to cmark</title>
+    <title>Introduction to libcmark</title>
 
     <para>
-      <application>cmark</application> is the C reference implementation of CommonMark, a rationalized version of Markdown syntax with a spec.
+      <application>libcmark</application> is the C reference implementation of CommonMark, a rationalized version of Markdown syntax with a spec.
     </para>
 
     <bridgehead renderas="sect3">Package Information</bridgehead>
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&cmark-download-http;"/>
+          Download (HTTP): <ulink url="&libcmark-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&cmark-download-ftp;"/>
+          Download (FTP): <ulink url="&libcmark-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &cmark-md5sum;
+          Download MD5 sum: &libcmark-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &cmark-size;
+          Download size: &libcmark-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &cmark-buildsize;
+          Estimated disk space required: &libcmark-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &cmark-time;
+          Estimated build time: &libcmark-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">cmark Dependencies</bridgehead>
+    <bridgehead renderas="sect3">libcmark Dependencies</bridgehead>
 
     <bridgehead renderas="sect4">Required</bridgehead>
     <para role="required">
@@ -72,10 +72,10 @@
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of cmark</title>
+    <title>Installation of libcmark</title>
 
     <para>
-      Install <application>cmark</application> by running the
+      Install <application>libcmark</application> by running the
       following commands:
     </para>
 
@@ -104,7 +104,7 @@ cmake --build build</userinput></screen>
 
       <seglistitem>
 	<seg>
-          cmark
+          libcmark
         </seg>
         <seg>
           None

@@ -87,6 +87,6 @@ getLatestGithubRelease libsdl-org/SDL_ttf sdl2-ttf general/graphlib 1- .*-2..*
 #vscode
 getLatestCodeloadRelease microsoft/vscode vscode xsoft/other
 
-#cmark
-getLatestGithubRelease commonmark/cmark cmark pst/sgml
+#libcmark
+getLatestGithubRelease commonmark/cmark libcmark pst/sgml
 
