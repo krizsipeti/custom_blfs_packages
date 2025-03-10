@@ -4,9 +4,9 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY sdl2-ttf-download-http "https://github.com/libsdl-org/SDL_ttf/releases/download/prerelease-3.1.2/SDL3_ttf-3.1.2.tar.gz">
+  <!ENTITY sdl2-ttf-download-http "https://github.com/libsdl-org/SDL_ttf/releases/download/release-2.24.0/SDL2_ttf-2.24.0.tar.gz">
   <!ENTITY sdl2-ttf-download-ftp  " ">
-  <!ENTITY sdl2-ttf-md5sum        "208e9c52bfb6b7051732e4941d5e7a32">
+  <!ENTITY sdl2-ttf-md5sum        "ea660f1b01919998785cffae9fa954b9">
   <!ENTITY sdl2-ttf-size          "12.6 MB">
   <!ENTITY sdl2-ttf-buildsize     "150 MB">
   <!ENTITY sdl2-ttf-time          "1 SBU (using parallelism=4)">

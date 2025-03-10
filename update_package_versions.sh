@@ -26,7 +26,7 @@ updatePkg()
 getLatestGithubRelease()
 {
     greetMsg "$2"
-    URL=$(curl -v --silent "https://github.com/$1/releases" 2>&1 | grep 'loading="lazy" src=' | tr '"' '\n' | grep /releases/ -m1)
+    URL=$(curl -v --silent "https://github.com/$1/releases" 2>&1 | grep -E 'include-fragment.*src=' | tr '"' '\n' | grep /releases/$5 -m1)
     VER=$(echo "$URL" | awk -F/ '{ print $(NF) }' | awk -F- '{ print $NF }')
     URL="https://github.com$(curl -v --silent "$URL" 2>&1 | grep '<a href=' | grep '.tar.' -m1 | tr '"' '\n' | grep "$1")"    
     if [[ $4 ]]; then
@@ -79,10 +79,10 @@ getLatestSourceforgeRelease qbittorrent qbittorrent xsoft/other 13-
 getLatestGithubRelease arvidn/libtorrent libtorrent-rasterbar networking/netlibs 2-
 
 #SDL2-image
-getLatestGithubRelease libsdl-org/SDL_image sdl2-image general/graphlib
+getLatestGithubRelease libsdl-org/SDL_image sdl2-image general/graphlib 1- .*-2..*
 
 #SDL2-ttf
-getLatestGithubRelease libsdl-org/SDL_ttf sdl2-ttf general/graphlib
+getLatestGithubRelease libsdl-org/SDL_ttf sdl2-ttf general/graphlib 1- .*-2..*
 
 #vscode
 getLatestCodeloadRelease microsoft/vscode vscode xsoft/other
