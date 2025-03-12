@@ -67,6 +67,7 @@
 
         <bridgehead renderas="sect4">Required</bridgehead>
         <para role="required">
+            <xref linkend="fmt"/>, and
             <xref linkend="qt6"/>, and
             <xref linkend="ruby"/>, and
             <xref linkend="cmark"/>, and
