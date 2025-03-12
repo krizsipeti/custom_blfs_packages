@@ -74,6 +74,20 @@ getLatestSourceforgeRelease()
     updatePkg "$2" "$VER" "$URL" "$3"
 }
 
+# Function that gets the latest tag of a specific package.
+# This function works only with packages stored on gitlab.
+getLatestGitlabTag()
+{
+    greetMsg "$2"
+    URL=$(curl -v --silent "https://gitlab.com/$1/-/tags" 2>&1 | grep -E '<a class.* href=.*/tags/' | tr '"' '\n' | grep /tags/$5 -m1)
+    VER=$(echo "$URL" | awk -F/ '{ print $(NF) }' | awk -F- '{ print $NF }')
+    URL="https://gitlab.com$(curl -v --silent "https://gitlab.com/$1/-/tags" 2>&1 | grep /archive/.*$VER.tar..* | tr ';' '\n' | grep .tar. -m1 | awk -F"&" '{ print $(NF-1) }')"
+    if [[ $4 ]]; then
+        VER=$(echo "$VER" | cut -c"$4")
+    fi
+    updatePkg "$2" "$VER" "$URL" "$3" "$MD5"
+}
+
 #minidlna
 getLatestSourceforgeRelease minidlna minidlna server/other
 
@@ -110,3 +124,5 @@ getLatestGithubTag Matroska-Org/libebml libebml multimedia/libdriv
 #libmatroska
 getLatestGithubTag Matroska-Org/libmatroska libmatroska multimedia/libdriv
 
+#mkvtoolnix
+getLatestGitlabTag mbunkus/mkvtoolnix mkvtoolnix multimedia/videoutils

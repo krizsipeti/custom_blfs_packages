@@ -59,3 +59,8 @@ grep -qF libebml-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY li
 cp -fv multimedia/libdriv/libmatroska.xml ../blfs_root/blfs-xml/multimedia/libdriv
 grep -qF libmatroska.xml ../blfs_root/blfs-xml/multimedia/libdriv/libdriv.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="libmatroska.xml"/>' ../blfs_root/blfs-xml/multimedia/libdriv/libdriv.xml
 grep -qF libmatroska-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY libmatroska-version "1.7.1">' >> ../blfs_root/blfs-xml/packages.ent
+
+# Add mkvtoolnix
+cp -fv multimedia/videoutils/mkvtoolnix.xml ../blfs_root/blfs-xml/multimedia/videoutils
+grep -qF mkvtoolnix.xml ../blfs_root/blfs-xml/multimedia/videoutils/videoutils.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="mkvtoolnix.xml"/>' ../blfs_root/blfs-xml/multimedia/videoutils/videoutils.xml
+grep -qF mkvtoolnix-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY mkvtoolnix-version "90.0">' >> ../blfs_root/blfs-xml/packages.ent

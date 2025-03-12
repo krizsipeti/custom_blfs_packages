@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY mkvtoolnix-download-http "https://gitlab.com/mbunkus/mkvtoolnix/-/archive/release-90.0/mkvtoolnix-release-90.0.tar.gz">
+  <!ENTITY mkvtoolnix-download-ftp  " ">
+  <!ENTITY mkvtoolnix-md5sum        "e23e38e08abbc5c8a3db885b46d507e1">
+  <!ENTITY mkvtoolnix-size          "1.6 MB">
+  <!ENTITY mkvtoolnix-buildsize     "160 MB">
+  <!ENTITY mkvtoolnix-time          "2 SBU (using parallelism=4)">
+]>
+
+<sect1 id="mkvtoolnix" xreflabel="mkvtoolnix-&mkvtoolnix-version;">
+    <?dbhtml filename="mkvtoolnix.html"?>
+
+
+    <title>mkvtoolnix-&mkvtoolnix-version;</title>
+
+    <indexterm zone="mkvtoolnix">
+        <primary sortas="a-mkvtoolnix">mkvtoolnix</primary>
+    </indexterm>
+    
+    <sect2 role="package">
+        <title>Introduction to mkvtoolnix</title>
+
+        <para>
+            <application>mkvtoolnix</application> is a video and audio player. It can play all formats supported by FFmpeg, libmodplug (including J2B and SFX). It also supports Audio CD, raw files, Rayman 2 music and chiptunes. It contains YouTube and MyFreeMP3 browser.
+        </para>
+
+        <bridgehead renderas="sect3">Package Information</bridgehead>
+        <itemizedlist spacing="compact">
+        <listitem>
+            <para>
+                Download (HTTP): <ulink url="&mkvtoolnix-download-http;"/>
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                Download (FTP): <ulink url="&mkvtoolnix-download-ftp;"/>
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                Download MD5 sum: &mkvtoolnix-md5sum;
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                Download size: &mkvtoolnix-size;
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                Estimated disk space required: &mkvtoolnix-buildsize;
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                Estimated build time: &mkvtoolnix-time;
+            </para>
+        </listitem>
+        </itemizedlist>
+
+        <bridgehead renderas="sect3">mkvtoolnix Dependencies</bridgehead>
+
+        <bridgehead renderas="sect4">Required</bridgehead>
+        <para role="required">
+            <xref linkend="qt6"/>, and
+            <xref linkend="ruby"/>, and
+            <xref linkend="cmark"/>, and
+            <xref linkend="libebml"/>, and
+            <xref linkend="libmatroska"/>
+        </para>
+    </sect2>
+
+    <sect2 role="installation">
+        <title/>
+
+<screen><userinput>./configure --prefix=/usr &amp;&amp;
+rake</userinput></screen>
+        
+<screen role="root"><userinput>rake install</userinput></screen>
+    </sect2>
+</sect1>
