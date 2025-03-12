@@ -78,7 +78,8 @@
     <sect2 role="installation">
         <title/>
 
-<screen><userinput>./configure --prefix=/usr &amp;&amp;
+<screen><userinput>./autogen.sh &amp;&amp;
+./configure --prefix=/usr &amp;&amp;
 rake</userinput></screen>
         
 <screen role="root"><userinput>rake install</userinput></screen>
