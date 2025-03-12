@@ -107,3 +107,6 @@ getLatestGithubRelease commonmark/cmark libcmark pst/sgml
 #libebml
 getLatestGithubTag Matroska-Org/libebml libebml multimedia/libdriv
 
+#libmatroska
+getLatestGithubTag Matroska-Org/libmatroska libmatroska multimedia/libdriv
+

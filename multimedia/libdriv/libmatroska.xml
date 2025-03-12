@@ -4,29 +4,29 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY libebml-download-http "https://github.com/Matroska-Org/libebml/archive/refs/tags/release-1.4.5.tar.gz">
-  <!ENTITY libebml-download-ftp  " ">
-  <!ENTITY libebml-md5sum        "2fb834d776f20b4c05fe80e2be219fa0">
-  <!ENTITY libebml-size          "1 MB">
-  <!ENTITY libebml-buildsize     "10 MB">
-  <!ENTITY libebml-time          "0.1 SBU (using parallelism=4)">
+  <!ENTITY libmatroska-download-http "https://github.com/Matroska-Org/libmatroska/archive/refs/tags/release-1.7.1.tar.gz">
+  <!ENTITY libmatroska-download-ftp  " ">
+  <!ENTITY libmatroska-md5sum        "ef677bdd7ce5559253e1c9211d68ec7d">
+  <!ENTITY libmatroska-size          "1 MB">
+  <!ENTITY libmatroska-buildsize     "10 MB">
+  <!ENTITY libmatroska-time          "0.1 SBU (using parallelism=4)">
 ]>
 
-<sect1 id="libebml" xreflabel="libebml-&libebml-version;">
-  <?dbhtml filename="libebml.html"?>
+<sect1 id="libmatroska" xreflabel="libmatroska-&libmatroska-version;">
+  <?dbhtml filename="libmatroska.html"?>
 
 
-  <title>libebml-&libebml-version;</title>
+  <title>libmatroska-&libmatroska-version;</title>
 
-  <indexterm zone="libebml">
-    <primary sortas="a-libebml">libebml</primary>
+  <indexterm zone="libmatroska">
+    <primary sortas="a-libmatroska">libmatroska</primary>
   </indexterm>
 
   <sect2 role="package">
-    <title>Introduction to libebml</title>
+    <title>Introduction to libmatroska</title>
 
     <para>
-      <application>libebml</application> is a library for reading and (eventually) writing ID3 tags, both
+      <application>libmatroska</application> is a library for reading and (eventually) writing ID3 tags, both
   ID3v1 and the various versions of ID3v2.
     </para>
 
@@ -34,50 +34,51 @@
     <itemizedlist spacing="compact">
       <listitem>
         <para>
-          Download (HTTP): <ulink url="&libebml-download-http;"/>
+          Download (HTTP): <ulink url="&libmatroska-download-http;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download (FTP): <ulink url="&libebml-download-ftp;"/>
+          Download (FTP): <ulink url="&libmatroska-download-ftp;"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          Download MD5 sum: &libebml-md5sum;
+          Download MD5 sum: &libmatroska-md5sum;
         </para>
       </listitem>
       <listitem>
         <para>
-          Download size: &libebml-size;
+          Download size: &libmatroska-size;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated disk space required: &libebml-buildsize;
+          Estimated disk space required: &libmatroska-buildsize;
         </para>
       </listitem>
       <listitem>
         <para>
-          Estimated build time: &libebml-time;
+          Estimated build time: &libmatroska-time;
         </para>
       </listitem>
     </itemizedlist>
 
-    <bridgehead renderas="sect3">libebml Dependencies</bridgehead>
+    <bridgehead renderas="sect3">libmatroska Dependencies</bridgehead>
 
     <bridgehead renderas="sect4">Required</bridgehead>
     <para role="required">
-        <xref linkend="cmake"/>
+        <xref linkend="cmake"/>, and
+        <xref linkend="libebml"/>
     </para>
 
   </sect2>
 
   <sect2 role="installation">
-    <title>Installation of libebml</title>
+    <title>Installation of libmatroska</title>
 
     <para>
-      Install <application>libebml</application> by running the
+      Install <application>libmatroska</application> by running the
       following commands:
     </para>
 
@@ -107,13 +108,13 @@ make</userinput></screen>
 
       <seglistitem>
 	<seg>
-          libebml
+          libmatroska
         </seg>
         <seg>
           None
         </seg>
         <seg>
-          /usr/share/libebml
+          /usr/share/libmatroska
         </seg>
       </seglistitem>
     </segmentedlist>

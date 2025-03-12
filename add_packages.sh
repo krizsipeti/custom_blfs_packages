@@ -54,3 +54,8 @@ grep -qF libcmark-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY l
 cp -fv multimedia/libdriv/libebml.xml ../blfs_root/blfs-xml/multimedia/libdriv
 grep -qF libebml.xml ../blfs_root/blfs-xml/multimedia/libdriv/libdriv.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="libebml.xml"/>' ../blfs_root/blfs-xml/multimedia/libdriv/libdriv.xml
 grep -qF libebml-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY libebml-version "1.4.5">' >> ../blfs_root/blfs-xml/packages.ent
+
+# Add libmatroska
+cp -fv multimedia/libdriv/libmatroska.xml ../blfs_root/blfs-xml/multimedia/libdriv
+grep -qF libmatroska.xml ../blfs_root/blfs-xml/multimedia/libdriv/libdriv.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="libmatroska.xml"/>' ../blfs_root/blfs-xml/multimedia/libdriv/libdriv.xml
+grep -qF libmatroska-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY libmatroska-version "1.7.1">' >> ../blfs_root/blfs-xml/packages.ent
