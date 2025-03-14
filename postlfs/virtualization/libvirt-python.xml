@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY libvirt-python-download-http "https://github.com/libvirt/libvirt-python/archive/refs/tags/v11.1.0.tar.gz">
+  <!ENTITY libvirt-python-download-ftp  " ">
+  <!ENTITY libvirt-python-md5sum        "2cdbb6c3e18a47db70c6af0c49aba87c">
+  <!ENTITY libvirt-python-size          "12.6 MB">
+  <!ENTITY libvirt-python-buildsize     "150 MB">
+  <!ENTITY libvirt-python-time          "1 SBU (using parallelism=4)">
+]>
+
+<sect1 id="libvirt-python" xreflabel="libvirt-python-&libvirt-python-version;">
+  <?dbhtml filename="libvirt-python.html"?>
+
+
+  <title>libvirt-python-&libvirt-python-version;</title>
+
+  <indexterm zone="libvirt-python">
+    <primary sortas="a-libvirt-python">libvirt-python</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduction to libvirt-python</title>
+
+    <para>
+      <application>libvirt-python</application> is a Library that simplifies the interaction with PKCS#11 providers for end-user applications using a simple API and optional OpenSSL engine.
+    </para>
+
+    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Download (HTTP): <ulink url="&libvirt-python-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download (FTP): <ulink url="&libvirt-python-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download MD5 sum: &libvirt-python-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download size: &libvirt-python-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated disk space required: &libvirt-python-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated build time: &libvirt-python-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">libvirt-python Dependencies</bridgehead>
+
+    <bridgehead renderas="sect4">Required</bridgehead>
+    <para role="required">
+        <xref linkend="python3"/>, and
+        <xref linkend="libvirt"/>
+    </para>
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installation of libvirt-python</title>
+
+    <para>
+      Install <application>libvirt-python</application> by running the
+      following commands:
+    </para>
+
+<screen><userinput>python3 -m build</userinput></screen>
+
+    <para>
+      This package does not come with a test suite.
+    </para>
+
+    <para>
+      Now, as the <systemitem class="username">root</systemitem> user:
+    </para>
+
+<screen role="root"><userinput>python3 -m pip install .</userinput></screen>
+  </sect2>
+
+  <sect2 role="content">
+    <title>Contents</title>
+
+    <segmentedlist>
+      <segtitle>Installed Programs</segtitle>
+      <segtitle>Installed Libraries</segtitle>
+      <segtitle>Installed Directory</segtitle>
+
+      <seglistitem>
+	<seg>
+          libvirt-python
+        </seg>
+        <seg>
+          None
+        </seg>
+        <seg>
+          /usr/share/libvirt-python
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+  </sect2>
+
+</sect1>

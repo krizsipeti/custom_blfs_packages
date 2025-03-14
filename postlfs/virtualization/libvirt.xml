@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY libvirt-download-http "https://github.com/libvirt/libvirt/archive/refs/tags/v11.1.0.tar.gz">
+  <!ENTITY libvirt-download-ftp  " ">
+  <!ENTITY libvirt-md5sum        "af558fb556049b48d15946f9a5975060">
+  <!ENTITY libvirt-size          "12.6 MB">
+  <!ENTITY libvirt-buildsize     "150 MB">
+  <!ENTITY libvirt-time          "1 SBU (using parallelism=4)">
+]>
+
+<sect1 id="libvirt" xreflabel="libvirt-&libvirt-version;">
+  <?dbhtml filename="libvirt.html"?>
+
+
+  <title>libvirt-&libvirt-version;</title>
+
+  <indexterm zone="libvirt">
+    <primary sortas="a-libvirt">libvirt</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduction to libvirt</title>
+
+    <para>
+      <application>libvirt</application> is a Library that simplifies the interaction with PKCS#11 providers for end-user applications using a simple API and optional OpenSSL engine.
+    </para>
+
+    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Download (HTTP): <ulink url="&libvirt-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download (FTP): <ulink url="&libvirt-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download MD5 sum: &libvirt-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download size: &libvirt-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated disk space required: &libvirt-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated build time: &libvirt-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">libvirt Dependencies</bridgehead>
+
+    <bridgehead renderas="sect4">Required</bridgehead>
+    <para role="required">
+        <xref linkend="python3"/>
+    </para>
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installation of libvirt</title>
+
+    <para>
+      Install <application>libvirt</application> by running the
+      following commands:
+    </para>
+
+<screen><userinput>meson setup build --prefix=/usr --buildtype=release -Ddriver_qemu=enabled &amp;&amp;
+ninja -C build</userinput></screen>
+
+    <para>
+      This package does not come with a test suite.
+    </para>
+
+    <para>
+      Now, as the <systemitem class="username">root</systemitem> user:
+    </para>
+
+<screen role="root"><userinput>sudo ninja -C build install</userinput></screen>
+  </sect2>
+
+  <sect2 role="content">
+    <title>Contents</title>
+
+    <segmentedlist>
+      <segtitle>Installed Programs</segtitle>
+      <segtitle>Installed Libraries</segtitle>
+      <segtitle>Installed Directory</segtitle>
+
+      <seglistitem>
+	<seg>
+          libvirt
+        </seg>
+        <seg>
+          None
+        </seg>
+        <seg>
+          /usr/share/libvirt
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+  </sect2>
+
+</sect1>

@@ -126,3 +126,15 @@ getLatestGithubTag Matroska-Org/libmatroska libmatroska multimedia/libdriv
 
 #mkvtoolnix
 getLatestGitlabTag mbunkus/mkvtoolnix mkvtoolnix multimedia/videoutils
+
+#virt-manager
+getLatestGithubRelease virt-manager/virt-manager virt-manager postlfs/virtualization
+
+#libvirt-python
+getLatestGithubTag libvirt/libvirt-python libvirt-python postlfs/virtualization
+
+#libvirt
+getLatestGithubTag libvirt/libvirt libvirt postlfs/virtualization
+
+#libosinfo
+getLatestGitlabTag libosinfo/libosinfo libosinfo postlfs/virtualization
