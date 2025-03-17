@@ -191,6 +191,8 @@ _create_blfs_config_xorg()
     fi
 
     cat > "$dir_blfscfg" << EOF
+CONFIG_postlfs-config-profile=y
+CONFIG_postlfs-config-vimrc=y
 CONFIG_pciutils=y
 CONFIG_xinit=y
 CONFIG_xorg-evdev-driver=y
@@ -362,6 +364,51 @@ EOF
 }
 
 
+# Creates the blfs configuration file to build freerdp, firefox and thunderbird.
+# The only parameter should be the new LFS system's root folder.
+_create_blfs_config_webtools()
+{
+    # Check parameter
+    local dir_lfs="$(realpath "$1")"
+    if [ ! -d "$dir_lfs" ] ; then
+        echo "Invalid folder: $dir_lfs"
+        return 1
+    fi
+
+    # Create new blfs config
+    local dir_blfscfg="$dir_lfs/home/pkr/blfs_root/configuration"
+    if [ -f "$dir_blfscfg" ] ; then
+        sudo rm -fv "$dir_blfscfg" || return 1
+    fi
+
+    cat > "$dir_blfscfg" << EOF
+CONFIG_freerdp=y
+CONFIG_firefox=y
+CONFIG_thunderbird=y
+
+# Build settings
+MS_sendmail=y
+MAIL_SERVER="sendmail"
+DEPLVL_2=y
+optDependency=2
+LANGUAGE="hu_HU.UTF-8"
+SUDO=y
+DEL_LA_FILES=y
+
+# Build Layout
+SRC_ARCHIVE="/sources"
+BUILD_ROOT="/sources"
+BUILD_SUBDIRS=y
+
+# Optimization
+JOBS=0
+CFG_CFLAGS=" -O3 -pipe -march=native "
+CFG_CXXFLAGS=" -O3 -pipe -march=native "
+CFG_LDFLAGS="EMPTY"
+EOF
+}
+
+
 # Creates script that auto builds the blfs system after successfull lfs build
 _create_blfs_builder_script()
 {
@@ -415,6 +462,13 @@ _build_blfs()
     cd "$dir_blfs_root" &&
     sed -i -E "s/_create_blfs_config_lxqt/_create_blfs_config_dm/g" "$dir_blfs_root/Makefile" &&
     make <<< yes &&
+    cd "$dir_blfs_work" &&
+    ../gen-makefile.sh &&
+    make &&
+    cd "$dir_blfs_root" &&
+    sed -i -E "s/_create_blfs_config_dm/_create_blfs_config_webtools/g" "$dir_blfs_root/Makefile" &&
+    make <<< yes &&
+    ../custom_blfs_packages/fixBlfsScripts.sh "$dir_blfs_root/scripts" &&
     cd "$dir_blfs_work" &&
     ../gen-makefile.sh &&
     make
