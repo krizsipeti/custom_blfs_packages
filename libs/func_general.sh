@@ -3,29 +3,26 @@
 # Create folders and get sources needed for LFS and BLFS installation
 _create_folders_and_get_sources()
 {
-    # Check if the lfs folder is exists
-    if [ ! -d "$1" ]
-    then
-        echo "LFS mount point folder does not exist!" >&2
+    # Check if the lfs folder exists
+    if [ ! -d "$1" ] ; then
+        echo "Error: LFS mount point folder '$1' does not exist!" >&2
         return 1
     fi
 
     # Check if jhalfs folder is already exist and delete it if yes
     local dir_jhalfs="$1/jhalfs"
-    if [ -d "$dir_jhalfs" ]
-    then
-        echo Deleting old jhalfs folder: "$dir_jhalfs"
-        sudo rm -rf "$dir_jhalfs" || { echo "Failed to delete folder: $dir_jhalfs" >&2; return 1; }
-        echo Done!
+    if [ -d "$dir_jhalfs" ] ; then
+        echo "Deleting old jhalfs folder: $dir_jhalfs"
+        sudo rm -rf "$dir_jhalfs" || { echo "Error: Failed to delete folder: $dir_jhalfs" >&2; return 1; }
+        echo "Done!"
     fi
 
     # Check if jhalfs folder is already exist and delete it if yes
     local dir_blfs="$1/blfs_root"
-    if [ -d "$dir_blfs" ]
-    then
-        echo Deleting old blfs_root folder: "$dir_blfs"
-        sudo rm -rf "$dir_blfs" || { echo "Failed to delete folder: $dir_blfs" >&2; return 1; }
-        echo Done!
+    if [ -d "$dir_blfs" ] ; then
+        echo "Deleting old blfs_root folder: $dir_blfs"
+        sudo rm -rf "$dir_blfs" || { echo "Error: Failed to delete folder: $dir_blfs" >&2; return 1; }
+        echo "Done!"
     fi
 
     # Now create the jhalfs folder and book-source sub-folder owned by the current user
