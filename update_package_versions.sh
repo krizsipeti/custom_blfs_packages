@@ -12,7 +12,7 @@ greetMsg()
 # Does the actual update of the package with the found version.
 updatePkg()
 {
-    MD5=$(curl -sL "$3" | md5sum | cut -d' ' -f1)
+    local MD5=$(curl -sL "$3" | md5sum | cut -d' ' -f1)
     sed -i -E "s@($1-version \"+)(.+\">)@\1$2\">@" add_packages.sh
     sed -i -E "s@($1-download-http \"+)(.+\">)@\1$3\">@" ./"$4"/"$1".xml
     sed -i -E "s@($1-md5sum *\"+)(.+\">)@\1$MD5\">@" ./"$4"/"$1".xml
@@ -26,13 +26,13 @@ updatePkg()
 getLatestGithubRelease()
 {
     greetMsg "$2"
-    URL=$(curl -v --silent "https://github.com/$1/releases" 2>&1 | grep -E 'include-fragment.*src=' | tr '"' '\n' | grep /releases/$5 -m1)
-    VER=$(echo "$URL" | awk -F/ '{ print $(NF) }' | awk -F- '{ print $NF }')
+    local URL=$(curl -v --silent "https://github.com/$1/releases" 2>&1 | grep -E 'include-fragment.*src=' | tr '"' '\n' | grep /releases/$5 -m1)
+    local VER=$(echo "$URL" | awk -F/ '{ print $(NF) }' | awk -F- '{ print $NF }')
     URL="https://github.com$(curl -v --silent "$URL" 2>&1 | grep '<a href=' | grep '.tar.' -m1 | tr '"' '\n' | grep "$1")"    
     if [[ $4 ]]; then
         VER=$(echo "$VER" | cut -c"$4")
     fi
-    updatePkg "$2" "$VER" "$URL" "$3" "$MD5"
+    updatePkg "$2" "$VER" "$URL" "$3"
 }
 
 # Function that gets the latest tag of a specific package.
@@ -40,13 +40,13 @@ getLatestGithubRelease()
 getLatestGithubTag()
 {
     greetMsg "$2"
-    URL=$(curl -v --silent "https://github.com/$1/tags" 2>&1 | grep -E '<h2 data.*<a href=' | tr '"' '\n' | grep /tag/$5 -m1)
-    VER=$(echo "$URL" | awk -F/ '{ print $(NF) }' | awk -F- '{ print $NF }')
+    local URL=$(curl -v --silent "https://github.com/$1/tags" 2>&1 | grep -E '<h2 data.*<a href=' | tr '"' '\n' | grep /tag/$5 -m1)
+    local VER=$(echo "$URL" | awk -F/ '{ print $(NF) }' | awk -F- '{ print $NF }')
     URL="https://github.com$(curl -v --silent "https://github.com/$1/tags" 2>&1 | grep -E '<a class.*href=' | tr '"' '\n' | grep /tags/.*$VER.tar..*)"
     if [[ $4 ]]; then
         VER=$(echo "$VER" | cut -c"$4")
     fi
-    updatePkg "$2" "$VER" "$URL" "$3" "$MD5"
+    updatePkg "$2" "$VER" "$URL" "$3"
 }
 
 # Function that gets the latest release of a specific package.
@@ -85,7 +85,7 @@ getLatestGitlabTag()
     if [[ $4 ]]; then
         VER=$(echo "$VER" | cut -c"$4")
     fi
-    updatePkg "$2" "$VER" "$URL" "$3" "$MD5"
+    updatePkg "$2" "$VER" "$URL" "$3"
 }
 
 #minidlna
