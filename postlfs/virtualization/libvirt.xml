@@ -26,7 +26,7 @@
     <title>Introduction to libvirt</title>
 
     <para>
-      <application>libvirt</application> is a Library that simplifies the interaction with PKCS#11 providers for end-user applications using a simple API and optional OpenSSL engine.
+      <application>libvirt</application> is a toolkit to manage virtualization platforms, providing a unified API for interacting with various hypervisors, containers, and other virtualization technologies.
     </para>
 
     <bridgehead renderas="sect3">Package Information</bridgehead>

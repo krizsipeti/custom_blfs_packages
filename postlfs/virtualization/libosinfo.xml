@@ -26,7 +26,7 @@
     <title>Introduction to libosinfo</title>
 
     <para>
-      <application>libosinfo</application> is a Library that simplifies the interaction with PKCS#11 providers for end-user applications using a simple API and optional OpenSSL engine.
+      <application>libosinfo</application> is a library that provides a database of operating systems and hypervisor capabilities, simplifying the management of virtualized environments.
     </para>
 
     <bridgehead renderas="sect3">Package Information</bridgehead>

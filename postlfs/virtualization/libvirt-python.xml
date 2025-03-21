@@ -26,7 +26,7 @@
     <title>Introduction to libvirt-python</title>
 
     <para>
-      <application>libvirt-python</application> is a Library that simplifies the interaction with PKCS#11 providers for end-user applications using a simple API and optional OpenSSL engine.
+      <application>libvirt-python</application> is a Python binding for libvirt, enabling developers to manage virtualization platforms programmatically using Python.
     </para>
 
     <bridgehead renderas="sect3">Package Information</bridgehead>

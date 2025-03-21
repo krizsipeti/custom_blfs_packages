@@ -26,8 +26,7 @@
     <title>Introduction to libmatroska</title>
 
     <para>
-      <application>libmatroska</application> is a library for reading and (eventually) writing ID3 tags, both
-  ID3v1 and the various versions of ID3v2.
+      <application>libmatroska</application> is a library for parsing and generating Matroska files, an open standard multimedia container format.
     </para>
 
     <bridgehead renderas="sect3">Package Information</bridgehead>

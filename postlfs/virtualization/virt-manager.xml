@@ -26,7 +26,7 @@
     <title>Introduction to virt-manager</title>
 
     <para>
-      <application>virt-manager</application> is a Library that simplifies the interaction with PKCS#11 providers for end-user applications using a simple API and optional OpenSSL engine.
+      <application>virt-manager</application> is a desktop user interface for managing virtual machines through libvirt, providing an easy-to-use graphical interface for creating, configuring, and monitoring virtualized environments.
     </para>
 
     <bridgehead renderas="sect3">Package Information</bridgehead>
