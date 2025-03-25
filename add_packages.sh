@@ -68,19 +68,19 @@ grep -qF mkvtoolnix-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY
 # Add virt-manager
 cp -fv postlfs/virtualization/virt-manager.xml ../blfs_root/blfs-xml/postlfs/virtualization
 grep -qF virt-manager.xml ../blfs_root/blfs-xml/postlfs/virtualization/virtualization.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="virt-manager.xml"/>' ../blfs_root/blfs-xml/postlfs/virtualization/virtualization.xml
-grep -qF virt-manager-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY virt-manager-version "v5.0.0">' >> ../blfs_root/blfs-xml/packages.ent
+grep -qF virt-manager-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY virt-manager-version "5.0.0">' >> ../blfs_root/blfs-xml/packages.ent
 
 # Add libvirt-python
 cp -fv postlfs/virtualization/libvirt-python.xml ../blfs_root/blfs-xml/postlfs/virtualization
 grep -qF libvirt-python.xml ../blfs_root/blfs-xml/postlfs/virtualization/virtualization.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="libvirt-python.xml"/>' ../blfs_root/blfs-xml/postlfs/virtualization/virtualization.xml
-grep -qF libvirt-python-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY libvirt-python-version "v11.1.0">' >> ../blfs_root/blfs-xml/packages.ent
+grep -qF libvirt-python-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY libvirt-python-version "11.1.0">' >> ../blfs_root/blfs-xml/packages.ent
 
 # Add libvirt
 cp -fv postlfs/virtualization/libvirt.xml ../blfs_root/blfs-xml/postlfs/virtualization
 grep -qF libvirt.xml ../blfs_root/blfs-xml/postlfs/virtualization/virtualization.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="libvirt.xml"/>' ../blfs_root/blfs-xml/postlfs/virtualization/virtualization.xml
-grep -qF libvirt-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY libvirt-version "v11.1.0">' >> ../blfs_root/blfs-xml/packages.ent
+grep -qF libvirt-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY libvirt-version "11.2.0-rc1">' >> ../blfs_root/blfs-xml/packages.ent
 
 # Add libosinfo
 cp -fv postlfs/virtualization/libosinfo.xml ../blfs_root/blfs-xml/postlfs/virtualization
 grep -qF libosinfo.xml ../blfs_root/blfs-xml/postlfs/virtualization/virtualization.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="libosinfo.xml"/>' ../blfs_root/blfs-xml/postlfs/virtualization/virtualization.xml
-grep -qF libosinfo-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY libosinfo-version "v1.12.0">' >> ../blfs_root/blfs-xml/packages.ent
+grep -qF libosinfo-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY libosinfo-version "1.12.0">' >> ../blfs_root/blfs-xml/packages.ent

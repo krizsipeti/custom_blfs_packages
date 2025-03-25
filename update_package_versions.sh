@@ -41,7 +41,7 @@ getLatestGithubTag()
 {
     greetMsg "$2"
     local URL=$(curl -v --silent "https://github.com/$1/tags" 2>&1 | grep -E '<h2 data.*<a href=' | tr '"' '\n' | grep /tag/$5 -m1)
-    local VER=$(echo "$URL" | awk -F/ '{ print $(NF) }' | awk -F- '{ print $NF }')
+    local VER=$(echo "$URL" | awk -F/ '{ print $(NF) }') # | awk -F- '{ print $NF }')
     URL="https://github.com$(curl -v --silent "https://github.com/$1/tags" 2>&1 | grep -E '<a class.*href=' | tr '"' '\n' | grep /tags/.*$VER.tar..*)"
     if [[ $4 ]]; then
         VER=$(echo "$VER" | cut -c"$4")
@@ -80,7 +80,7 @@ getLatestGitlabTag()
 {
     greetMsg "$2"
     URL=$(curl -v --silent "https://gitlab.com/$1/-/tags" 2>&1 | grep -E '<a class.* href=.*/tags/' | tr '"' '\n' | grep /tags/$5 -m1)
-    VER=$(echo "$URL" | awk -F/ '{ print $(NF) }' | awk -F- '{ print $NF }')
+    VER=$(echo "$URL" | awk -F/ '{ print $(NF) }') # | awk -F- '{ print $NF }')
     URL="https://gitlab.com$(curl -v --silent "https://gitlab.com/$1/-/tags" 2>&1 | grep /archive/.*$VER.tar..* | tr ';' '\n' | grep .tar. -m1 | awk -F"&" '{ print $(NF-1) }')"
     if [[ $4 ]]; then
         VER=$(echo "$VER" | cut -c"$4")
@@ -119,22 +119,22 @@ getLatestCodeloadRelease microsoft/vscode vscode xsoft/other
 getLatestGithubRelease commonmark/cmark libcmark pst/sgml
 
 #libebml
-getLatestGithubTag Matroska-Org/libebml libebml multimedia/libdriv
+getLatestGithubTag Matroska-Org/libebml libebml multimedia/libdriv 9-
 
 #libmatroska
-getLatestGithubTag Matroska-Org/libmatroska libmatroska multimedia/libdriv
+getLatestGithubTag Matroska-Org/libmatroska libmatroska multimedia/libdriv 9-
 
 #mkvtoolnix
-getLatestGitlabTag mbunkus/mkvtoolnix mkvtoolnix multimedia/videoutils
+getLatestGitlabTag mbunkus/mkvtoolnix mkvtoolnix multimedia/videoutils 9-
 
 #virt-manager
-getLatestGithubRelease virt-manager/virt-manager virt-manager postlfs/virtualization
+getLatestGithubRelease virt-manager/virt-manager virt-manager postlfs/virtualization 2-
 
 #libvirt-python
-getLatestGithubTag libvirt/libvirt-python libvirt-python postlfs/virtualization
+getLatestGithubTag libvirt/libvirt-python libvirt-python postlfs/virtualization 2-
 
 #libvirt
-getLatestGithubTag libvirt/libvirt libvirt postlfs/virtualization
+getLatestGitlabTag libvirt/libvirt libvirt postlfs/virtualization 2-
 
 #libosinfo
-getLatestGitlabTag libosinfo/libosinfo libosinfo postlfs/virtualization
+getLatestGitlabTag libosinfo/libosinfo libosinfo postlfs/virtualization 2-
