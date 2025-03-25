@@ -67,10 +67,6 @@
 
     <bridgehead renderas="sect4">Required</bridgehead>
     <para role="required">
-        <xref linkend="meson"/>, and
-        <xref linkend="gobject"/>, and
-        <xref linkend="gio"/>, and
-        <xref linkend="libxml"/>, and
         <xref linkend="libxslt"/>
     </para>
   </sect2>
