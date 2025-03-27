@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY slirp4netns-download-http "https://github.com/rootless-containers/slirp4netns/archive/refs/tags/v1.3.2.tar.gz">
+  <!ENTITY slirp4netns-download-ftp  " ">
+  <!ENTITY slirp4netns-md5sum        "2caed30622194e73c5065c9cd2a64bec">
+  <!ENTITY slirp4netns-size          "4.2 MB">
+  <!ENTITY slirp4netns-buildsize     "150 MB">
+  <!ENTITY slirp4netns-time          "1.5 SBU (using parallelism=4)">
+]>
+
+<sect1 id="slirp4netns" xreflabel="slirp4netns-&slirp4netns-version;">
+  <?dbhtml filename="slirp4netns.html"?>
+
+
+  <title>slirp4netns-&slirp4netns-version;</title>
+
+  <indexterm zone="slirp4netns">
+    <primary sortas="a-slirp4netns">slirp4netns</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduction to slirp4netns</title>
+
+    <para>
+    <application>slirp4netns</application> is a networking utility that provides user-mode networking for unprivileged network namespaces. It enables applications to access the network without requiring elevated privileges, making it useful for containerized environments and sandboxing scenarios.
+    </para>
+
+    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Download (HTTP): <ulink url="&slirp4netns-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download (FTP): <ulink url="&slirp4netns-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download MD5 sum: &slirp4netns-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download size: &slirp4netns-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated disk space required: &slirp4netns-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated build time: &slirp4netns-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">slirp4netns Dependencies</bridgehead>
+
+    <bridgehead renderas="sect4">Required</bridgehead>
+    <para role="required">
+      <xref linkend="glib2"/>,
+      <xref linkend="libpcap"/>,
+      <xref linkend="libslirp"/>,
+      <xref linkend="libseccomp"/>
+    </para>
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installation of slirp4netns</title>
+
+    <para>
+      Install <application>slirp4netns</application> by running the
+      following commands:
+    </para>
+
+<screen><userinput>./autogen.sh &amp;&amp;
+./configure --prefix=/usr &amp;&amp;
+make</userinput></screen>
+
+    <para>
+      This package does not come with a test suite.
+    </para>
+
+    <para>
+      Now, as the <systemitem class="username">root</systemitem> user:
+    </para>
+
+<screen role="root"><userinput>make install</userinput></screen>
+  </sect2>
+
+  <sect2 role="content">
+    <title>Contents</title>
+
+    <segmentedlist>
+      <segtitle>Installed Programs</segtitle>
+      <segtitle>Installed Libraries</segtitle>
+      <segtitle>Installed Directory</segtitle>
+
+      <seglistitem>
+	<seg>
+          slirp4netns
+        </seg>
+        <seg>
+          None
+        </seg>
+        <seg>
+          /usr/share/slirp4netns
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+  </sect2>
+
+</sect1>

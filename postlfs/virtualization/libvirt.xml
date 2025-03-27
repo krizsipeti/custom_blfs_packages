@@ -67,7 +67,9 @@
 
     <bridgehead renderas="sect4">Required</bridgehead>
     <para role="required">
-        <xref linkend="python3"/>
+        <xref linkend="python3"/>, and
+        <xref linkend="slirp4netns"/>, and
+        <xref linkend="libpcap"/>
     </para>
   </sect2>
 
