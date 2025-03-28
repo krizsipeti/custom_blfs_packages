@@ -81,7 +81,7 @@
       following commands:
     </para>
 
-<screen><userinput>meson setup build --prefix=/usr --buildtype=release -Ddriver_qemu=enabled &amp;&amp;
+<screen><userinput>meson setup build --prefix=/usr --buildtype=release -Ddriver_qemu=enabled -Dnss=disabled -Dtests=disabled &amp;&amp;
 ninja -C build</userinput></screen>
 
     <para>
