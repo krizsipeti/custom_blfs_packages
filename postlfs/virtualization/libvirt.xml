@@ -69,7 +69,8 @@
     <para role="required">
         <xref linkend="python3"/>, and
         <xref linkend="libnl"/>, and
-        <xref linkend="libpcap"/>
+        <xref linkend="libpcap"/>, and
+        <xref linkend="qemu"/>
     </para>
   </sect2>
 
