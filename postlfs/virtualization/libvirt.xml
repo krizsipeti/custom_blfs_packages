@@ -82,7 +82,9 @@
       following commands:
     </para>
 
-<screen><userinput>meson setup build --prefix=/usr --buildtype=release -Ddriver_qemu=enabled -Dnss=disabled -Dtests=disabled -Dqemu_group=libvirt-qemu -Dqemu_user=libvirt-qemu &amp;&amp;
+<screen><userinput>export QEMU_PACK="$(find ../.. -iname qemu-*.tar.*)"  &amp;&amp;
+tar --strip-components=3 -C subprojects/keycodemapdb/ -xf "$QEMU_PACK" $(tar -tvf "$QEMU_PACK" | grep -m1 keycodemapdb | awk -F' ' '{print $NF}') &amp;&amp;
+meson setup build --prefix=/usr --buildtype=release -Ddriver_qemu=enabled -Dnss=disabled -Dtests=disabled -Dqemu_group=libvirt-qemu -Dqemu_user=libvirt-qemu &amp;&amp;
 ninja -C build</userinput></screen>
 
     <para>
