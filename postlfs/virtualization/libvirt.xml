@@ -4,9 +4,9 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY libvirt-download-http "https://gitlab.com/libvirt/libvirt/-/archive/v11.2.0-rc1/libvirt-v11.2.0-rc1.tar.gz">
+  <!ENTITY libvirt-download-http "https://gitlab.com/libvirt/libvirt/-/archive/v11.2.0-rc2/libvirt-v11.2.0-rc2.tar.gz">
   <!ENTITY libvirt-download-ftp  " ">
-  <!ENTITY libvirt-md5sum        "0354bb18f11bbb869b6e9205bc1ac829">
+  <!ENTITY libvirt-md5sum        "be21e3fd3aa1f972a12f8097c2753f21">
   <!ENTITY libvirt-size          "12.6 MB">
   <!ENTITY libvirt-buildsize     "150 MB">
   <!ENTITY libvirt-time          "1 SBU (using parallelism=4)">
@@ -81,7 +81,7 @@
       following commands:
     </para>
 
-<screen><userinput>meson setup build --prefix=/usr --buildtype=release -Ddriver_qemu=enabled -Dnss=disabled -Dtests=disabled &amp;&amp;
+<screen><userinput>meson setup build --prefix=/usr --buildtype=release -Ddriver_qemu=enabled -Dnss=disabled -Dtests=disabled -Dqemu_group=libvirt-qemu -Dqemu_user=libvirt-qemu &amp;&amp;
 ninja -C build</userinput></screen>
 
     <para>
