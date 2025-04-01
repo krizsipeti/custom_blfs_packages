@@ -4,9 +4,9 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY libvirt-python-download-http "https://github.com/libvirt/libvirt-python/archive/refs/tags/v11.1.0.tar.gz">
+  <!ENTITY libvirt-python-download-http "https://github.com/libvirt/libvirt-python/archive/refs/tags/v11.2.0.tar.gz">
   <!ENTITY libvirt-python-download-ftp  " ">
-  <!ENTITY libvirt-python-md5sum        "2cdbb6c3e18a47db70c6af0c49aba87c">
+  <!ENTITY libvirt-python-md5sum        "761d4f418aa95f0379358ce595fa4625">
   <!ENTITY libvirt-python-size          "12.6 MB">
   <!ENTITY libvirt-python-buildsize     "150 MB">
   <!ENTITY libvirt-python-time          "1 SBU (using parallelism=4)">
@@ -68,6 +68,7 @@
     <bridgehead renderas="sect4">Required</bridgehead>
     <para role="required">
         <xref linkend="python3"/>, and
+        <xref linkend="pypa-build"/>, and
         <xref linkend="libvirt"/>
     </para>
   </sect2>
@@ -80,7 +81,7 @@
       following commands:
     </para>
 
-<screen><userinput>python3 -m build</userinput></screen>
+<screen><userinput>pip3 wheel -w dist --no-build-isolation --no-deps --no-cache-dir $PWD</userinput></screen>
 
     <para>
       This package does not come with a test suite.
@@ -90,7 +91,7 @@
       Now, as the <systemitem class="username">root</systemitem> user:
     </para>
 
-<screen role="root"><userinput>python3 -m pip install .</userinput></screen>
+<screen role="root"><userinput>pip3 install --no-index --find-links dist --no-user libvirt-python</userinput></screen>
   </sect2>
 
   <sect2 role="content">
