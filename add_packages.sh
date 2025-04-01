@@ -89,3 +89,8 @@ grep -qF libosinfo-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY 
 cp -fv networking/netutils/slirp4netns.xml ../blfs_root/blfs-xml/networking/netutils
 grep -qF slirp4netns.xml ../blfs_root/blfs-xml/networking/netutils/netutils.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="slirp4netns.xml"/>' ../blfs_root/blfs-xml/networking/netutils/netutils.xml
 grep -qF slirp4netns-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY slirp4netns-version "1.3.2">' >> ../blfs_root/blfs-xml/packages.ent
+
+# Add libvirt-glib
+cp -fv postlfs/virtualization/libvirt-glib.xml ../blfs_root/blfs-xml/postlfs/virtualization
+grep -qF libvirt-glib.xml ../blfs_root/blfs-xml/postlfs/virtualization/virtualization.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="libvirt-glib.xml"/>' ../blfs_root/blfs-xml/postlfs/virtualization/virtualization.xml
+grep -qF libvirt-glib-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY libvirt-glib-version "5.0.0">' >> ../blfs_root/blfs-xml/packages.ent

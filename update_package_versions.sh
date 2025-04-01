@@ -141,3 +141,6 @@ getLatestGitlabTag libosinfo/libosinfo libosinfo postlfs/virtualization 2-
 
 #slirp4netns
 getLatestGithubRelease rootless-containers/slirp4netns slirp4netns networking/netutils 2-
+
+#libvirt-glib
+getLatestGithubTag libvirt/libvirt-glib libvirt-glib postlfs/virtualization 2-

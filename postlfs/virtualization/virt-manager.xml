@@ -69,8 +69,10 @@
     <para role="required">
         <xref linkend="python3"/>, and
         <xref linkend="gtk3"/>, and
+        <xref linkend="libvirt-glib"/>, and
         <xref linkend="libvirt-python"/>, and
         <xref linkend="pygobject3"/>, and
+        <xref linkend="requests"/>, and
         <xref linkend="libosinfo"/>, and
         <xref linkend="gtksourceview4"/>
     </para>
@@ -84,8 +86,8 @@
       following commands:
     </para>
 
-<screen><userinput>./configure --prefix=/usr &amp;&amp;
-make</userinput></screen>
+<screen><userinput>meson setup build --prefix=/usr --buildtype=release -Dtests=disabled &amp;&amp;
+ninja -C build</userinput></screen>
 
     <para>
       This package does not come with a test suite.
@@ -95,7 +97,7 @@ make</userinput></screen>
       Now, as the <systemitem class="username">root</systemitem> user:
     </para>
 
-<screen role="root"><userinput>make install</userinput></screen>
+<screen role="root"><userinput>sudo ninja -C build install</userinput></screen>
   </sect2>
 
   <sect2 role="content">
