@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY libvirt-glib-download-http "https://github.com/libvirt/libvirt-glib/archive/refs/tags/v5.0.0.tar.gz">
+  <!ENTITY libvirt-glib-download-ftp  " ">
+  <!ENTITY libvirt-glib-md5sum        "bc2ba495b3c81a8ff33bc29c95f5993c">
+  <!ENTITY libvirt-glib-size          "12.6 MB">
+  <!ENTITY libvirt-glib-buildsize     "150 MB">
+  <!ENTITY libvirt-glib-time          "1 SBU (using parallelism=4)">
+]>
+
+<sect1 id="libvirt-glib" xreflabel="libvirt-glib-&libvirt-glib-version;">
+  <?dbhtml filename="libvirt-glib.html"?>
+
+
+  <title>libvirt-glib-&libvirt-glib-version;</title>
+
+  <indexterm zone="libvirt-glib">
+    <primary sortas="a-libvirt-glib">libvirt-glib</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduction to libvirt-glib</title>
+
+    <para>
+      <application>libvirt-glib</application> is a toolkit to manage virtualization platforms, providing a unified API for interacting with various hypervisors, containers, and other virtualization technologies.
+    </para>
+
+    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Download (HTTP): <ulink url="&libvirt-glib-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download (FTP): <ulink url="&libvirt-glib-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download MD5 sum: &libvirt-glib-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download size: &libvirt-glib-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated disk space required: &libvirt-glib-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated build time: &libvirt-glib-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">libvirt-glib Dependencies</bridgehead>
+
+    <bridgehead renderas="sect4">Required</bridgehead>
+    <para role="required">
+        <xref linkend="libvirt"/>
+    </para>
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installation of libvirt-glib</title>
+
+    <para>
+      Install <application>libvirt-glib</application> by running the
+      following commands:
+    </para>
+
+<screen><userinput>meson setup build --prefix=/usr --buildtype=release -Dtests=disabled &amp;&amp;
+ninja -C build</userinput></screen>
+
+    <para>
+      This package does not come with a test suite.
+    </para>
+
+    <para>
+      Now, as the <systemitem class="username">root</systemitem> user:
+    </para>
+
+<screen role="root"><userinput>sudo ninja -C build install</userinput></screen>
+  </sect2>
+
+  <sect2 role="content">
+    <title>Contents</title>
+
+    <segmentedlist>
+      <segtitle>Installed Programs</segtitle>
+      <segtitle>Installed Libraries</segtitle>
+      <segtitle>Installed Directory</segtitle>
+
+      <seglistitem>
+	<seg>
+          libvirt-glib
+        </seg>
+        <seg>
+          None
+        </seg>
+        <seg>
+          /usr/share/libvirt-glib
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+  </sect2>
+
+</sect1>
