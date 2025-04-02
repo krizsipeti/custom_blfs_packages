@@ -94,3 +94,8 @@ grep -qF slirp4netns-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTIT
 cp -fv postlfs/virtualization/libvirt-glib.xml ../blfs_root/blfs-xml/postlfs/virtualization
 grep -qF libvirt-glib.xml ../blfs_root/blfs-xml/postlfs/virtualization/virtualization.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="libvirt-glib.xml"/>' ../blfs_root/blfs-xml/postlfs/virtualization/virtualization.xml
 grep -qF libvirt-glib-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY libvirt-glib-version "5.0.0">' >> ../blfs_root/blfs-xml/packages.ent
+
+# Add dnsmasq
+cp -fv networking/netutils/dnsmasq.xml ../blfs_root/blfs-xml/networking/netutils
+grep -qF dnsmasq.xml ../blfs_root/blfs-xml/networking/netutils/netutils.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="dnsmasq.xml"/>' ../blfs_root/blfs-xml/networking/netutils/netutils.xml
+grep -qF dnsmasq-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY dnsmasq-version "2.91">' >> ../blfs_root/blfs-xml/packages.ent

@@ -88,6 +88,15 @@ getLatestGitlabTag()
     updatePkg "$2" "$VER" "$URL" "$3"
 }
 
+# Function that gets the latest release of dnsmasq.
+getLatestDnsmasq()
+{
+    greetMsg "dnsmasq"
+    URL="https://thekelleys.org.uk/dnsmasq/$(curl -v --silent "https://thekelleys.org.uk/dnsmasq/" 2>&1 | tr '"' '\n' | grep -v '.asc' | grep ^dnsmasq | tail -1)"
+    VER=$(echo "$URL" | awk -F- '{print $(NF) }' | rev | cut -c8- | rev)
+    updatePkg "dnsmasq" "$VER" "$URL" "networking/netutils"
+}
+
 #minidlna
 getLatestSourceforgeRelease minidlna minidlna server/other
 
@@ -144,3 +153,6 @@ getLatestGithubRelease rootless-containers/slirp4netns slirp4netns networking/ne
 
 #libvirt-glib
 getLatestGithubTag libvirt/libvirt-glib libvirt-glib postlfs/virtualization 2-
+
+#dnsmasq
+getLatestDnsmasq

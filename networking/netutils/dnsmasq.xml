@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY dnsmasq-download-http "https://thekelleys.org.uk/dnsmasq/dnsmasq-2.91.tar.xz">
+  <!ENTITY dnsmasq-download-ftp  " ">
+  <!ENTITY dnsmasq-md5sum        "d0f47ffc680a4697f6bbf988dcb75a31">
+  <!ENTITY dnsmasq-size          "4.2 MB">
+  <!ENTITY dnsmasq-buildsize     "150 MB">
+  <!ENTITY dnsmasq-time          "1.5 SBU (using parallelism=4)">
+]>
+
+<sect1 id="dnsmasq" xreflabel="dnsmasq-&dnsmasq-version;">
+  <?dbhtml filename="dnsmasq.html"?>
+
+
+  <title>dnsmasq-&dnsmasq-version;</title>
+
+  <indexterm zone="dnsmasq">
+    <primary sortas="a-dnsmasq">dnsmasq</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduction to dnsmasq</title>
+
+    <para>
+    <application>dnsmasq</application> is a lightweight, easy-to-configure DNS forwarder and DHCP server. It is designed to provide network services to small-scale networks, such as home or office setups, and is commonly used in embedded systems and containerized environments.
+    </para>
+
+    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Download (HTTP): <ulink url="&dnsmasq-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download (FTP): <ulink url="&dnsmasq-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download MD5 sum: &dnsmasq-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download size: &dnsmasq-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated disk space required: &dnsmasq-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated build time: &dnsmasq-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">dnsmasq Dependencies</bridgehead>
+
+    <bridgehead renderas="sect4">Required</bridgehead>
+    <para role="required">
+    </para>
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installation of dnsmasq</title>
+
+    <para>
+      Install <application>dnsmasq</application> by running the
+      following commands:
+    </para>
+
+<screen><userinput>make all</userinput></screen>
+
+    <para>
+      This package does not come with a test suite.
+    </para>
+
+    <para>
+      Now, as the <systemitem class="username">root</systemitem> user:
+    </para>
+
+<screen role="root"><userinput>make PREFIX=/usr install</userinput></screen>
+  </sect2>
+
+  <sect2 role="content">
+    <title>Contents</title>
+
+    <segmentedlist>
+      <segtitle>Installed Programs</segtitle>
+      <segtitle>Installed Libraries</segtitle>
+      <segtitle>Installed Directory</segtitle>
+
+      <seglistitem>
+	<seg>
+          dnsmasq
+        </seg>
+        <seg>
+          None
+        </seg>
+        <seg>
+          /usr/share/dnsmasq
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+  </sect2>
+
+</sect1>
