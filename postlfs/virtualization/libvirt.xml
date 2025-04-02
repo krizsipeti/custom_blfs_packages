@@ -73,6 +73,8 @@
         <xref linkend="iptables"/>, and
         <xref linkend="dnsmasq"/>, and
         <xref linkend="dmidecode"/>, and
+        <xref linkend="vte"/>, and
+        <xref linkend="gtk-vnc"/>, and
         <xref linkend="qemu"/>
     </para>
   </sect2>
@@ -106,7 +108,7 @@ allow all
 EOF</userinput></screen>
 
 <screen role="root"><userinput>groupadd -f -g 127 libvirt &amp;&amp;
-usermod -a -G libvirt $USER &amp;&amp;
+usermod -a -G libvirt pkr &amp;&amp;
 groupadd -f -g 128 libvirt-qemu &amp;&amp;
 useradd -g libvirt-qemu -c 'Libvirt Qemu' -d /var/lib/libvirt -s /bin/false -u 128 libvirt-qemu &amp;&amp;
 groupadd -f -g 129 libvirt-dnsmasq &amp;&amp;
