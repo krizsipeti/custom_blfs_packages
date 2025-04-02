@@ -72,6 +72,7 @@
         <xref linkend="libpcap"/>, and
         <xref linkend="iptables"/>, and
         <xref linkend="dnsmasq"/>, and
+        <xref linkend="dmidecode"/>, and
         <xref linkend="qemu"/>
     </para>
   </sect2>

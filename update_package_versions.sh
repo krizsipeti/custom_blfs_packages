@@ -88,13 +88,13 @@ getLatestGitlabTag()
     updatePkg "$2" "$VER" "$URL" "$3"
 }
 
-# Function that gets the latest release of dnsmasq.
-getLatestDnsmasq()
+# Function that gets the latest release from a file list.
+getLatestFromFileList()
 {
-    greetMsg "dnsmasq"
-    URL="https://thekelleys.org.uk/dnsmasq/$(curl -v --silent "https://thekelleys.org.uk/dnsmasq/" 2>&1 | tr '"' '\n' | grep -v '.asc' | grep ^dnsmasq | tail -1)"
+    greetMsg "$1"
+    URL="$2$(curl -v --silent "$2" 2>&1 | tr '"' '\n' | grep -v '.asc' | grep -v '.sig' | grep "^$1" | tail -1)"
     VER=$(echo "$URL" | awk -F- '{print $(NF) }' | rev | cut -c8- | rev)
-    updatePkg "dnsmasq" "$VER" "$URL" "networking/netutils"
+    updatePkg "$1" "$VER" "$URL" "$3"
 }
 
 #minidlna
@@ -155,4 +155,7 @@ getLatestGithubRelease rootless-containers/slirp4netns slirp4netns networking/ne
 getLatestGithubTag libvirt/libvirt-glib libvirt-glib postlfs/virtualization 2-
 
 #dnsmasq
-getLatestDnsmasq
+getLatestFromFileList dnsmasq https://thekelleys.org.uk/dnsmasq/ networking/netutils
+
+#dmidecode
+getLatestFromFileList dmidecode http://download.savannah.gnu.org/releases/dmidecode/ general/sysutils

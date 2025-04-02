@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY dmidecode-download-http "http://download.savannah.gnu.org/releases/dmidecode/dmidecode-3.6.tar.xz">
+  <!ENTITY dmidecode-download-ftp  " ">
+  <!ENTITY dmidecode-md5sum        "e931a92708ac7a7396452dbc8be8decd">
+  <!ENTITY dmidecode-size          "12.6 MB">
+  <!ENTITY dmidecode-buildsize     "150 MB">
+  <!ENTITY dmidecode-time          "1 SBU (using parallelism=4)">
+]>
+
+<sect1 id="dmidecode" xreflabel="dmidecode-&dmidecode-version;">
+  <?dbhtml filename="dmidecode.html"?>
+
+
+  <title>dmidecode-&dmidecode-version;</title>
+
+  <indexterm zone="dmidecode">
+    <primary sortas="a-dmidecode">dmidecode</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduction to dmidecode</title>
+
+    <para>
+      <application>dmidecode</application> is a tool for dumping a computer's hardware information as described in its BIOS or UEFI firmware, including details about the system's processor, memory, and other components.
+    </para>
+
+    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Download (HTTP): <ulink url="&dmidecode-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download (FTP): <ulink url="&dmidecode-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download MD5 sum: &dmidecode-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download size: &dmidecode-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated disk space required: &dmidecode-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated build time: &dmidecode-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">dmidecode Dependencies</bridgehead>
+
+    <bridgehead renderas="sect4">Required</bridgehead>
+    <para role="required">
+    </para>
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installation of dmidecode</title>
+
+    <para>
+      Install <application>dmidecode</application> by running the
+      following commands:
+    </para>
+
+<screen><userinput>make</userinput></screen>
+
+    <para>
+      This package does not come with a test suite.
+    </para>
+
+    <para>
+      Now, as the <systemitem class="username">root</systemitem> user:
+    </para>
+
+<screen role="root"><userinput>make prefix=/usr install</userinput></screen>
+  </sect2>
+
+  <sect2 role="content">
+    <title>Contents</title>
+
+    <segmentedlist>
+      <segtitle>Installed Programs</segtitle>
+      <segtitle>Installed Libraries</segtitle>
+      <segtitle>Installed Directory</segtitle>
+
+      <seglistitem>
+	<seg>
+          dmidecode
+        </seg>
+        <seg>
+          None
+        </seg>
+        <seg>
+          /usr/share/dmidecode
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+  </sect2>
+
+</sect1>
