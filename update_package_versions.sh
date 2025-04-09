@@ -173,3 +173,9 @@ getLatestFromFileList dnsmasq https://thekelleys.org.uk/dnsmasq/ networking/netu
 
 #dmidecode
 getLatestFromFileList dmidecode http://download.savannah.gnu.org/releases/dmidecode/ general/sysutils
+
+#osinfo-db-tools
+getLatestGitlabTag libosinfo/osinfo-db-tools osinfo-db-tools postlfs/virtualization 2-
+
+#osinfo-db
+getLatestGitlabTag libosinfo/osinfo-db osinfo-db postlfs/virtualization 2-

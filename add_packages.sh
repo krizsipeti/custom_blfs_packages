@@ -104,3 +104,13 @@ grep -qF dnsmasq-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY dn
 cp -fv general/sysutils/dmidecode.xml ../blfs_root/blfs-xml/general/sysutils
 grep -qF dmidecode.xml ../blfs_root/blfs-xml/general/sysutils/sysutils.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="dmidecode.xml"/>' ../blfs_root/blfs-xml/general/sysutils/sysutils.xml
 grep -qF dmidecode-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY dmidecode-version "3.6">' >> ../blfs_root/blfs-xml/packages.ent
+
+# Add osinfo-db-tools
+cp -fv postlfs/virtualization/osinfo-db-tools.xml ../blfs_root/blfs-xml/postlfs/virtualization
+grep -qF osinfo-db-tools.xml ../blfs_root/blfs-xml/postlfs/virtualization/virtualization.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="osinfo-db-tools.xml"/>' ../blfs_root/blfs-xml/postlfs/virtualization/virtualization.xml
+grep -qF osinfo-db-tools-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY osinfo-db-tools-version "1.12.0">' >> ../blfs_root/blfs-xml/packages.ent
+
+# Add osinfo-db
+cp -fv postlfs/virtualization/osinfo-db.xml ../blfs_root/blfs-xml/postlfs/virtualization
+grep -qF osinfo-db.xml ../blfs_root/blfs-xml/postlfs/virtualization/virtualization.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="osinfo-db.xml"/>' ../blfs_root/blfs-xml/postlfs/virtualization/virtualization.xml
+grep -qF osinfo-db-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY osinfo-db-version "20250124">' >> ../blfs_root/blfs-xml/packages.ent
