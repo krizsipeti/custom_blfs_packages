@@ -67,7 +67,9 @@
 
     <bridgehead renderas="sect4">Required</bridgehead>
     <para role="required">
-        <xref linkend="libxslt"/>
+        <xref linkend="libxslt"/>, and
+        <xref linkend="json-glib"/>, and
+        <xref linkend="libarchive"/>
     </para>
   </sect2>
 
