@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY osinfo-db-download-http "https://gitlab.com/libosinfo/osinfo-db/-/archive/v20250124/osinfo-db-v20250124.tar.gz">
+  <!ENTITY osinfo-db-download-ftp  " ">
+  <!ENTITY osinfo-db-md5sum        "bbfc678c8889389c987067870315485f">
+  <!ENTITY osinfo-db-size          "12.6 MB">
+  <!ENTITY osinfo-db-buildsize     "150 MB">
+  <!ENTITY osinfo-db-time          "1 SBU (using parallelism=4)">
+]>
+
+<sect1 id="osinfo-db" xreflabel="osinfo-db-&osinfo-db-version;">
+  <?dbhtml filename="osinfo-db.html"?>
+
+
+  <title>osinfo-db-&osinfo-db-version;</title>
+
+  <indexterm zone="osinfo-db">
+    <primary sortas="a-osinfo-db">osinfo-db</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduction to osinfo-db</title>
+
+    <para>
+      <application>osinfo-db</application> is a library that provides a database of operating systems and hypervisor capabilities, simplifying the management of virtualized environments.
+    </para>
+
+    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Download (HTTP): <ulink url="&osinfo-db-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download (FTP): <ulink url="&osinfo-db-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download MD5 sum: &osinfo-db-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download size: &osinfo-db-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated disk space required: &osinfo-db-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated build time: &osinfo-db-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">osinfo-db Dependencies</bridgehead>
+
+    <bridgehead renderas="sect4">Required</bridgehead>
+    <para role="required">
+        <xref linkend="libxslt"/>, and
+        <xref linkend="osinfo-db-tools"/>
+    </para>
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installation of osinfo-db</title>
+
+    <para>
+      Install <application>osinfo-db</application> by running the
+      following commands:
+    </para>
+
+<screen><userinput>make</userinput></screen>
+
+    <para>
+      This package does not come with a test suite.
+    </para>
+
+    <para>
+      Now, as the <systemitem class="username">root</systemitem> user:
+    </para>
+
+<screen role="root"><userinput>make install DESTDIR="/usr" OSINFO_DB_TARGET="--system"</userinput></screen>
+  </sect2>
+
+  <sect2 role="content">
+    <title>Contents</title>
+
+    <segmentedlist>
+      <segtitle>Installed Programs</segtitle>
+      <segtitle>Installed Libraries</segtitle>
+      <segtitle>Installed Directory</segtitle>
+
+      <seglistitem>
+	<seg>
+          osinfo-db
+        </seg>
+        <seg>
+          None
+        </seg>
+        <seg>
+          /usr/share/osinfo-db
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+  </sect2>
+
+</sect1>

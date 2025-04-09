@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+  <!ENTITY % general-entities SYSTEM "../../general.ent">
+  %general-entities;
+
+  <!ENTITY osinfo-db-tools-download-http "https://gitlab.com/libosinfo/osinfo-db-tools/-/archive/v1.12.0/osinfo-db-tools-v1.12.0.tar.gz">
+  <!ENTITY osinfo-db-tools-download-ftp  " ">
+  <!ENTITY osinfo-db-tools-md5sum        "02ae6f11f8334f34d2b705ff2bb66fff">
+  <!ENTITY osinfo-db-tools-size          "12.6 MB">
+  <!ENTITY osinfo-db-tools-buildsize     "150 MB">
+  <!ENTITY osinfo-db-tools-time          "1 SBU (using parallelism=4)">
+]>
+
+<sect1 id="osinfo-db-tools" xreflabel="osinfo-db-tools-&osinfo-db-tools-version;">
+  <?dbhtml filename="osinfo-db-tools.html"?>
+
+
+  <title>osinfo-db-tools-&osinfo-db-tools-version;</title>
+
+  <indexterm zone="osinfo-db-tools">
+    <primary sortas="a-osinfo-db-tools">osinfo-db-tools</primary>
+  </indexterm>
+
+  <sect2 role="package">
+    <title>Introduction to osinfo-db-tools</title>
+
+    <para>
+      <application>osinfo-db-tools</application> is a library that provides a database of operating systems and hypervisor capabilities, simplifying the management of virtualized environments.
+    </para>
+
+    <bridgehead renderas="sect3">Package Information</bridgehead>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Download (HTTP): <ulink url="&osinfo-db-tools-download-http;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download (FTP): <ulink url="&osinfo-db-tools-download-ftp;"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download MD5 sum: &osinfo-db-tools-md5sum;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Download size: &osinfo-db-tools-size;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated disk space required: &osinfo-db-tools-buildsize;
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Estimated build time: &osinfo-db-tools-time;
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <bridgehead renderas="sect3">osinfo-db-tools Dependencies</bridgehead>
+
+    <bridgehead renderas="sect4">Required</bridgehead>
+    <para role="required">
+        <xref linkend="libxslt"/>
+    </para>
+  </sect2>
+
+  <sect2 role="installation">
+    <title>Installation of osinfo-db-tools</title>
+
+    <para>
+      Install <application>osinfo-db-tools</application> by running the
+      following commands:
+    </para>
+
+<screen><userinput>meson setup build --prefix=/usr --buildtype=release &amp;&amp;
+ninja -C build</userinput></screen>
+
+    <para>
+      This package does not come with a test suite.
+    </para>
+
+    <para>
+      Now, as the <systemitem class="username">root</systemitem> user:
+    </para>
+
+<screen role="root"><userinput>sudo ninja -C build install</userinput></screen>
+  </sect2>
+
+  <sect2 role="content">
+    <title>Contents</title>
+
+    <segmentedlist>
+      <segtitle>Installed Programs</segtitle>
+      <segtitle>Installed Libraries</segtitle>
+      <segtitle>Installed Directory</segtitle>
+
+      <seglistitem>
+	<seg>
+          osinfo-db-tools
+        </seg>
+        <seg>
+          None
+        </seg>
+        <seg>
+          /usr/share/osinfo-db-tools
+        </seg>
+      </seglistitem>
+    </segmentedlist>
+
+  </sect2>
+
+</sect1>
