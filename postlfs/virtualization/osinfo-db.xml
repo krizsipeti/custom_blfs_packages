@@ -90,7 +90,7 @@
       Now, as the <systemitem class="username">root</systemitem> user:
     </para>
 
-<screen role="root"><userinput>make install DESTDIR="/usr" OSINFO_DB_TARGET="--system"</userinput></screen>
+<screen role="root"><userinput>make install OSINFO_DB_TARGET="--system"</userinput></screen>
   </sect2>
 
   <sect2 role="content">
