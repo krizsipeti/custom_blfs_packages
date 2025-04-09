@@ -97,6 +97,20 @@ getLatestFromFileList()
     updatePkg "$1" "$VER" "$URL" "$3"
 }
 
+# Function that gets the latest tag of a specific package.
+# This function works only with packages stored on codeberg.
+getLatestCodebergTag()
+{
+    greetMsg "$2"
+    URL=$(curl -v --silent "https://codeberg.org/$1/tags" 2>&1 | grep -E '<a class.* href=.*/tag/' | tr '"' '\n' | grep /tag/$5 -m1)
+    VER=$(echo "$URL" | awk -F- '{ print $NF }')
+    URL="https://codeberg.org$(curl -v --silent "https://codeberg.org/$1/tags" 2>&1 | grep /archive/.*$VER.tar..* | tr '"' '\n' | grep .tar. -m1 | awk -F"&" '{ print $(NF-1) }')"
+    if [[ $4 ]]; then
+        VER=$(echo "$VER" | cut -c"$4")
+    fi
+    updatePkg "$2" "$VER" "$URL" "$3"
+}
+
 #minidlna
 getLatestSourceforgeRelease minidlna minidlna server/other
 
@@ -134,7 +148,7 @@ getLatestGithubTag Matroska-Org/libebml libebml multimedia/libdriv 9-
 getLatestGithubTag Matroska-Org/libmatroska libmatroska multimedia/libdriv 9-
 
 #mkvtoolnix
-getLatestGitlabTag mbunkus/mkvtoolnix mkvtoolnix multimedia/videoutils 9-
+getLatestCodebergTag mbunkus/mkvtoolnix mkvtoolnix multimedia/videoutils
 
 #virt-manager
 getLatestGithubRelease virt-manager/virt-manager virt-manager postlfs/virtualization 2-
