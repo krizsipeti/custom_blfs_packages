@@ -109,8 +109,9 @@ EOF</userinput></screen>
 
 <screen role="root"><userinput>groupadd -f -g 127 libvirt &amp;&amp;
 usermod -a -G libvirt pkr &amp;&amp;
+useradd -g kvm -c 'Libvirt Qemu' -d /var/lib/libvirt -s /bin/false -u 128 libvirt-qemu &amp;&amp;
 groupadd -f -g 128 libvirt-qemu &amp;&amp;
-useradd -g libvirt-qemu -c 'Libvirt Qemu' -d /var/lib/libvirt -s /bin/false -u 128 libvirt-qemu &amp;&amp;
+usermod -a -G libvirt-qemu libvirt-qemu &amp;&amp;
 groupadd -f -g 129 libvirt-dnsmasq &amp;&amp;
 useradd -g libvirt-dnsmasq -c 'Libvirt Dnsmasq' -d /var/lib/libvirt/dnsmasq -s /bin/false -u 129 libvirt-dnsmasq</userinput></screen>
   </sect2>
