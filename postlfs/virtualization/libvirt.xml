@@ -4,9 +4,9 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY libvirt-download-http "https://gitlab.com/libvirt/libvirt/-/archive/v11.3.0-rc2/libvirt-v11.3.0-rc2.tar.gz">
+  <!ENTITY libvirt-download-http "https://gitlab.com/libvirt/libvirt/-/archive/v11.3.0/libvirt-v11.3.0.tar.gz">
   <!ENTITY libvirt-download-ftp  " ">
-  <!ENTITY libvirt-md5sum        "4c27fc7c5ff3cc6d3e77841c6ca6de0c">
+  <!ENTITY libvirt-md5sum        "3eecbe45d31fc11faf0ae5b8ac7aefc0">
   <!ENTITY libvirt-size          "12.6 MB">
   <!ENTITY libvirt-buildsize     "150 MB">
   <!ENTITY libvirt-time          "1 SBU (using parallelism=4)">
