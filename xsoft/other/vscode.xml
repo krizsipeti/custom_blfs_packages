@@ -4,9 +4,9 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY vscode-download-http "https://codeload.github.com/microsoft/vscode/tar.gz/refs/tags/1.100.0">
+  <!ENTITY vscode-download-http "https://codeload.github.com/microsoft/vscode/tar.gz/refs/tags/1.100.2">
   <!ENTITY vscode-download-ftp  " ">
-  <!ENTITY vscode-md5sum        "d18270605862c58b4ec662b03c3d9e7c">
+  <!ENTITY vscode-md5sum        "b1b91a63f450b6f5dc30c47c50082f7e">
   <!ENTITY vscode-size          "4.6 MB">
   <!ENTITY vscode-buildsize     "500 MB">
   <!ENTITY vscode-time          "2 SBU (using parallelism=4)">
