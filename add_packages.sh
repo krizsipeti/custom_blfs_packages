@@ -78,7 +78,7 @@ grep -qF libvirt-python-version ../blfs_root/blfs-xml/packages.ent || echo '<!EN
 # Add libvirt
 cp -fv postlfs/virtualization/libvirt.xml ../blfs_root/blfs-xml/postlfs/virtualization
 grep -qF libvirt.xml ../blfs_root/blfs-xml/postlfs/virtualization/virtualization.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="libvirt.xml"/>' ../blfs_root/blfs-xml/postlfs/virtualization/virtualization.xml
-grep -qF libvirt-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY libvirt-version "11.4.0-rc1">' >> ../blfs_root/blfs-xml/packages.ent
+grep -qF libvirt-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY libvirt-version "11.4.0-rc2">' >> ../blfs_root/blfs-xml/packages.ent
 
 # Add libosinfo
 cp -fv postlfs/virtualization/libosinfo.xml ../blfs_root/blfs-xml/postlfs/virtualization
