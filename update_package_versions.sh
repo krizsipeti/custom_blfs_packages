@@ -79,7 +79,7 @@ getLatestSourceforgeRelease()
 getLatestGitlabTag()
 {
     greetMsg "$2"
-    URL=$(curl -v --silent "https://gitlab.com/$1/-/tags" 2>&1 | grep -E '<a class.* href=.*/tags/' | tr '"' '\n' | grep /tags/$5 -m1)
+    URL=$(curl -v --silent "https://gitlab.com/$1/-/tags" 2>&1 | grep -E '<a href=.*/tags/' | tr '"' '\n' | grep /tags/$5 -m1)
     VER=$(echo "$URL" | awk -F/ '{ print $(NF) }') # | awk -F- '{ print $NF }')
     URL="https://gitlab.com$(curl -v --silent "https://gitlab.com/$1/-/tags" 2>&1 | grep /archive/.*$VER.tar..* | tr ';' '\n' | grep .tar. -m1 | awk -F"&" '{ print $(NF-1) }')"
     if [[ $4 ]]; then

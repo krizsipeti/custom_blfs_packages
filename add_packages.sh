@@ -8,7 +8,7 @@ grep -qF libtorrent-rasterbar-version ../blfs_root/blfs-xml/packages.ent || echo
 # Add qBittorrent
 cp -fv xsoft/other/qbittorrent.xml ../blfs_root/blfs-xml/xsoft/other
 grep -qF qbittorrent.xml ../blfs_root/blfs-xml/xsoft/other/other.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="qbittorrent.xml"/>' ../blfs_root/blfs-xml/xsoft/other/other.xml
-grep -qF qbittorrent-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY qbittorrent-version "5.1.0">' >> ../blfs_root/blfs-xml/packages.ent
+grep -qF qbittorrent-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY qbittorrent-version "5.1.2">' >> ../blfs_root/blfs-xml/packages.ent
 
 # Add pkcs11-helper
 cp -fv postlfs/security/pkcs11-helper.xml ../blfs_root/blfs-xml/postlfs/security
@@ -28,7 +28,7 @@ grep -qF minidlna-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY m
 # Add QMPlay2
 cp -fv multimedia/videoutils/qmplay2.xml ../blfs_root/blfs-xml/multimedia/videoutils
 grep -qF qmplay2.xml ../blfs_root/blfs-xml/multimedia/videoutils/videoutils.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="qmplay2.xml"/>' ../blfs_root/blfs-xml/multimedia/videoutils/videoutils.xml
-grep -qF qmplay2-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY qmplay2-version "25.01.19">' >> ../blfs_root/blfs-xml/packages.ent
+grep -qF qmplay2-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY qmplay2-version "25.06.27">' >> ../blfs_root/blfs-xml/packages.ent
 
 # Add SDL2_ttf
 cp -fv general/graphlib/sdl2-ttf.xml ../blfs_root/blfs-xml/general/graphlib
@@ -43,7 +43,7 @@ grep -qF sdl2-image-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY
 # Add VSCode
 cp -fv xsoft/other/vscode.xml ../blfs_root/blfs-xml/xsoft/other
 grep -qF vscode.xml ../blfs_root/blfs-xml/xsoft/other/other.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="vscode.xml"/>' ../blfs_root/blfs-xml/xsoft/other/other.xml
-grep -qF vscode-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY vscode-version "1.100.2">' >> ../blfs_root/blfs-xml/packages.ent
+grep -qF vscode-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY vscode-version "1.102.1">' >> ../blfs_root/blfs-xml/packages.ent
 
 # Add libcmark
 cp -fv pst/sgml/libcmark.xml ../blfs_root/blfs-xml/pst/sgml
@@ -63,7 +63,7 @@ grep -qF libmatroska-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTIT
 # Add mkvtoolnix
 cp -fv multimedia/videoutils/mkvtoolnix.xml ../blfs_root/blfs-xml/multimedia/videoutils
 grep -qF mkvtoolnix.xml ../blfs_root/blfs-xml/multimedia/videoutils/videoutils.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="mkvtoolnix.xml"/>' ../blfs_root/blfs-xml/multimedia/videoutils/videoutils.xml
-grep -qF mkvtoolnix-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY mkvtoolnix-version "92.0">' >> ../blfs_root/blfs-xml/packages.ent
+grep -qF mkvtoolnix-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY mkvtoolnix-version "93.0">' >> ../blfs_root/blfs-xml/packages.ent
 
 # Add virt-manager
 cp -fv postlfs/virtualization/virt-manager.xml ../blfs_root/blfs-xml/postlfs/virtualization
@@ -73,12 +73,12 @@ grep -qF virt-manager-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTI
 # Add libvirt-python
 cp -fv postlfs/virtualization/libvirt-python.xml ../blfs_root/blfs-xml/postlfs/virtualization
 grep -qF libvirt-python.xml ../blfs_root/blfs-xml/postlfs/virtualization/virtualization.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="libvirt-python.xml"/>' ../blfs_root/blfs-xml/postlfs/virtualization/virtualization.xml
-grep -qF libvirt-python-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY libvirt-python-version "11.3.0">' >> ../blfs_root/blfs-xml/packages.ent
+grep -qF libvirt-python-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY libvirt-python-version "11.5.0">' >> ../blfs_root/blfs-xml/packages.ent
 
 # Add libvirt
 cp -fv postlfs/virtualization/libvirt.xml ../blfs_root/blfs-xml/postlfs/virtualization
 grep -qF libvirt.xml ../blfs_root/blfs-xml/postlfs/virtualization/virtualization.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="libvirt.xml"/>' ../blfs_root/blfs-xml/postlfs/virtualization/virtualization.xml
-grep -qF libvirt-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY libvirt-version "11.4.0-rc2">' >> ../blfs_root/blfs-xml/packages.ent
+grep -qF libvirt-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY libvirt-version "11.5.0">' >> ../blfs_root/blfs-xml/packages.ent
 
 # Add libosinfo
 cp -fv postlfs/virtualization/libosinfo.xml ../blfs_root/blfs-xml/postlfs/virtualization
@@ -88,7 +88,7 @@ grep -qF libosinfo-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY 
 # Add slirp4netns
 cp -fv networking/netutils/slirp4netns.xml ../blfs_root/blfs-xml/networking/netutils
 grep -qF slirp4netns.xml ../blfs_root/blfs-xml/networking/netutils/netutils.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="slirp4netns.xml"/>' ../blfs_root/blfs-xml/networking/netutils/netutils.xml
-grep -qF slirp4netns-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY slirp4netns-version "1.3.2">' >> ../blfs_root/blfs-xml/packages.ent
+grep -qF slirp4netns-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY slirp4netns-version "1.3.3">' >> ../blfs_root/blfs-xml/packages.ent
 
 # Add libvirt-glib
 cp -fv postlfs/virtualization/libvirt-glib.xml ../blfs_root/blfs-xml/postlfs/virtualization
@@ -113,4 +113,4 @@ grep -qF osinfo-db-tools-version ../blfs_root/blfs-xml/packages.ent || echo '<!E
 # Add osinfo-db
 cp -fv postlfs/virtualization/osinfo-db.xml ../blfs_root/blfs-xml/postlfs/virtualization
 grep -qF osinfo-db.xml ../blfs_root/blfs-xml/postlfs/virtualization/virtualization.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="osinfo-db.xml"/>' ../blfs_root/blfs-xml/postlfs/virtualization/virtualization.xml
-grep -qF osinfo-db-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY osinfo-db-version "20250124">' >> ../blfs_root/blfs-xml/packages.ent
+grep -qF osinfo-db-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY osinfo-db-version "20250606">' >> ../blfs_root/blfs-xml/packages.ent

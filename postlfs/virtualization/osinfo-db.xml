@@ -4,9 +4,9 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY osinfo-db-download-http "https://gitlab.com/libosinfo/osinfo-db/-/archive/v20250124/osinfo-db-v20250124.tar.gz">
+  <!ENTITY osinfo-db-download-http "https://gitlab.com/libosinfo/osinfo-db/-/archive/v20250606/osinfo-db-v20250606.tar.gz">
   <!ENTITY osinfo-db-download-ftp  " ">
-  <!ENTITY osinfo-db-md5sum        "bbfc678c8889389c987067870315485f">
+  <!ENTITY osinfo-db-md5sum        "683497fc58330f36ddaa4bf1b0633124">
   <!ENTITY osinfo-db-size          "12.6 MB">
   <!ENTITY osinfo-db-buildsize     "150 MB">
   <!ENTITY osinfo-db-time          "1 SBU (using parallelism=4)">
