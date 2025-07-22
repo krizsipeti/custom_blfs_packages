@@ -24,7 +24,7 @@ _patch_network_scripts()
     # Check if wpa_supplicant is required and patch its install script if yes
     if [[ $2 == *"wpa_supplicant"* ]] ; then
         sed -i "/^cat > \/etc\/systemd\/network/i cat > /etc/systemd/network/20-wlan0.network << \"EOF\"\n\[Match\]\nName=wlan0\n\n\[Network\]\nDHCP=yes\nEOF" "$net_script" &&
-        sed -i "/20-wlan0.network/i mkdir -pv /etc/wpa_supplicant\ncat > /etc/wpa_supplicant/wpa_supplicant-wlan0.conf << \"EOF\"\nnetwork=\{\nssid=\"Telekom-737166_5Ghz\"\n#psk=\"teuf95a2e2fb\"\npsk=c8bac18b5379c7c80f01daad882e978c7a803b5404a69705b977552640608863\n\}\nEOF" "$net_script" &&
+        sed -i "/20-wlan0.network/i mkdir -pv /etc/wpa_supplicant\ncat > /etc/wpa_supplicant/wpa_supplicant-wlan0.conf << \"EOF\"\nnetwork=\{\nssid=\"Telekom-361759\"\n#psk=\"42918671251652357786\"\npsk=ecfb16e5ed6fd6c40782e12a58b47adeefc5dfe2698f43b01f1b2cb799b7b270\n\}\nEOF" "$net_script" &&
         sed -i "/wpa_supplicant@/s/@.*/@wlan0/" "$(find "$1/blfs_root/scripts/" -type f -iname "*-wpa_supplicant")"
         if [[ $? -gt 0 ]] ; then
             echo "Failed to patch wpa_supplicant script." >&2
