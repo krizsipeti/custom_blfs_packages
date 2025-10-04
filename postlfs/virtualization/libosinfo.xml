@@ -4,7 +4,7 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY libosinfo-download-http "https://gitlab.com/libosinfo/libosinfo/-/archive/v1.12.0/libosinfo-v1.12.0.tar.gz">
+  <!ENTITY libosinfo-download-http "https://gitlab.com/libosinfo/libosinfo/-/archive/v1.12.0/libosinfo-v1.12.0.tar.gz?ref_type=tags">
   <!ENTITY libosinfo-download-ftp  " ">
   <!ENTITY libosinfo-md5sum        "33d2d382f11523d05cac0ee6e13bd3b9">
   <!ENTITY libosinfo-size          "12.6 MB">

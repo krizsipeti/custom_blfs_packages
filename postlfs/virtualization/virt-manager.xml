@@ -4,9 +4,9 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY virt-manager-download-http "https://github.com/virt-manager/virt-manager/archive/refs/tags/v5.0.0.tar.gz">
+  <!ENTITY virt-manager-download-http "https://github.com/virt-manager/virt-manager/releases/download/v5.1.0/virt-manager-5.1.0.tar.xz">
   <!ENTITY virt-manager-download-ftp  " ">
-  <!ENTITY virt-manager-md5sum        "dc03fb9deb493ae9561bbee867ece891">
+  <!ENTITY virt-manager-md5sum        "d7963b628d415d062bd74d5691f3e70c">
   <!ENTITY virt-manager-size          "12.6 MB">
   <!ENTITY virt-manager-buildsize     "150 MB">
   <!ENTITY virt-manager-time          "1 SBU (using parallelism=4)">
