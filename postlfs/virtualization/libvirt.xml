@@ -4,7 +4,7 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY libvirt-download-http "https://gitlab.com/libvirt/libvirt/-/archive/v11.8.0/libvirt-v11.8.0.tar.gz?ref_type=tags">
+  <!ENTITY libvirt-download-http "https://gitlab.com/libvirt/libvirt/-/archive/v11.8.0/libvirt-v11.8.0.tar.gz">
   <!ENTITY libvirt-download-ftp  " ">
   <!ENTITY libvirt-md5sum        "a6f5b1501efe8acaa997801cbeb06b0c">
   <!ENTITY libvirt-size          "12.6 MB">

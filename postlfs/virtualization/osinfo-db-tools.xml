@@ -4,7 +4,7 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY osinfo-db-tools-download-http "https://gitlab.com/libosinfo/osinfo-db-tools/-/archive/v1.12.0/osinfo-db-tools-v1.12.0.tar.gz?ref_type=tags">
+  <!ENTITY osinfo-db-tools-download-http "https://gitlab.com/libosinfo/osinfo-db-tools/-/archive/v1.12.0/osinfo-db-tools-v1.12.0.tar.gz">
   <!ENTITY osinfo-db-tools-download-ftp  " ">
   <!ENTITY osinfo-db-tools-md5sum        "02ae6f11f8334f34d2b705ff2bb66fff">
   <!ENTITY osinfo-db-tools-size          "12.6 MB">
