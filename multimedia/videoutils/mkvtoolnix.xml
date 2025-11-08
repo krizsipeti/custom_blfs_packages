@@ -4,9 +4,9 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY mkvtoolnix-download-http "https://codeberg.org/mbunkus/mkvtoolnix/archive/release-95.0.tar.gz">
+  <!ENTITY mkvtoolnix-download-http "https://codeberg.org/mbunkus/mkvtoolnix/archive/release-96.0.tar.gz">
   <!ENTITY mkvtoolnix-download-ftp  " ">
-  <!ENTITY mkvtoolnix-md5sum        "89d61c3b1ca2ff0bc89abcd002c58e3c">
+  <!ENTITY mkvtoolnix-md5sum        "ff4c324a781c53c7e2bba0caf00d5d16">
   <!ENTITY mkvtoolnix-size          "1.6 MB">
   <!ENTITY mkvtoolnix-buildsize     "160 MB">
   <!ENTITY mkvtoolnix-time          "2 SBU (using parallelism=4)">
