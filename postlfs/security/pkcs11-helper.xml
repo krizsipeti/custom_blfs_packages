@@ -4,9 +4,9 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY pkcs11-helper-download-http "https://github.com/OpenSC/pkcs11-helper/releases/download/pkcs11-helper-1.30.0/pkcs11-helper-1.30.0.tar.bz2">
+  <!ENTITY pkcs11-helper-download-http "https://github.com/OpenSC/pkcs11-helper/releases/download/pkcs11-helper-1.31.0/pkcs11-helper-1.31.0.tar.bz2">
   <!ENTITY pkcs11-helper-download-ftp  " ">
-  <!ENTITY pkcs11-helper-md5sum        "f6dacff56228a6e9d5c0d417464a0d31">
+  <!ENTITY pkcs11-helper-md5sum        "f43fd6305b765cabfed79cc8986593d7">
   <!ENTITY pkcs11-helper-size          "12.6 MB">
   <!ENTITY pkcs11-helper-buildsize     "150 MB">
   <!ENTITY pkcs11-helper-time          "1 SBU (using parallelism=4)">

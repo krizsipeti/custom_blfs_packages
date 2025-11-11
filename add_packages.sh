@@ -8,12 +8,12 @@ grep -qF libtorrent-rasterbar-version ../blfs_root/blfs-xml/packages.ent || echo
 # Add qBittorrent
 cp -fv xsoft/other/qbittorrent.xml ../blfs_root/blfs-xml/xsoft/other
 grep -qF qbittorrent.xml ../blfs_root/blfs-xml/xsoft/other/other.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="qbittorrent.xml"/>' ../blfs_root/blfs-xml/xsoft/other/other.xml
-grep -qF qbittorrent-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY qbittorrent-version "5.1.2">' >> ../blfs_root/blfs-xml/packages.ent
+grep -qF qbittorrent-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY qbittorrent-version "5.1.3">' >> ../blfs_root/blfs-xml/packages.ent
 
 # Add pkcs11-helper
 cp -fv postlfs/security/pkcs11-helper.xml ../blfs_root/blfs-xml/postlfs/security
 grep -qF pkcs11-helper.xml ../blfs_root/blfs-xml/postlfs/security/security.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="pkcs11-helper.xml"/>' ../blfs_root/blfs-xml/postlfs/security/security.xml
-grep -qF pkcs11-helper-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY pkcs11-helper-version "1.30.0">' >> ../blfs_root/blfs-xml/packages.ent
+grep -qF pkcs11-helper-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY pkcs11-helper-version "1.31.0">' >> ../blfs_root/blfs-xml/packages.ent
 
 # Add libid3tag
 cp -fv multimedia/libdriv/libid3tag.xml ../blfs_root/blfs-xml/multimedia/libdriv
