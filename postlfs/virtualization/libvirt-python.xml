@@ -67,7 +67,7 @@
 
     <bridgehead renderas="sect4">Required</bridgehead>
     <para role="required">
-        <xref linkend="python3"/>, and
+        <xref linkend="python3"/>,
         <xref linkend="pypa-build"/>, and
         <xref linkend="libvirt"/>
     </para>

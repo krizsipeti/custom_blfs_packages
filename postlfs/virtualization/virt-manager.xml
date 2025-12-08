@@ -67,13 +67,13 @@
 
     <bridgehead renderas="sect4">Required</bridgehead>
     <para role="required">
-        <xref linkend="python3"/>, and
-        <xref linkend="gtk3"/>, and
-        <xref linkend="libvirt-glib"/>, and
-        <xref linkend="libvirt-python"/>, and
-        <xref linkend="pygobject3"/>, and
-        <xref linkend="requests"/>, and
-	<xref linkend="libosinfo"/>, and
+        <xref linkend="python3"/>,
+        <xref linkend="gtk3"/>,
+        <xref linkend="libvirt-glib"/>,
+        <xref linkend="libvirt-python"/>,
+        <xref linkend="pygobject3"/>,
+        <xref linkend="requests"/>,
+	<xref linkend="libosinfo"/>,
 	<xref linkend="bridgeutils"/>, and
         <xref linkend="gtksourceview4"/>
     </para>

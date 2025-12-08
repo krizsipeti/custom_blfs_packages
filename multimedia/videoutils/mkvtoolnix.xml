@@ -67,10 +67,10 @@
 
         <bridgehead renderas="sect4">Required</bridgehead>
         <para role="required">
-            <xref linkend="fmt"/>, and
-            <xref linkend="qt6"/>, and
-            <xref linkend="ruby"/>, and
-            <xref linkend="libcmark"/>, and
+            <xref linkend="fmt"/>,
+            <xref linkend="qt6"/>,
+            <xref linkend="ruby"/>,
+            <xref linkend="libcmark"/>,
             <xref linkend="libebml"/>, and
             <xref linkend="libmatroska"/>
         </para>

@@ -78,12 +78,12 @@
 
     <bridgehead renderas="sect4">Required</bridgehead>
     <para role="required">
-      <xref linkend="libexif"/>, and
-      <xref linkend="libjpeg"/>
-      <xref linkend="libid3tag"/>
-      <xref linkend="flac"/>
-      <xref linkend="libvorbis"/>
-      <xref linkend="sqlite"/>
+      <xref linkend="libexif"/>,
+      <xref linkend="libjpeg"/>,
+      <xref linkend="libid3tag"/>,
+      <xref linkend="flac"/>,
+      <xref linkend="libvorbis"/>,
+      <xref linkend="sqlite"/>, and
       <xref linkend="ffmpeg"/>
     </para>
   </sect2>

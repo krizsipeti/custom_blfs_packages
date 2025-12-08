@@ -67,7 +67,7 @@
 
     <bridgehead renderas="sect4">Required</bridgehead>
     <para role="required">
-      <xref linkend="boost"/>, and
+      <xref linkend="boost"/>,
       <xref linkend="libtorrent-rasterbar"/>, and
       <xref linkend="qt6"/>
     </para>

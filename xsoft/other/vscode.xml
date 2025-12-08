@@ -67,7 +67,7 @@
 
     <bridgehead renderas="sect4">Required</bridgehead>
     <para role="required">
-      <xref linkend="mitkrb"/>, and
+      <xref linkend="mitkrb"/>,
       <xref linkend="libsecret"/>, and
       <xref linkend="python3"/>
     </para>
