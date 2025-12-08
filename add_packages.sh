@@ -8,7 +8,7 @@ grep -qF libtorrent-rasterbar-version ../blfs_root/blfs-xml/packages.ent || echo
 # Add qBittorrent
 cp -fv xsoft/other/qbittorrent.xml ../blfs_root/blfs-xml/xsoft/other
 grep -qF qbittorrent.xml ../blfs_root/blfs-xml/xsoft/other/other.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="qbittorrent.xml"/>' ../blfs_root/blfs-xml/xsoft/other/other.xml
-grep -qF qbittorrent-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY qbittorrent-version "5.1.3">' >> ../blfs_root/blfs-xml/packages.ent
+grep -qF qbittorrent-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY qbittorrent-version "5.1.4">' >> ../blfs_root/blfs-xml/packages.ent
 
 # Add pkcs11-helper
 cp -fv postlfs/security/pkcs11-helper.xml ../blfs_root/blfs-xml/postlfs/security
@@ -43,7 +43,7 @@ grep -qF sdl2-image-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY
 # Add VSCode
 cp -fv xsoft/other/vscode.xml ../blfs_root/blfs-xml/xsoft/other
 grep -qF vscode.xml ../blfs_root/blfs-xml/xsoft/other/other.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="vscode.xml"/>' ../blfs_root/blfs-xml/xsoft/other/other.xml
-grep -qF vscode-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY vscode-version "1.106.0">' >> ../blfs_root/blfs-xml/packages.ent
+grep -qF vscode-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY vscode-version "1.106.3">' >> ../blfs_root/blfs-xml/packages.ent
 
 # Add libcmark
 cp -fv pst/sgml/libcmark.xml ../blfs_root/blfs-xml/pst/sgml
@@ -73,12 +73,12 @@ grep -qF virt-manager-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTI
 # Add libvirt-python
 cp -fv postlfs/virtualization/libvirt-python.xml ../blfs_root/blfs-xml/postlfs/virtualization
 grep -qF libvirt-python.xml ../blfs_root/blfs-xml/postlfs/virtualization/virtualization.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="libvirt-python.xml"/>' ../blfs_root/blfs-xml/postlfs/virtualization/virtualization.xml
-grep -qF libvirt-python-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY libvirt-python-version "11.9.0">' >> ../blfs_root/blfs-xml/packages.ent
+grep -qF libvirt-python-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY libvirt-python-version "11.10.0">' >> ../blfs_root/blfs-xml/packages.ent
 
 # Add libvirt
 cp -fv postlfs/virtualization/libvirt.xml ../blfs_root/blfs-xml/postlfs/virtualization
 grep -qF libvirt.xml ../blfs_root/blfs-xml/postlfs/virtualization/virtualization.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="libvirt.xml"/>' ../blfs_root/blfs-xml/postlfs/virtualization/virtualization.xml
-grep -qF libvirt-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY libvirt-version "11.9.0">' >> ../blfs_root/blfs-xml/packages.ent
+grep -qF libvirt-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY libvirt-version "11.10.0">' >> ../blfs_root/blfs-xml/packages.ent
 
 # Add libosinfo
 cp -fv postlfs/virtualization/libosinfo.xml ../blfs_root/blfs-xml/postlfs/virtualization
