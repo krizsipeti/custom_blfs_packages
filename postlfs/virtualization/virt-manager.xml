@@ -73,7 +73,8 @@
         <xref linkend="libvirt-python"/>, and
         <xref linkend="pygobject3"/>, and
         <xref linkend="requests"/>, and
-        <xref linkend="libosinfo"/>, and
+	<xref linkend="libosinfo"/>, and
+	<xref linkend="bridgeutils"/>, and
         <xref linkend="gtksourceview4"/>
     </para>
   </sect2>
