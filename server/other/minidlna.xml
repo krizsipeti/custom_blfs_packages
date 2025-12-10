@@ -73,7 +73,6 @@
       </listitem>
     </itemizedlist>
 
-
     <bridgehead renderas="sect3">MiniDLNA Dependencies</bridgehead>
 
     <bridgehead renderas="sect4">Required</bridgehead>
@@ -82,8 +81,7 @@
       <xref linkend="libjpeg"/>,
       <xref linkend="libid3tag"/>,
       <xref linkend="flac"/>,
-      <xref linkend="libvorbis"/>,
-      <xref linkend="sqlite"/>, and
+      <xref linkend="libvorbis"/>, and
       <xref linkend="ffmpeg"/>
     </para>
   </sect2>
@@ -121,7 +119,7 @@ make</userinput></screen>
       <segtitle>Installed Directory</segtitle>
 
       <seglistitem>
-	<seg>
+        <seg>
           minidlna
         </seg>
         <seg>
