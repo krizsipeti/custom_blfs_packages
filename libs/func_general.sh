@@ -9,19 +9,19 @@ _create_folders_and_get_sources()
         return 1
     fi
 
-    # Check if jhalfs folder is already exist and delete it if yes
+    # Check if jhalfs folder is already exist and delete it's content if yes
     local dir_jhalfs="$1/jhalfs"
     if [ -d "$dir_jhalfs" ] ; then
-        echo "Deleting old jhalfs folder: $dir_jhalfs"
-        sudo rm -rf "$dir_jhalfs" || { echo "Error: Failed to delete folder: $dir_jhalfs" >&2; return 1; }
+        echo "Deleting content of old jhalfs folder: $dir_jhalfs"
+        sudo find "$dir_jhalfs" -mindepth 1 -delete || { echo "Error: Failed to delete content of folder: $dir_jhalfs" >&2; return 1; }
         echo "Done!"
     fi
 
-    # Check if jhalfs folder is already exist and delete it if yes
+    # Check if blfs_root folder is already exist and delete it's content if yes
     local dir_blfs="$1/blfs_root"
     if [ -d "$dir_blfs" ] ; then
-        echo "Deleting old blfs_root folder: $dir_blfs"
-        sudo rm -rf "$dir_blfs" || { echo "Error: Failed to delete folder: $dir_blfs" >&2; return 1; }
+        echo "Deleting content of old blfs_root folder: $dir_blfs"
+        sudo find "$dir_blfs" -mindepth 1 -delete || { echo "Error: Failed to delete content of folder: $dir_blfs" >&2; return 1; }
         echo "Done!"
     fi
 
@@ -30,18 +30,40 @@ _create_folders_and_get_sources()
     local u="$(id -un)" # current user
     local g="$(id -gn)" # current group
     echo Creating jhalfs folder...
-    sudo install -v -o "$u" -g root -m 1777 -d "$dir_jhalfs" || return 1
-    sudo install -v -o "$u" -g "$g" -m 1777 -d "$dir_book" || return 1
+    if [ ! -d "$dir_jhalfs" ] ; then
+        sudo install -v -o "$u" -g root -m 1777 -d "$dir_jhalfs" || return 1
+    else
+        sudo chmod -v 1777 "$dir_jhalfs" || return 1
+    fi
+    echo Creating book-source folder...
+    if [ ! -d "$dir_book" ] ; then
+        sudo install -v -o "$u" -g "$g" -m 1777 -d "$dir_book" || return 1
+    else
+        sudo chmod -v 1777 "$dir_book" || return 1
+    fi
 
     # Clone the LFS book repository to book-source folder
+    local branch=
+    if [ -n "$USE_MULTILIB" ] ; then
+        branch="--branch multilib"
+    fi
     echo Cloning lfs book sources...
-    git clone https://git.linuxfromscratch.org/lfs.git "$dir_book" || return 1
+    git clone $branch https://git.linuxfromscratch.org/lfs.git "$dir_book" || return 1
 
     # Now create the blfs_root folder and blfs-xml sub-folder owned by the current user
     local dir_blfs_book="$dir_blfs/blfs-xml"
     echo Creating blfs_root folder...
-    sudo install -v -o "$u" -g root -m 1777 -d "$dir_blfs" || return 1
-    sudo install -v -o "$u" -g "$g" -m 1777 -d "$dir_blfs_book" || return 1
+    if [ ! -d "$dir_blfs" ] ; then
+        sudo install -v -o "$u" -g root -m 1777 -d "$dir_blfs" || return 1
+    else
+        sudo chmod -v 1777 "$dir_blfs" || return 1
+    fi
+    echo Creating blfs-xml folder...
+    if [ ! -d "$dir_blfs_book" ] ; then
+        sudo install -v -o "$u" -g "$g" -m 1777 -d "$dir_blfs_book" || return 1
+    else
+        sudo chmod -v 1777 "$dir_blfs_book" || return 1
+    fi
 
     # Clone the BLFS book repository to blfs-xml folder
     echo Cloning blfs book sources...
@@ -55,17 +77,21 @@ _create_folders_and_get_sources()
         sudo chmod -v 1777 "$dir_sources" || return 1
     fi
 
-    # Check if setup folder is already exist and delete it if yes
+    # Check if setup folder is already exist and delete it's content if yes
     local dir_setup="$1/setup"
     if [ -d "$dir_setup" ] ; then
         echo Deleting old setup folder: "$dir_setup"
-        sudo rm -rf "$dir_setup" || return 1
+        sudo find "$dir_setup" -mindepth 1 -delete || { echo "Error: Failed to delete content of folder: $dir_setup" >&2; return 1; }
         echo Done!
     fi
 
     # Now create the setup folder owned by the current user
     echo Creating setup folder...
-    sudo install -v -o "$u" -g "$g" -m 755 -d "$dir_setup" || return 1
+    if [ ! -d "$dir_setup" ] ; then
+        sudo install -v -o "$u" -g "$g" -m 755 -d "$dir_setup" || return 1
+    else
+        sudo chmod -v 755 "$dir_setup" || return 1
+    fi
 
     # Clone the jhalfs repository to setup folder
     echo Cloning jhalfs sources...
@@ -95,8 +121,22 @@ _patch_jhalfs_sources()
     latest_kernel_ver=$(_get_latest_kernel_version)
     if [[ $? -gt 0 ]] ; then return 1; fi
     cp -iv lfs_configs/configuration "$dir_setup/" || return 1
+    #local commit="trunk"
+    local lfs_multilib_no="LFS_MULTILIB_NO=y"
+    local lfs_multilib_all="# LFS_MULTILIB_ALL is not set"
+    local multilib="default"
+    if [ -n "$USE_MULTILIB" ] ; then
+        #commit="multilib"
+        lfs_multilib_no="# LFS_MULTILIB_NO is not set"
+        lfs_multilib_all="LFS_MULTILIB_ALL=y"
+        multilib="ml_all"
+    fi
     echo Patching setup configuration file...
     local file_cfg="$dir_setup/configuration"
+    #sed -i -E "\@COMMIT=\"xxx\"@s@xxx@$commit@g" "$file_cfg" &&
+    sed -i -E "\@LFS_MULTILIB_NO@s@LFS_MULTILIB_NO@$lfs_multilib_no@g" "$file_cfg" &&
+    sed -i -E "\@LFS_MULTILIB_ALL@s@LFS_MULTILIB_ALL@$lfs_multilib_all@g" "$file_cfg" &&
+    sed -i -E "\@MULTILIB=\"xxx\"@s@xxx@$multilib@g" "$file_cfg" &&
     sed -i -E "\@BUILDDIR=\"xxx\"@s@xxx@$1@g" "$file_cfg" &&
     sed -i -E "/^FSTAB=/s/^/#/g" "$file_cfg" &&
     sed -i -E "\@FSTAB=\"xxx\"@s@xxx@/home/$u/fstab@g" "$file_cfg" &&
