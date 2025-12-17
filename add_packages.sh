@@ -43,7 +43,7 @@ grep -qF sdl2-image-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY
 # Add VSCode
 cp -fv xsoft/other/vscode.xml ../blfs_root/blfs-xml/xsoft/other
 grep -qF vscode.xml ../blfs_root/blfs-xml/xsoft/other/other.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="vscode.xml"/>' ../blfs_root/blfs-xml/xsoft/other/other.xml
-grep -qF vscode-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY vscode-version "1.106.3">' >> ../blfs_root/blfs-xml/packages.ent
+grep -qF vscode-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY vscode-version "1.107.0">' >> ../blfs_root/blfs-xml/packages.ent
 
 # Add libcmark
 cp -fv pst/sgml/libcmark.xml ../blfs_root/blfs-xml/pst/sgml
@@ -113,4 +113,4 @@ grep -qF osinfo-db-tools-version ../blfs_root/blfs-xml/packages.ent || echo '<!E
 # Add osinfo-db
 cp -fv postlfs/virtualization/osinfo-db.xml ../blfs_root/blfs-xml/postlfs/virtualization
 grep -qF osinfo-db.xml ../blfs_root/blfs-xml/postlfs/virtualization/virtualization.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="osinfo-db.xml"/>' ../blfs_root/blfs-xml/postlfs/virtualization/virtualization.xml
-grep -qF osinfo-db-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY osinfo-db-version "20250606">' >> ../blfs_root/blfs-xml/packages.ent
+grep -qF osinfo-db-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY osinfo-db-version "20251212">' >> ../blfs_root/blfs-xml/packages.ent
