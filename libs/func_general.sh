@@ -505,7 +505,6 @@ _build_blfs()
     cd "$dir_blfs_root" &&
     sed -i -E "s/_create_blfs_config_dm/_create_blfs_config_webtools/g" "$dir_blfs_root/Makefile" &&
     make <<< yes &&
-    ../custom_blfs_packages/fixBlfsScripts.sh "$dir_blfs_root/scripts" &&
     cd "$dir_blfs_work" &&
     ../gen-makefile.sh &&
     make
