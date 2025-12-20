@@ -103,7 +103,7 @@ grep -qF dnsmasq-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY dn
 #Add dmidecode
 cp -fv general/sysutils/dmidecode.xml ../blfs_root/blfs-xml/general/sysutils
 grep -qF dmidecode.xml ../blfs_root/blfs-xml/general/sysutils/sysutils.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="dmidecode.xml"/>' ../blfs_root/blfs-xml/general/sysutils/sysutils.xml
-grep -qF dmidecode-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY dmidecode-version "3.6">' >> ../blfs_root/blfs-xml/packages.ent
+grep -qF dmidecode-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY dmidecode-version "3.7">' >> ../blfs_root/blfs-xml/packages.ent
 
 # Add osinfo-db-tools
 cp -fv postlfs/virtualization/osinfo-db-tools.xml ../blfs_root/blfs-xml/postlfs/virtualization

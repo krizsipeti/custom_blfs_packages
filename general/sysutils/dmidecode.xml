@@ -4,9 +4,9 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY dmidecode-download-http "http://download.savannah.gnu.org/releases/dmidecode/dmidecode-3.6.tar.xz">
+  <!ENTITY dmidecode-download-http "http://download.savannah.gnu.org/releases/dmidecode/dmidecode-3.7.tar.xz">
   <!ENTITY dmidecode-download-ftp  " ">
-  <!ENTITY dmidecode-md5sum        "e931a92708ac7a7396452dbc8be8decd">
+  <!ENTITY dmidecode-md5sum        "2e7540d3de633146c1d349fb7bc1f6b1">
   <!ENTITY dmidecode-size          "12.6 MB">
   <!ENTITY dmidecode-buildsize     "150 MB">
   <!ENTITY dmidecode-time          "1 SBU (using parallelism=4)">
