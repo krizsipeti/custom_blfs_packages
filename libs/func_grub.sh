@@ -21,6 +21,7 @@ _patch_grub_script()
         boot_fs=$(lsblk -l -o MOUNTPOINT,UUID | grep "^$1 " | awk '{print $2}') || return 1
     fi
     sed -i "/set root=/c\search --set=root --fs-uuid $boot_fs" "$grub_script" || return 1
+    sed -i "s/.*gfxpayload=/#&/g" "$grub_script" || return 1
     sed -i "/^ .*linux /c\    linux \${knl_name} root=PARTUUID=\${lnx_root} ro \${opts}" "$grub_script" || return 1
     sed -i '/set timeout/a set color_normal=white/black\nset color_highlight=yellow/black\nset menu_color_normal=light-blue/black\nset menu_color_highlight=yellow/blue' "$grub_script"
 }
