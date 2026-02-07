@@ -43,7 +43,7 @@ grep -qF sdl2-image-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY
 # Add VSCode
 cp -fv xsoft/other/vscode.xml ../blfs_root/blfs-xml/xsoft/other
 grep -qF vscode.xml ../blfs_root/blfs-xml/xsoft/other/other.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="vscode.xml"/>' ../blfs_root/blfs-xml/xsoft/other/other.xml
-grep -qF vscode-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY vscode-version "1.107.1">' >> ../blfs_root/blfs-xml/packages.ent
+grep -qF vscode-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY vscode-version "1.109.0">' >> ../blfs_root/blfs-xml/packages.ent
 
 # Add libcmark
 cp -fv pst/sgml/libcmark.xml ../blfs_root/blfs-xml/pst/sgml
@@ -63,7 +63,7 @@ grep -qF libmatroska-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTIT
 # Add mkvtoolnix
 cp -fv multimedia/videoutils/mkvtoolnix.xml ../blfs_root/blfs-xml/multimedia/videoutils
 grep -qF mkvtoolnix.xml ../blfs_root/blfs-xml/multimedia/videoutils/videoutils.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="mkvtoolnix.xml"/>' ../blfs_root/blfs-xml/multimedia/videoutils/videoutils.xml
-grep -qF mkvtoolnix-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY mkvtoolnix-version "96.0">' >> ../blfs_root/blfs-xml/packages.ent
+grep -qF mkvtoolnix-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY mkvtoolnix-version "97.0">' >> ../blfs_root/blfs-xml/packages.ent
 
 # Add virt-manager
 cp -fv postlfs/virtualization/virt-manager.xml ../blfs_root/blfs-xml/postlfs/virtualization
@@ -73,12 +73,12 @@ grep -qF virt-manager-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTI
 # Add libvirt-python
 cp -fv postlfs/virtualization/libvirt-python.xml ../blfs_root/blfs-xml/postlfs/virtualization
 grep -qF libvirt-python.xml ../blfs_root/blfs-xml/postlfs/virtualization/virtualization.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="libvirt-python.xml"/>' ../blfs_root/blfs-xml/postlfs/virtualization/virtualization.xml
-grep -qF libvirt-python-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY libvirt-python-version "11.10.0">' >> ../blfs_root/blfs-xml/packages.ent
+grep -qF libvirt-python-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY libvirt-python-version "12.0.0">' >> ../blfs_root/blfs-xml/packages.ent
 
 # Add libvirt
 cp -fv postlfs/virtualization/libvirt.xml ../blfs_root/blfs-xml/postlfs/virtualization
 grep -qF libvirt.xml ../blfs_root/blfs-xml/postlfs/virtualization/virtualization.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="libvirt.xml"/>' ../blfs_root/blfs-xml/postlfs/virtualization/virtualization.xml
-grep -qF libvirt-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY libvirt-version "11.10.0">' >> ../blfs_root/blfs-xml/packages.ent
+grep -qF libvirt-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY libvirt-version "12.0.0">' >> ../blfs_root/blfs-xml/packages.ent
 
 # Add libosinfo
 cp -fv postlfs/virtualization/libosinfo.xml ../blfs_root/blfs-xml/postlfs/virtualization
@@ -98,7 +98,7 @@ grep -qF libvirt-glib-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTI
 # Add dnsmasq
 cp -fv networking/netutils/dnsmasq.xml ../blfs_root/blfs-xml/networking/netutils
 grep -qF dnsmasq.xml ../blfs_root/blfs-xml/networking/netutils/netutils.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="dnsmasq.xml"/>' ../blfs_root/blfs-xml/networking/netutils/netutils.xml
-grep -qF dnsmasq-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY dnsmasq-version "2.91">' >> ../blfs_root/blfs-xml/packages.ent
+grep -qF dnsmasq-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY dnsmasq-version "2.92">' >> ../blfs_root/blfs-xml/packages.ent
 
 #Add dmidecode
 cp -fv general/sysutils/dmidecode.xml ../blfs_root/blfs-xml/general/sysutils
