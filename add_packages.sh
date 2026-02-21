@@ -43,12 +43,12 @@ grep -qF sdl2-image-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY
 # Add VSCode
 cp -fv xsoft/other/vscode.xml ../blfs_root/blfs-xml/xsoft/other
 grep -qF vscode.xml ../blfs_root/blfs-xml/xsoft/other/other.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="vscode.xml"/>' ../blfs_root/blfs-xml/xsoft/other/other.xml
-grep -qF vscode-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY vscode-version "1.109.0">' >> ../blfs_root/blfs-xml/packages.ent
+grep -qF vscode-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY vscode-version "1.109.5">' >> ../blfs_root/blfs-xml/packages.ent
 
 # Add libcmark
 cp -fv pst/sgml/libcmark.xml ../blfs_root/blfs-xml/pst/sgml
 grep -qF libcmark.xml ../blfs_root/blfs-xml/pst/sgml/sgml.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="libcmark.xml"/>' ../blfs_root/blfs-xml/pst/sgml/sgml.xml
-grep -qF libcmark-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY libcmark-version "0.31.1">' >> ../blfs_root/blfs-xml/packages.ent
+grep -qF libcmark-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY libcmark-version "0.31.2">' >> ../blfs_root/blfs-xml/packages.ent
 
 # Add libebml
 cp -fv multimedia/libdriv/libebml.xml ../blfs_root/blfs-xml/multimedia/libdriv

@@ -4,9 +4,9 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY libcmark-download-http "https://github.com/commonmark/cmark/archive/refs/tags/0.31.1.tar.gz">
+  <!ENTITY libcmark-download-http "https://github.com/commonmark/cmark/archive/refs/tags/0.31.2.tar.gz">
   <!ENTITY libcmark-download-ftp  " ">
-  <!ENTITY libcmark-md5sum        "362160f1c0457389f5ad6e9d5eaf4cfb">
+  <!ENTITY libcmark-md5sum        "705ff52fcacc6d9b4d0d1d5a7723edcc">
   <!ENTITY libcmark-size          "4.6 MB">
   <!ENTITY libcmark-buildsize     "500 MB">
   <!ENTITY libcmark-time          "2 SBU (using parallelism=4)">
