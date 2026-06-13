@@ -4,9 +4,9 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY dnsmasq-download-http "https://thekelleys.org.uk/dnsmasq/dnsmasq-2.92.tar.xz">
+  <!ENTITY dnsmasq-download-http "https://thekelleys.org.uk/dnsmasq/dnsmasq-2.93.tar.xz">
   <!ENTITY dnsmasq-download-ftp  " ">
-  <!ENTITY dnsmasq-md5sum        "f3fe755e3f206f2b0f5520970f4c4c50">
+  <!ENTITY dnsmasq-md5sum        "33cf617dbdc8455c6c055ebd788bd95b">
   <!ENTITY dnsmasq-size          "4.2 MB">
   <!ENTITY dnsmasq-buildsize     "150 MB">
   <!ENTITY dnsmasq-time          "1.5 SBU (using parallelism=4)">

@@ -4,9 +4,9 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY slirp4netns-download-http "https://github.com/rootless-containers/slirp4netns/archive/refs/tags/v1.3.3.tar.gz">
+  <!ENTITY slirp4netns-download-http "https://github.com/rootless-containers/slirp4netns/archive/refs/tags/v1.3.4.tar.gz">
   <!ENTITY slirp4netns-download-ftp  " ">
-  <!ENTITY slirp4netns-md5sum        "dac1f51f1582d68bb7431da0ca05a76f">
+  <!ENTITY slirp4netns-md5sum        "54a9e407b4d518c9ca1056d201d6ded0">
   <!ENTITY slirp4netns-size          "4.2 MB">
   <!ENTITY slirp4netns-buildsize     "150 MB">
   <!ENTITY slirp4netns-time          "1.5 SBU (using parallelism=4)">
