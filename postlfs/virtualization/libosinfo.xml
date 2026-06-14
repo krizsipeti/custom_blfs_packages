@@ -80,6 +80,7 @@
       following commands:
     </para>
 
+<screen><userinput>sed -i 's/ATTRIBUTE_UNUSED//g' osinfo/osinfo_loader.c</userinput></screen>
 <screen><userinput>meson setup build --prefix=/usr --buildtype=release &amp;&amp;
 ninja -C build</userinput></screen>
 
