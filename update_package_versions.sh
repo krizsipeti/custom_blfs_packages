@@ -124,10 +124,10 @@ getLatestGithubRelease OpenSC/pkcs11-helper pkcs11-helper postlfs/security
 getLatestGithubRelease zaps166/QMPlay2 qmplay2 multimedia/videoutils
 
 #qBittorrent
-getLatestSourceforgeRelease qbittorrent qbittorrent xsoft/other 13-
+getLatestGithubRelease qbittorrent/qBittorrent qbittorrent xsoft/other
 
 #libtorrent-rasterbar
-getLatestGithubRelease arvidn/libtorrent libtorrent-rasterbar networking/netlibs 2-
+getLatestGithubTag arvidn/libtorrent libtorrent-rasterbar networking/netlibs 2-
 
 #SDL2-image
 getLatestGithubRelease libsdl-org/SDL_image sdl2-image general/graphlib 1- .*-2..*
