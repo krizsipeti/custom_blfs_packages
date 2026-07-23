@@ -4,9 +4,9 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY libmatroska-download-http "https://github.com/Matroska-Org/libmatroska/archive/refs/tags/release-1.7.1.tar.gz">
+  <!ENTITY libmatroska-download-http "https://github.com/Matroska-Org/libmatroska/archive/refs/tags/release-1.7.2.tar.gz">
   <!ENTITY libmatroska-download-ftp  " ">
-  <!ENTITY libmatroska-md5sum        "ef677bdd7ce5559253e1c9211d68ec7d">
+  <!ENTITY libmatroska-md5sum        "e820945ee464d8265c84b1307c45e0e6">
   <!ENTITY libmatroska-size          "1 MB">
   <!ENTITY libmatroska-buildsize     "10 MB">
   <!ENTITY libmatroska-time          "0.1 SBU (using parallelism=4)">
