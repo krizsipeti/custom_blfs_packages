@@ -4,9 +4,9 @@
   <!ENTITY % general-entities SYSTEM "../../general.ent">
   %general-entities;
 
-  <!ENTITY libebml-download-http "https://github.com/Matroska-Org/libebml/archive/refs/tags/release-1.4.6.tar.gz">
+  <!ENTITY libebml-download-http "https://github.com/Matroska-Org/libebml/archive/refs/tags/release-1.4.7.tar.gz">
   <!ENTITY libebml-download-ftp  " ">
-  <!ENTITY libebml-md5sum        "5fab0772f5599e77b2cff0aa7a076725">
+  <!ENTITY libebml-md5sum        "49ba9515cd928017754a355f1c57ad59">
   <!ENTITY libebml-size          "1 MB">
   <!ENTITY libebml-buildsize     "10 MB">
   <!ENTITY libebml-time          "0.1 SBU (using parallelism=4)">

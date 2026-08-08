@@ -28,7 +28,7 @@ grep -qF minidlna-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY m
 # Add QMPlay2
 cp -fv multimedia/videoutils/qmplay2.xml ../blfs_root/blfs-xml/multimedia/videoutils
 grep -qF qmplay2.xml ../blfs_root/blfs-xml/multimedia/videoutils/videoutils.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="qmplay2.xml"/>' ../blfs_root/blfs-xml/multimedia/videoutils/videoutils.xml
-grep -qF qmplay2-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY qmplay2-version "26.06.27">' >> ../blfs_root/blfs-xml/packages.ent
+grep -qF qmplay2-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY qmplay2-version "26.08.02">' >> ../blfs_root/blfs-xml/packages.ent
 
 # Add SDL2_ttf
 cp -fv general/graphlib/sdl2-ttf.xml ../blfs_root/blfs-xml/general/graphlib
@@ -43,7 +43,7 @@ grep -qF sdl2-image-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY
 # Add VSCode
 cp -fv xsoft/other/vscode.xml ../blfs_root/blfs-xml/xsoft/other
 grep -qF vscode.xml ../blfs_root/blfs-xml/xsoft/other/other.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="vscode.xml"/>' ../blfs_root/blfs-xml/xsoft/other/other.xml
-grep -qF vscode-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY vscode-version "1.130.0">' >> ../blfs_root/blfs-xml/packages.ent
+grep -qF vscode-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY vscode-version "1.132.0">' >> ../blfs_root/blfs-xml/packages.ent
 
 # Add libcmark
 cp -fv pst/sgml/libcmark.xml ../blfs_root/blfs-xml/pst/sgml
@@ -53,7 +53,7 @@ grep -qF libcmark-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY l
 # Add libebml
 cp -fv multimedia/libdriv/libebml.xml ../blfs_root/blfs-xml/multimedia/libdriv
 grep -qF libebml.xml ../blfs_root/blfs-xml/multimedia/libdriv/libdriv.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="libebml.xml"/>' ../blfs_root/blfs-xml/multimedia/libdriv/libdriv.xml
-grep -qF libebml-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY libebml-version "1.4.6">' >> ../blfs_root/blfs-xml/packages.ent
+grep -qF libebml-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY libebml-version "1.4.7">' >> ../blfs_root/blfs-xml/packages.ent
 
 # Add libmatroska
 cp -fv multimedia/libdriv/libmatroska.xml ../blfs_root/blfs-xml/multimedia/libdriv
@@ -73,12 +73,12 @@ grep -qF virt-manager-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTI
 # Add libvirt-python
 cp -fv postlfs/virtualization/libvirt-python.xml ../blfs_root/blfs-xml/postlfs/virtualization
 grep -qF libvirt-python.xml ../blfs_root/blfs-xml/postlfs/virtualization/virtualization.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="libvirt-python.xml"/>' ../blfs_root/blfs-xml/postlfs/virtualization/virtualization.xml
-grep -qF libvirt-python-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY libvirt-python-version "12.5.0">' >> ../blfs_root/blfs-xml/packages.ent
+grep -qF libvirt-python-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY libvirt-python-version "12.6.0">' >> ../blfs_root/blfs-xml/packages.ent
 
 # Add libvirt
 cp -fv postlfs/virtualization/libvirt.xml ../blfs_root/blfs-xml/postlfs/virtualization
 grep -qF libvirt.xml ../blfs_root/blfs-xml/postlfs/virtualization/virtualization.xml || sed -i '/<\/chapter>.*/i <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="libvirt.xml"/>' ../blfs_root/blfs-xml/postlfs/virtualization/virtualization.xml
-grep -qF libvirt-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY libvirt-version "12.5.0">' >> ../blfs_root/blfs-xml/packages.ent
+grep -qF libvirt-version ../blfs_root/blfs-xml/packages.ent || echo '<!ENTITY libvirt-version "12.6.0">' >> ../blfs_root/blfs-xml/packages.ent
 
 # Add libosinfo
 cp -fv postlfs/virtualization/libosinfo.xml ../blfs_root/blfs-xml/postlfs/virtualization

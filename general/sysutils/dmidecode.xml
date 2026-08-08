@@ -6,7 +6,7 @@
 
   <!ENTITY dmidecode-download-http "http://download.savannah.gnu.org/releases/dmidecode/dmidecode-3.7.tar.xz">
   <!ENTITY dmidecode-download-ftp  " ">
-  <!ENTITY dmidecode-md5sum        "2e7540d3de633146c1d349fb7bc1f6b1">
+  <!ENTITY dmidecode-md5sum        "261b1f079fa0a5c0c32d181e43440c05">
   <!ENTITY dmidecode-size          "12.6 MB">
   <!ENTITY dmidecode-buildsize     "150 MB">
   <!ENTITY dmidecode-time          "1 SBU (using parallelism=4)">
