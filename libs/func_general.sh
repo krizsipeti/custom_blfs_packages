@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Create folders and get sources needed for LFS and BLFS installation
+# Create folders and get sources needed for LFS and BLFS/GLFS installation
 _create_folders_and_get_sources()
 {
     # Check if the lfs folder exists
@@ -14,14 +14,6 @@ _create_folders_and_get_sources()
     if [ -d "$dir_jhalfs" ] ; then
         echo "Deleting content of old jhalfs folder: $dir_jhalfs"
         sudo find "$dir_jhalfs" -mindepth 1 -delete || { echo "Error: Failed to delete content of folder: $dir_jhalfs" >&2; return 1; }
-        echo "Done!"
-    fi
-
-    # Check if blfs_root folder is already exist and delete it's content if yes
-    local dir_blfs="$1/blfs_root"
-    if [ -d "$dir_blfs" ] ; then
-        echo "Deleting content of old blfs_root folder: $dir_blfs"
-        sudo find "$dir_blfs" -mindepth 1 -delete || { echo "Error: Failed to delete content of folder: $dir_blfs" >&2; return 1; }
         echo "Done!"
     fi
 
@@ -50,6 +42,34 @@ _create_folders_and_get_sources()
     echo Cloning lfs book sources...
     git clone $branch https://git.linuxfromscratch.org/lfs.git "$dir_book" || return 1
 
+    # Check sources folder existence and create if needed
+    local dir_sources="$1/sources"
+    if [ ! -d "$dir_sources" ] ; then
+        sudo install -v -o "$u" -g "$g" -m 1777 -d "$dir_sources" || return 1
+    else
+        sudo chmod -v 1777 "$dir_sources" || return 1
+    fi
+    
+    # Create the BLFS/GLFS sources folder and get the sources
+    if [ -n "$USE_GLFS" ] ; then
+        _create_folders_and_get_sources_glfs "$1" || return 1
+    else
+        _create_folders_and_get_sources_blfs "$1" || return 1
+    fi
+}
+
+
+# Create folders and get sources needed for BLFS installation
+_create_folders_and_get_sources_blfs()
+{
+    # Check if blfs_root folder is already exist and delete it's content if yes
+    local dir_blfs="$1/blfs_root"
+    if [ -d "$dir_blfs" ] ; then
+        echo "Deleting content of old blfs_root folder: $dir_blfs"
+        sudo find "$dir_blfs" -mindepth 1 -delete || { echo "Error: Failed to delete content of folder: $dir_blfs" >&2; return 1; }
+        echo "Done!"
+    fi
+
     # Now create the blfs_root folder and blfs-xml sub-folder owned by the current user
     local dir_blfs_book="$dir_blfs/blfs-xml"
     echo Creating blfs_root folder...
@@ -68,14 +88,6 @@ _create_folders_and_get_sources()
     # Clone the BLFS book repository to blfs-xml folder
     echo Cloning blfs book sources...
     git clone https://git.linuxfromscratch.org/blfs.git "$dir_blfs_book" || return 1
-
-    # Check sources folder existence and create if needed
-    local dir_sources="$1/sources"
-    if [ ! -d "$dir_sources" ] ; then
-        sudo install -v -o "$u" -g "$g" -m 1777 -d "$dir_sources" || return 1
-    else
-        sudo chmod -v 1777 "$dir_sources" || return 1
-    fi
 
     # Check if setup folder is already exist and delete it's content if yes
     local dir_setup="$1/setup"
@@ -96,6 +108,58 @@ _create_folders_and_get_sources()
     # Clone the jhalfs repository to setup folder
     echo Cloning jhalfs sources...
     git clone https://git.linuxfromscratch.org/jhalfs.git "$dir_setup"
+}
+
+
+# Create folders and get sources needed for GLFS installation
+_create_folders_and_get_sources_glfs()
+{
+    # Check if glfs_root folder is already exist and delete it's content if yes
+    local dir_glfs="$1/glfs_root"
+    if [ -d "$dir_glfs" ] ; then
+        echo "Deleting content of old glfs_root folder: $dir_glfs"
+        sudo find "$dir_glfs" -mindepth 1 -delete || { echo "Error: Failed to delete content of folder: $dir_glfs" >&2; return 1; }
+        echo "Done!"
+    fi
+
+    # Now create the glfs_root folder and glfs-xml sub-folder owned by the current user
+    local dir_glfs_book="$dir_glfs/glfs-xml"
+    echo Creating glfs_root folder...
+    if [ ! -d "$dir_glfs" ] ; then
+        sudo install -v -o "$u" -g root -m 1777 -d "$dir_glfs" || return 1
+    else
+        sudo chmod -v 1777 "$dir_glfs" || return 1
+    fi
+    echo Creating glfs-xml folder...
+    if [ ! -d "$dir_glfs_book" ] ; then
+        sudo install -v -o "$u" -g "$g" -m 1777 -d "$dir_glfs_book" || return 1
+    else
+        sudo chmod -v 1777 "$dir_glfs_book" || return 1
+    fi
+
+    # Clone the GLFS book repository to glfs-xml folder
+    echo Cloning glfs book sources...
+    git clone https://github.com/glfs-book/glfs.git "$dir_glfs_book" || return 1
+    
+    # Check if setup folder is already exist and delete it's content if yes
+    local dir_setup="$1/setup"
+    if [ -d "$dir_setup" ] ; then
+        echo Deleting old setup folder: "$dir_setup"
+        sudo find "$dir_setup" -mindepth 1 -delete || { echo "Error: Failed to delete content of folder: $dir_setup" >&2; return 1; }
+        echo Done!
+    fi
+
+    # Now create the setup folder owned by the current user
+    echo Creating setup folder...
+    if [ ! -d "$dir_setup" ] ; then
+        sudo install -v -o "$u" -g "$g" -m 755 -d "$dir_setup" || return 1
+    else
+        sudo chmod -v 755 "$dir_setup" || return 1
+    fi
+
+    # Clone the glfs-jhalfs repository to setup folder
+    echo Cloning glfs-jhalfs sources...
+    git clone https://github.com/krizsipeti/glfs-jhalfs.git "$dir_setup"
 }
 
 
@@ -147,17 +211,21 @@ _patch_jhalfs_sources()
         return 1
     fi
 
-    # Add additional blfs packages to build config if specified any
-    blfs_packs=postlfs-config-profile,postlfs-config-vimrc
+    # Add extra packages to build config if specified any
+    if [ -n "USE_GLFS" ] ; then
+        extra_packs=bash-profiles,curl
+    else
+        extra_packs=postlfs-config-profile,postlfs-config-vimrc
+    fi
     if [ -n "$2" ] ; then
-        blfs_packs="$blfs_packs,$2"
+        extra_packs="$extra_packs,$2"
     fi
     local script_dir="$dir_setup/common/libs/func_install_blfs"
     local line_number=$(grep "$script_dir" -e '$LINE_SUDO' -n -m1 | cut -d: -f1)
-    additional_configs=$(sed 's/,/\n/g' <<< "$blfs_packs" | sed 's/$/=y/' | sed 's/^/CONFIG_/' | sed '$!s/$/\\/')
+    additional_configs=$(sed 's/,/\n/g' <<< "$extra_packs" | sed 's/$/=y/' | sed 's/^/CONFIG_/' | sed '$!s/$/\\/')
     sed -i "$((line_number+1))i$additional_configs" "$script_dir"
     if [[ $? -gt 0 ]] ; then
-        echo "Could not add blfs packages to the build config." >&2
+        echo "Could not add extra packages to the build config." >&2
         return 1
     fi
 
@@ -178,12 +246,18 @@ _finalize_lfs_build()
 
     # Patch the sudoers file
     sudo sed -i "/^root ALL=(ALL:ALL) ALL/a pkr ALL=(ALL:ALL) NOPASSWD: ALL" "$dir_lfs/etc/sudoers" &&
+    sudo chroot "$dir_lfs" chown -hR pkr:pkr "/var/lib/jhalfs"
 
-    # Move blfs folder to pkr home folder
-    sudo mv -v "$dir_lfs/blfs_root" "$dir_lfs/home/pkr/" &&
-    sudo chroot "$dir_lfs" chown -hR pkr:pkr "/home/pkr/blfs_root" &&
-    sudo chroot "$dir_lfs" chown -hR pkr:pkr "/var/lib/jhalfs" &&
-    sudo sed -i "s|/blfs_root/packdesc.dtd|/home/pkr/blfs_root/packdesc.dtd|g" "$dir_lfs/var/lib/jhalfs/BLFS/instpkg.xml"
+    # Move blfs or glfs folder to pkr home folder
+    if [ -n "$USE_GLFS" ] ; then
+        sudo mv -v "$dir_lfs/glfs_root" "$dir_lfs/home/pkr/" &&
+        sudo chroot "$dir_lfs" chown -hR pkr:pkr "/home/pkr/glfs_root" &&
+        sudo sed -i "s|/glfs_root/packdesc.dtd|/home/pkr/glfs_root/packdesc.dtd|g" "$dir_lfs/var/lib/jhalfs/GLFS/instpkg.xml"
+    else
+        sudo mv -v "$dir_lfs/blfs_root" "$dir_lfs/home/pkr/" &&
+        sudo chroot "$dir_lfs" chown -hR pkr:pkr "/home/pkr/blfs_root" &&
+        sudo sed -i "s|/blfs_root/packdesc.dtd|/home/pkr/blfs_root/packdesc.dtd|g" "$dir_lfs/var/lib/jhalfs/BLFS/instpkg.xml"
+    fi
 
     # Copy custom blfs folder to pkr home folder if exist
     if [ ! -d "$HOME/custom_blfs_packages" ] ; then
@@ -512,4 +586,73 @@ _build_blfs()
 )}
 
 _build_blfs\n' | sudo tee "$dir_lfs/etc/profile.d/x_build_blfs.sh" > /dev/null
+}
+
+
+# Creates script that auto builds the glfs system after successfull lfs build
+_create_glfs_builder_script()
+{
+    # Check parameter
+    local dir_lfs="$(realpath "$1")"
+    if [ ! -d "$dir_lfs" ] ; then
+        echo "Invalid folder: $dir_lfs"
+        return 1
+    fi
+
+    printf '#!/bin/bash
+
+_build_glfs()
+{(
+    if ! [ "$USER" == "pkr" ] ; then return 0; fi
+    sudo rm -rfv /etc/systemd/system/getty@tty1.service.d
+    sudo rm -fv /etc/profile.d/x_build_glfs.sh
+    echo "Wait 15 seconds before start to have network ready ..."
+    sleep 15
+    local dir_home="/home/pkr"
+    local dir_glfs_root="$dir_home/glfs_root"
+    local dir_lfs_xml="$dir_glfs_root/lfs-xml"
+    local dir_glfs_xml="$dir_glfs_root/glfs-xml"
+    local dir_glfs_work="$dir_glfs_root/work"
+    cd "$dir_lfs_xml"
+    git reset --hard
+    git clean -xfd
+    cd "$dir_blfs_xml"
+    git reset --hard
+    git clean -xfd
+    cd "$dir_glfs_root"
+    make clean &&
+    make update &&
+    sed -i -E "/(=configuration|python3)/s/^/#/g;/=configuration/i\	source /home/pkr/custom_blfs_packages/libs/func_general.sh && _create_blfs_config_xorg /" "$dir_glfs_root/Makefile" &&
+    make <<< yes &&
+    cd "$dir_glfs_work" &&
+    ../gen-makefile.sh &&
+    make &&
+    cd "$dir_glfs_root" &&
+    sed -i -E "s/_create_blfs_config_xorg/_create_blfs_config_qt6/g" "$dir_glfs_root/Makefile" &&
+    make <<< yes &&
+    cd "$dir_glfs_work" &&
+    ../gen-makefile.sh &&
+    make &&
+    cd "$dir_glfs_root" &&
+    sed -i -E "s/_create_blfs_config_qt6/_create_blfs_config_lxqt/g" "$dir_glfs_root/Makefile" &&
+    make <<< yes &&
+    cd "$dir_glfs_work" &&
+    ../gen-makefile.sh &&
+    make &&
+    cd "$dir_glfs_root" &&
+    sed -i -E "s/_create_blfs_config_lxqt/_create_blfs_config_dm/g" "$dir_glfs_root/Makefile" &&
+    make <<< yes &&
+    cd "$dir_glfs_work" &&
+    ../gen-makefile.sh &&
+    make &&
+    cd "$dir_glfs_root" &&
+    sed -i -E "s/_create_blfs_config_dm/_create_blfs_config_webtools/g" "$dir_glfs_root/Makefile" &&
+    make <<< yes &&
+    cd "$dir_glfs_work" &&
+    ../gen-makefile.sh &&
+    make
+    sudo shutdown --poweroff +1
+)}
+
+_build_glfs\n' | sudo tee "$dir_lfs/etc/profile.d/x_build_glfs.sh" > /dev/null
 }
